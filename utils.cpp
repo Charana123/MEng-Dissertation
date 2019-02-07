@@ -1,10 +1,14 @@
 #include "utils.hpp"
-#include<boost/tokenizer.hpp>
 
 bool operator==(const Set& a1, const Set& a2)
 {
     if(a1.vertices == a2.vertices && a1.i == a2.i) return true;
     else return false;
+}
+
+std::ostream& operator<<(std::ostream& o, const Set& s){
+    o << "{ k:" << s.i << "," << s.vertices << " }";
+    return o;
 }
 
 vector<string> read_file(string filename)
@@ -23,30 +27,32 @@ vector<string> read_file(string filename)
 	return lines;
 }
 
-vector<Set> get_sets(vector<string> lines){
-    vector<Set> sets;
+map<int, Set> get_sets(vector<string> lines){
+    map<int, Set> sets;
     int counter = 0;
 	for(auto line=lines.begin(); line!=lines.end(); ++line){
 		// TODO:: Replace split for tokenizer (its significantly more memory efficient and faster)
 		set<int> vertices;
+		boost::trim(*line);
 		boost::tokenizer<> tok(*line);
 		for(auto beg=tok.begin(); beg!=tok.end();++beg){
 			vertices.insert(std::stoi(*beg));
 		}
-        Set set = {vertices, counter++};
+        Set set = {vertices, counter};
 		/* boost::trim(*line); */
 		/* vector<string> vertices; */
 		/* boost::split(vertices, *line, boost::is_any_of(" ")); */
 		/* vector<int> set(vertices.size()); */
 		/* transform(vertices.begin(), vertices.end(), set.begin(), [](string str) -> int { return std::stoi(str); }); */
-		sets.push_back(set);
+		sets[counter] = set;
 	}
     return sets;
 }
 
-Set get_universe(vector<Set> sets){
+Set get_universe(map<int, Set> sets){
     Set universe = {{}, -1};
-    for(Set& set: sets){
+    for(auto e: sets){
+        Set& set = e.second;
         std::set_difference(set.vertices.begin(), set.vertices.end(), universe.vertices.begin(), universe.vertices.end(), std::inserter(universe.vertices, universe.vertices.end()));
     }
     return universe;
@@ -55,7 +61,7 @@ Set get_universe(vector<Set> sets){
 SetCoverInput read_problem(string filename)
 {
     vector<string> lines = read_file(filename);
-    vector<Set> sets = get_sets(lines);
+    map<int, Set> sets = get_sets(lines);
     Set universe = get_universe(sets);
 	return {sets, universe};
 }

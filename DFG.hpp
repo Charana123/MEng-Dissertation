@@ -1,5 +1,5 @@
-#ifndef SET_COVER_H_
-#define SET_COVER_H_
+#ifndef DFG_H_
+#define DFG_H_
 
 #include <iostream>
 #include <set>
@@ -8,11 +8,8 @@
 #include <iterator>
 #include "utils.hpp"
 
-struct SetCoverOutput {
-    std::set<int> Sigma;
-    Set C;
-};
 
-SetCoverOutput DFG(string filename, float p);
+map<int, vector<Set>> OrderBySubCollection(SetCoverInput set_cover_input, float p);
+SetCoverOutput DFG(map<int, vector<Set>> ktoCollection, float p);
 
 #endif

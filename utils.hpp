@@ -7,8 +7,9 @@
 #include <algorithm>
 #include <boost/interprocess/file_mapping.hpp>
 #include <boost/interprocess/mapped_region.hpp>
-/* #include <boost/tokenizer.hpp> */
 #include <boost/algorithm/string.hpp>
+#include<boost/tokenizer.hpp>
+#include "prettyprint.hpp"
 
 using namespace std;
 using namespace boost;
@@ -20,11 +21,17 @@ struct Set{
 };
 
 bool operator==(const Set& a1, const Set& a2);
+std::ostream& operator<<(std::ostream& o, const Set& s);
 
 struct SetCoverInput
 {
-    vector<Set> sets;
+    map<int, Set> sets;
     Set universe;
+};
+
+struct SetCoverOutput {
+    std::set<int> Sigma;
+    Set C;
 };
 
 SetCoverInput read_problem(string filename);

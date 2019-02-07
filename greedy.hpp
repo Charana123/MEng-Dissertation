@@ -8,6 +8,8 @@
 #include <iterator>
 #include "utils.hpp"
 
-SetCoverOutput Greedy(SetCoverInput set_cover_input, vector<Set> ktoCollection);
+SetCoverOutput greedy_impl(SetCoverInput set_cover_input);
+SetCoverOutput greedy(SetCoverInput* set_cover_input, map<int, vector<Set*>> inverted_index);
+map<int, vector<Set*>> computeInvertedIndex(SetCoverInput* set_cover_input);
 
 #endif

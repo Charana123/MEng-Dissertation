@@ -45,6 +45,7 @@ map<int, Set> get_sets(vector<string> lines){
 		/* vector<int> set(vertices.size()); */
 		/* transform(vertices.begin(), vertices.end(), set.begin(), [](string str) -> int { return std::stoi(str); }); */
 		sets[counter] = set;
+        counter++;
 	}
     return sets;
 }

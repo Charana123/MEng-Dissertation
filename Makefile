@@ -2,7 +2,8 @@ DFG = utils.cpp DFG.cpp DFG_main.cpp
 DFG_TEST = utils.cpp DFG.cpp DFG_test.cpp
 GREEDY = utils.cpp greedy.cpp greedy_main.cpp
 GREEDY_TEST = utils.cpp greedy.cpp greedy_test.cpp
-FILES = utils.cpp greedy.cpp greedy_main.cpp
+RFGREEDY = utils.cpp rfgreedy.cpp rfgreedy_main.cpp
+RFGREEDY_TEST = utils.cpp rfgreedy.cpp rfgreedy_test.cpp
 
 dfg:
 	g++-8 -std=c++17 -pthread -lboost_iostreams $(DFG) -o dfg
@@ -20,12 +21,20 @@ greedy_test:
 	g++-8 -std=c++17 -pthread -lboost_iostreams $(GREEDY_TEST) -o greedy_test
 	./greedy_test
 
+rfgreedy:
+	g++-8 -std=c++17 -pthread -lboost_iostreams $(RFGREEDY) -o rfgreedy
+	./rfgreedy
+
+rfgreedy_test:
+	g++-8 -std=c++17 -pthread -lboost_iostreams $(RFGREEDY_TEST) -o rfgreedy_test
+	./rfgreedy_test
+
 # util:
 # 	g++-8 -std=c++17 -lboost_iostreams utils.cpp -o util
 # 	./util
 # 	make clean
 
 clean:
-	rm dfg dfg_test greedy greedy_test
+	rm dfg dfg_test greedy greedy_test rfgreedy rfgreedy_test
 
 .PHONY: DFG DFG_test greedy greedy_test

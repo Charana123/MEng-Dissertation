@@ -37,4 +37,5 @@ rfgreedy_test:
 clean:
 	rm dfg dfg_test greedy greedy_test rfgreedy rfgreedy_test
 
-.PHONY: DFG DFG_test greedy greedy_test
+.PHONY: dfg dfg_test greedy greedy_test rfgreedy rfgreedy_test
+

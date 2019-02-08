@@ -19,7 +19,7 @@ void summarise(string name, std::function<SetCoverOutput()> func){
     cout << endl;
 }
 
-float q = 1.05;
+float q = 100;
 int main(){
 
     SetCoverInput sci = read_problem("./dataset/test.dat");

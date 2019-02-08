@@ -5,6 +5,7 @@
 #include <set>
 #include <cmath>
 #include <algorithm>
+#include <functional>
 #include <iterator>
 #include "utils.hpp"
 

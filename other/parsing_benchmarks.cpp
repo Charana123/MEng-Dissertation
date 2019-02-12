@@ -1,10 +1,46 @@
-#include "../utils.hpp"
+#include "../gp_utils.hpp"
 #include <algorithm>
 #include <fstream>
 #include <chrono>
 #include <cstdio>
 
 using namespace std;
+
+void process_mem_usage(double* vm_usage, double* resident_set)
+{
+   using std::ios_base;
+   using std::ifstream;
+   using std::string;
+
+   *vm_usage     = 0.0;
+   *resident_set = 0.0;
+
+   // 'file' stat seems to give the most reliable results
+   ifstream stat_stream("/proc/self/stat",ios_base::in);
+
+   // dummy vars for leading entries in stat that we don't care about
+   //
+   string pid, comm, state, ppid, pgrp, session, tty_nr;
+   string tpgid, flags, minflt, cminflt, majflt, cmajflt;
+   string utime, stime, cutime, cstime, priority, nice;
+   string O, itrealvalue, starttime;
+
+   // the two fields we want
+   //
+   unsigned long vsize;
+   long rss;
+
+   stat_stream >> pid >> comm >> state >> ppid >> pgrp >> session >> tty_nr
+               >> tpgid >> flags >> minflt >> cminflt >> majflt >> cmajflt
+               >> utime >> stime >> cutime >> cstime >> priority >> nice
+               >> O >> itrealvalue >> starttime >> vsize >> rss; // don't care about the rest
+
+   stat_stream.close();
+
+   long page_size_kb = sysconf(_SC_PAGE_SIZE) / 1024; // in case x86-64 is configured to use 2MB pages
+   *vm_usage     = vsize / 1024.0;
+   *resident_set = rss * page_size_kb;
+}
 
 int filesize(const char* filename)
 {
@@ -39,7 +75,7 @@ int main(){
     time("ifstream", []() -> void{
         std::ifstream ifs(file_path);
         for(string line; getline(ifs, line); ){
-            /* parse_line(line); */
+            parse_line(line);
         }
     });
 
@@ -62,6 +98,7 @@ int main(){
         int pages = file_size / page_size;
         int remain = file_size % page_size;
 
+        int lines = 0;
         for(int page = 0; page < pages; page++){
             bip::mapped_region mapped_rgn(mapping, bip::read_only, page * page_size, page_size);
             char const* const mmaped_data = static_cast<char*>(mapped_rgn.get_address());
@@ -69,45 +106,60 @@ int main(){
 
             imemstream mmifs(mmaped_data, mmap_size);
             for(string line; getline(mmifs, line); ){
-                /* parse_line(line); */
+                lines++;
             }
         }
+        cout << lines << endl;
     });
 
     time("cstyle fgets", []() -> void{
         FILE * pFile;
-        char line [100];
+        size_t buffer_size = 1024*16;
+        char line [buffer_size];
         pFile = fopen(file_path.c_str() , "r");
-        for(; fgets (line, 100, pFile) != NULL; ){
+        int lines = 0;
+        double vm_usage, resident_set;
+        for(; fgets (line, buffer_size, pFile) != NULL; ){
+            lines++;
         }
+        cout << lines << endl;
         fclose (pFile);
     });
 
-    time("cstyle fread", []() -> void{
-        FILE* pFile = fopen(file_path.c_str() , "r");
-        size_t buffer_size = 100;
-        size_t read_bytes = buffer_size;
-        char* c_buffer = new char[buffer_size];
-        char* c_line = new char[buffer_size];
-        size_t c_line_offset = 0;
-        for(; fread(c_line + c_line_offset, 1, read_bytes, pFile) != NULL; ){
-            char* newline = strchr(c_buffer, '\n');
-            if(newline == NULL){
-                c_buffer = (char*) realloc(c_buffer, buffer_size * 2);
-                c_line = (char*) realloc(c_line, buffer_size * 2);
-                c_line_offset = buffer_size;
-                read_bytes = buffer_size * 2 - buffer_size;
-                buffer_size *= 2;
-            }
-            else{
-                size_t offset = newline - c_line;
-                memcpy(c_line, c_buffer, offset);
-                string line(c_line, offset);
-                parse_line(line);
-            }
-        }
-        fclose (pFile);
-    });
+    /* time("cstyle fread", []() -> void{ */
+    /*     FILE* pFile = fopen(file_path.c_str() , "r"); */
+    /*     size_t buffer_size = 1024; */
+    /*     size_t read_bytes = buffer_size; */
+    /*     char* c_buffer = new char[buffer_size]; */
+    /*     size_t c_buffer_offset = 0; */
+    /*     char* c_line = new char[buffer_size]; */
+    /*     int lines = 0; */
+    /*     for(int bytes_read = 0; (bytes_read = fread(c_buffer + c_buffer_offset, 1, read_bytes, pFile)) != NULL; ){ */
+    /*         char* c_newline = strchr(c_buffer, '\n'); */
+    /*         if(c_newline == NULL){ */
+    /*             c_buffer = (char*) realloc(c_buffer, buffer_size * 2); */
+    /*             c_line = (char*) realloc(c_line, buffer_size * 2); */
+    /*             c_buffer_offset = buffer_size; */
+    /*             read_bytes = buffer_size * 2 - buffer_size; */
+    /*             buffer_size *= 2; */
+    /*         } */
+    /*         else{ */
+    /*             char *cn = c_buffer; */
+    /*             char *nn; */
+    /*             for(; (nn = (char*) memchr(cn, '\n', (c_buffer + bytes_read) - cn)) != NULL; cn = nn + 1){ */
+    /*                 lines++; */
+    /*                 /1* cout << bytes_read << endl; *1/ */
+    /*                 /1* cout << "memchr" << endl; *1/ */
+    /*                 /1* string line(cn, nn - cn); *1/ */
+    /*                 /1* parse_line(line); *1/ */
+    /*             } */
+    /*             memcpy(c_buffer, cn, (c_buffer + bytes_read) - cn); */
+    /*             c_buffer_offset = (c_buffer + bytes_read) - cn; */
+    /*         } */
+    /*     } */
+    /*     cout << "lines: " << lines << endl; */
+    /*     fclose (pFile); */
+    /* }); */
 }
 
 

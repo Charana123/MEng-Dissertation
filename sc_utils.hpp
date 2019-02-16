@@ -8,15 +8,15 @@ using namespace std;
 
 struct SetCoverInput
 {
-    map<int, Set> sets;
-    Set universe;
+    map<int, Set>* sets;
+    Set* universe;
 };
 
 struct SetCoverOutput {
-    std::set<int> Sigma;
-    Set C;
+    set<int>* Sigma;
+    Set* C;
 };
 
-SetCoverInput read_sci(string filename);
+SetCoverInput* read_sci(string filename);
 
 #endif

@@ -8,8 +8,7 @@
 #include <iterator>
 #include "utils.hpp"
 
-
-map<int, vector<Set>> OrderBySubCollection(SetCoverInput set_cover_input, float p);
-SetCoverOutput DFG(map<int, vector<Set>> ktoCollection, float p);
+map<int, vector<Set>>* OrderBySubCollection(SetCoverInput* set_cover_input, float p);
+SetCoverOutput* DFG(map<int, vector<Set>> ktoCollection*, float p);
 
 #endif

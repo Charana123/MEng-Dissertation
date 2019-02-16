@@ -2,12 +2,12 @@
 using namespace std;
 using namespace boost;
 
-map<int, vector<Set>> OrderBySubCollection(SetCoverInput set_cover_input, float p = 1.05){
+map<int, vector<Set>>* OrderBySubCollection(SetCoverInput* set_cover_input, float p = 1.05){
 
-    map<int, Set> collection = set_cover_input.sets;
-    Set universe = set_cover_input.universe;
+    map<int, Set> collection = set_cover_input->sets;
+    Set universe = set_cover_input->universe;
 
-    map<int, vector<Set>> ktoCollection;
+    map<int, vector<Set>> ktoCollection = new {};
     for(auto e : collection){
         Set s = e.second;
         for(int k = 0; ; k++){
@@ -21,14 +21,14 @@ map<int, vector<Set>> OrderBySubCollection(SetCoverInput set_cover_input, float 
 }
 
 // Disk Friendly Greedy
-SetCoverOutput DFG(map<int, vector<Set>> ktoCollection, float p = 1.05)
+SetCoverOutput* DFG(map<int, vector<Set>>* ktoCollection, float p = 1.05)
 {
     // Globals
     set<int> Sigma; //list of indices of chosen sets
     Set C = {{}, -1}; //list of covered vertices
 
     set<int, std::less<int>> keys;
-    for(auto const& e : ktoCollection) keys.insert(e.first);
+    for(auto const& e : *ktoCollection) keys.insert(e.first);
     int K = max(*keys.end(), *keys.begin());
     for(int k = K; k > 0; k--){
         for (Set set: ktoCollection[k]){
@@ -61,7 +61,7 @@ SetCoverOutput DFG(map<int, vector<Set>> ktoCollection, float p = 1.05)
             C.vertices.insert(diff.vertices.begin(), diff.vertices.end());
         }
     }
-    return {Sigma, C};
+    return new {Sigma, C};
 }
 
 

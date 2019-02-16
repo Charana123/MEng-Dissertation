@@ -4,12 +4,15 @@
 
 using namespace std;
 
-int main(){
-    EdgeCoverInput* eci = read_eci("./dataset/chess.dat");
-    HyperEdge* he = eci->hyperedges->get_next_hyperedge();
-    if (he == nullptr) cout << "nullptr" << endl;
-    /* EdgeCoverOutput* eco = sssc(eci); */
+
+int default_b(set<int>& V){ return V.size(); }
+int default_c(set<int>& E){ return 1; }
+
+SSSCInput* read_sssc(string filename){
+    Stream* stream = new Stream(filename);
+	return new SSSCInput{.stream=stream, .universe=stream->get_universe(), .epsilon_cover=1, .b=default_b, .c=default_c};
 }
+
 
 
 

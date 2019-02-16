@@ -4,11 +4,22 @@
 #include "ec_utils.hpp"
 #include <cmath>
 
-struct EdgeCoverOutput {
+using HyperEdge = Set;
+
+struct SSSCInput
+{
+    Stream* stream;
+    Set* universe;
+    float epsilon_cover;
+    std::function<int(set<int>&)> b; // vertex benefits
+    std::function<int(set<int>&)> c; // edge costs
+};
+
+struct SSSCOutput {
     function<int(int)>* cover_certificate;
 };
 
-EdgeCoverOutput* sssc(EdgeCoverInput* eci);
+SSSCOutput* sssc(SSSCInput* eci);
 
 class Cover {
     public:

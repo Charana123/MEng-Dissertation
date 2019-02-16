@@ -6,6 +6,7 @@ RFGREEDY = utils.cpp rfgreedy.cpp rfgreedy_main.cpp
 RFGREEDY_TEST = utils.cpp rfgreedy.cpp rfgreedy_test.cpp
 SSSC = gp_utils.cpp sc_utils.cpp ec_utils.cpp sssc.cpp sssc_main.cpp
 SSSC_TEST = gp_utils.cpp sc_utils.cpp ec_utils.cpp sssc.cpp sssc_test.cpp
+ITER_SET_COVER = gp_utils.cpp ec_utils.cpp iter_set_cover.cpp
 
 dfg:
 	g++-8 -std=c++17 -pthread -lboost_iostreams $(DFG) -o dfg
@@ -39,8 +40,19 @@ sssc_test:
 	g++-8 -std=c++17 -pthread -lboost_iostreams $(SSSC_TEST) -o sssc_test
 	./sssc_test
 
+iter_set_cover:
+	g++-8 -fopenmp -lboost_iostreams $(ITER_SET_COVER) -o iter_set_cover
+	# ./iter_set_cover
+
 clean:
-	rm dfg dfg_test greedy greedy_test rfgreedy rfgreedy_test
+	rm dfg dfg_test greedy greedy_test rfgreedy rfgreedy_test iter_set_cover
 
 .PHONY: dfg dfg_test greedy greedy_test rfgreedy rfgreedy_test sssc sssc_test
+
+
+
+
+
+
+
 

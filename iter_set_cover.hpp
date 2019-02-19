@@ -5,11 +5,17 @@
 #include "ec_utils.hpp"
 #include <omp.h>
 
-struct EdgeCoverOutput
+// Recursive Sample Set Cover
+struct IterSetCoverInput
 {
-    std::set<int> Sigma;
+    Stream* stream;
+    int n;
+    int m;
+    Set* universe;
+    float accuracy_delta; // Controls the number of passes, space and approximation ratio
+    float c; // Controls the accuracy of the randomized sample being a delta-cover
 };
 
-EdgeCoverOutput* iterSetCover(EdgeCoverInput* eci);
+set<int>* iter_set_cover(IterSetCoverInput* isci);
 
 #endif

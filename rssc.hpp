@@ -15,11 +15,6 @@ struct RSSCInput
     float c; // Controls the accuracy of the randomized sample being a delta-cover
 };
 
-struct RSSCOutput
-{
-    set<int>* sol;
-};
-
 RSSCOutput* recursive_sample_set_cover(RSSCInput* rssc_input){
 RSSCOutput* simple_sample_set_cover(RSSCInput* rssc_input){
 

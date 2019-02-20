@@ -3,14 +3,14 @@
 
 int main(){
     Stream stream("./dataset/chess.dat");
+    cout << "created stream" << endl;
     Set universe = {{}, -1};
     stream.get_universe(universe);
+    cout << "get universe" << endl;
     int n = universe.vertices.size();
 
-    cout << "before" << endl;
     ProgressiveGreedyInput pgin = {stream, n};
-    cout << "after" << endl;
-    int p = 10;
+    int p = 1;
     ProgressiveGreedyOutput pgout;
     progressive_greedy_naive(pgin, p, pgout);
 

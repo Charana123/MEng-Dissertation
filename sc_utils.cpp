@@ -1,10 +1,16 @@
 #include "sc_utils.hpp"
 
-map<int, Set> get_sets(vector<string> lines){
+map<int, Set> read_sets(string filename)
+{
+    /* auto f = map_file("one.txt", length); */
+    bip::file_mapping mapping(filename.c_str(), bip::read_only);
+    bip::mapped_region mapped_rgn(mapping, bip::read_only);
+	char const* const mmaped_data = static_cast<char*>(mapped_rgn.get_address());
+	size_t const mmap_size = mapped_rgn.get_size();
+
+	imemstream mmistream(mmaped_data, mmap_size);
     map<int, Set> sets;
-    int counter = 0;
-	for(auto line=lines.begin(); line!=lines.end(); ++line){
-		// TODO:: Replace split for tokenizer (its significantly more memory efficient and faster)
+	for(string line; getline(mmistream, line);){
 		set<int> vertices;
 		boost::trim(*line);
 		boost::tokenizer<> tok(*line);
@@ -12,15 +18,25 @@ map<int, Set> get_sets(vector<string> lines){
 			vertices.insert(std::stoi(*beg));
 		}
         Set set = {vertices, counter};
-		/* boost::trim(*line); */
-		/* vector<string> vertices; */
-		/* boost::split(vertices, *line, boost::is_any_of(" ")); */
-		/* vector<int> set(vertices.size()); */
-		/* transform(vertices.begin(), vertices.end(), set.begin(), [](string str) -> int { return std::stoi(str); }); */
 		sets[counter] = set;
         counter++;
 	}
-    return sets;
+	return sets;
+}
+
+for(string line; getline(ifs, line); ){
+    Set* s = parse_line(line);
+    delete s;
+}
+
+Set* parse_line(string line){
+    boost::tokenizer<> tok(line);
+    Set* s = new Set();
+    for(auto beg=tok.begin(); beg!=tok.end(); ++beg){
+        s->vertices.insert(std::stoi(*beg));
+    }
+    s->i = counter++;
+    return s;
 }
 
 Set get_universe(map<int, Set> sets){
@@ -32,10 +48,21 @@ Set get_universe(map<int, Set> sets){
     return universe;
 }
 
-SetCoverInput read_sci(string filename)
-{
-    vector<string> lines = read_file(filename);
-    map<int, Set> sets = get_sets(lines);
-    Set universe = get_universe(sets);
-	return {sets, universe};
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

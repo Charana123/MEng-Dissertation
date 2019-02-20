@@ -1,27 +1,30 @@
-#ifndef SSSC_H_
-#define SSSC_H_
+#ifndef WSSSC_H_
+#define WSSSC_H_
 
 #include "ec_utils.hpp"
 #include <cmath>
 
 using HyperEdge = Set;
 
-struct SSSCInput
+struct WSSSCInput
 {
+    float epsilon_cover;
     Set* universe;
     Stream* stream;
+    std::function<int(set<int>&)> b; // vertex benefits
+    std::function<int(set<int>&)> c; // edge costs
 };
 
-struct SSSCOutput
-{
+struct SSSCOutput {
     function<int(int)>* cover_certificate;
 };
 
-SSSCOutput* sssc(SSSCInput* eci);
+SSSCOutput* wsssc(SSSCInput* eci);
 
 class Cover {
     public:
-        Cover()
+        Cover(function<int(set<int>&)>& b, function<int(set<int>&)>& c)
+            : b(b), c(c){};
         void run(HyperEdge* he);
         void get(function<int(int)>* eid, function<int(int)>* eff);
     private:

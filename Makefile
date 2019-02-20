@@ -16,7 +16,7 @@ ssc_utils_test:
 	./ssc_utils_test
 
 pg:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(PGREEDY) -o pg
+	g++-8 -std=c++17 -pthread -lboost_iostreams -g $(PGREEDY) -o pg
 	./pg
 
 pg_test:
@@ -57,7 +57,7 @@ sssc_test:
 
 iter_set_cover:
 	g++-8 -fopenmp -lboost_iostreams $(ITER_SET_COVER) -o iter_set_cover
-	# ./iter_set_cover
+	./iter_set_cover
 
 clean:
 	rm dfg dfg_test greedy greedy_test rfgreedy rfgreedy_test iter_set_cover

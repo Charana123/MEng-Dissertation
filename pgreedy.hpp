@@ -3,21 +3,25 @@
 
 #include "ssc_utils.hpp"
 #include <algorithm>
+#include <random>
+#include <map>
+#include <chrono>
 
 using namespace std;
 
 struct ProgressiveGreedyInput
 {
-    Stream& stream;
+    Stream* stream;
+    set<int>* universe;
     int n;
+    int m;
 };
 
 struct ProgressiveGreedyOutput
 {
     set<int> sol;
-    set<int> covered;
+    map<int, bool> covered;
 };
 
-void progressive_greedy_naive(ProgressiveGreedyInput& pgin, int p, ProgressiveGreedyOutput& pgout);
-void greedy_pass(ProgressiveGreedyInput& pgin, int threshold, set<int>& sol, set<int>& covered);
+void progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p, ProgressiveGreedyOutput* pgout);
 #endif

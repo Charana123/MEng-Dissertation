@@ -4,9 +4,9 @@ vector<int>* random_sample(int sample_size, Set& universe){
 
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     vector<int>* S = new boost::irange(1, universe.size());
+    shuffle (S->begin(), S->end(), std::default_random_engine(seed));
     S->erase(sample_size, S->size());
 
-    shuffle (S->begin(), S->end(), std::default_random_engine(seed));
     transform(S->begin(), S->end(), S->begin(), [&universe](int i) -> {
         return universe.vertices[i];
     });

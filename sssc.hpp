@@ -1,34 +1,27 @@
 #ifndef SSSC_H_
 #define SSSC_H_
 
-#include "ec_utils.hpp"
+#include "ssc_utils.hpp"
 #include <cmath>
 
 using HyperEdge = Set;
 
 struct SSSCInput
 {
-    Set* universe;
     Stream* stream;
+    Set* universe;
 };
 
-struct SSSCOutput
-{
-    function<int(int)>* cover_certificate;
-};
+set<int>* sssc(SSSCInput* eci);
 
-SSSCOutput* sssc(SSSCInput* eci);
-
-class Cover {
+class UnweightedCover {
     public:
-        Cover()
+        UnweightedCover();
         void run(HyperEdge* he);
-        void get(function<int(int)>* eid, function<int(int)>* eff);
+        void get(map<int, int>* eid, vector<tuple<int, int>>* eff);
     private:
-        map<int, int> eid_m = {};
-        map<int, int> eff_m = {};
-        function<int(set<int>&)>& b;
-        function<int(set<int>&)>& c;
+        map<int, set<int>> eid;
+        vector<tuple<int, int>> eff;
 };
 
 #endif

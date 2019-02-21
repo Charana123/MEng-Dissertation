@@ -1,40 +1,36 @@
 #include "sssc.hpp"
 
-template <typename U, typename V>
-function<U(V)> functionWrapper(map<U, V> m){
-    return [&](U u) -> V{
-        if(m.find(u) != m.end()){
-            return m[u];
-        }
-        else{
-            throw exception();
-        }
-    };
+void UnweightedCover::get(map<int, int>* eid, vector<tuple<int, int>>* eff){
+    /* *eid = this->eid; */
+    *eff = this->eff;
 }
 
-void Cover::get(function<int(int)>* eid, function<int(int)>* eff){
-    *eid = functionWrapper<int, int>(this->eid_m);
-    *eff = functionWrapper<int, int>(this->eff_m);
-}
-
-void Cover::run(HyperEdge* he){
-    float lev_t = ceil(log2f(this->b(he->vertices)/this->c(he->vertices)));
+//take it as a set, take the set, update the count, check <= root n
+//for taken sets, append to collection, find difference with universe, collect
+void UnweightedCover::run(HyperEdge* he){
+    int lev_t = ceil(log2f(he->vertices.size()));
     for(int v : he->vertices){
-        this->eid_m[v] = he->i;
-        this->eff_m[v] = lev_t;
+        /* this->eid[v] = he->i; */
+        this->eff.push_back({v, lev_t});
     }
 }
 
-SSSCOutput* sssc(SSSCInput* sssci){
+set<int>* sssc(SSSCInput* sssci){
 
-    Cover cover1(sssci->b, sssci->c);
-    for(HyperEdge he; (he = sssci->stream->get_next_hyperedge(he)) != nullptr; ){
-        cover1.run(he);
+    UnweightedCover cover;
+    for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
+        cover.run(he);
     }
-    function<int(int)> *eid = new function<int(int)>();
-    function<int(int)> *eff = new function<int(int)>();
+    map<int, int> *eid = new map<int, int>();
+    vector<tuple<int, int>> *eff = new vector<tuple<int, int>>();
     cover.get(eid, eff);
-    return new EdgeCoverOutput{.cover_certificate=eid};
+    sort(eff->begin(), eff->begin(), [](auto t1, auto t2) -> bool{
+        return get<1>(t1) > get<1>(t2);
+    });
+    for(auto& t : *eff){
+
+    }
+    return nullptr;
 }
 
 

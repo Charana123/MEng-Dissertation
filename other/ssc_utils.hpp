@@ -1,5 +1,5 @@
-#ifndef EC_UTILS_H_
-#define EC_UTILS_H_
+#ifndef SSC_UTILS_H_
+#define SSC_UTILS_H_
 // Edge Cover Utilities
 
 #include "gp_utils.hpp"

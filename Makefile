@@ -1,68 +1,78 @@
-# DFG = utils.cpp DFG.cpp DFG_main.cpp
-# DFG_TEST = utils.cpp DFG.cpp DFG_test.cpp
-# GREEDY = utils.cpp greedy.cpp greedy_main.cpp
-# GREEDY_TEST = utils.cpp greedy.cpp greedy_test.cpp
+DFG_FILES = utils.cpp DFG.cpp DFG_main.cpp
+DFGT_FILES = utils.cpp DFG.cpp DFG_test.cpp
+G_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_main.cpp
+GT_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_test.cpp
 # RFGREEDY = utils.cpp rfgreedy.cpp rfgreedy_main.cpp
 # RFGREEDY_TEST = utils.cpp rfgreedy.cpp rfgreedy_test.cpp
 # SSSC = gp_utils.cpp sc_utils.cpp ec_utils.cpp sssc.cpp sssc_main.cpp
 # SSSC_TEST = gp_utils.cpp sc_utils.cpp ec_utils.cpp sssc.cpp sssc_test.cpp
 # ITER_SET_COVER = gp_utils.cpp ec_utils.cpp iter_set_cover.cpp
-PGREEDY = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
-PGREEDY_TEST = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_test.cpp
-SSC_UTILS_TEST = gp_utils.cpp ssc_utils.cpp ssc_utils_test.cpp
+PG_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
+PGT_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_test.cpp
+# SSC_UTILS_TEST = gp_utils.cpp ssc_utils.cpp ssc_utils_test.cpp
 
-ssc_utils_test:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(SSC_UTILS_TEST) -o ssc_utils_test
-	./ssc_utils_test
+FLAGS=-std=c++17 -g -pthread
+LIBS=
+ifeq ($(shell uname -s),Darwin)
+	CC=g++-8
+else
+	CC=g++
+	EXTRA=-I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
+endif
 
 pg:
-	g++-8 -std=c++17 -pthread -lboost_iostreams -g $(PGREEDY) -o pg
+	$(CC) $(FLAGS) $(PG_FILES) -o pg $(EXTRA) $(LIBS)
 	./pg
 
-pg_test:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(PGREEDY_TEST) -o pg_test
-	./pg_test
+pgt:
+	$(CC) $(FLAGS)  $(PGT_FILES) -o pgt $(EXTRA) $(LIBS)
+	./pgt
 
 dfg:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(DFG) -o dfg
+	$(CC) $(FLAGS)  $(DFG_FILES) -o dfg $(EXTRA) $(LIBS)
 	./dfg
 
-dfg_test:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(DFG_TEST) -o dfg_test
-	./dfg_test
+dfgt:
+	$(CC) $(FLAGS)  $(DFGT_FILES) -o dfg_test $(EXTRA) $(LIBS)
+	./dfgt
 
-greedy:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(GREEDY) -o greedy
-	./greedy
+g:
+	$(CC) $(FLAGS)  $(G_FILES) -o g $(EXTRA) $(LIBS)
+	./g
 
-greedy_test:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(GREEDY_TEST) -o greedy_test
-	./greedy_test
+gt:
+	$(CC) $(FLAGS)  $(GT_FILES) -o gt $(EXTRA) $(LIBS)
+	./gt
 
-rfgreedy:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(RFGREEDY) -o rfgreedy
-	./rfgreedy
+# rfgreedy:
+# 	$(CC) $(FLAGS)  $(RFGREEDY) -o rfgreedy
+# 	./rfgreedy
 
-rfgreedy_test:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(RFGREEDY_TEST) -o rfgreedy_test
-	./rfgreedy_test
 
-sssc:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(SSSC) -o sssc
-	./sssc
+# ssc_utils_test:
+# 	$(CC) $(FLAGS)  $(SSC_UTILS_TEST) -o ssc_utils_test
+# 	./ssc_utils_test
 
-sssc_test:
-	g++-8 -std=c++17 -pthread -lboost_iostreams $(SSSC_TEST) -o sssc_test
-	./sssc_test
+# rfgreedy_test:
+# 	$(CC) $(FLAGS)  $(RFGREEDY_TEST) -o rfgreedy_test
+# 	./rfgreedy_test
 
-iter_set_cover:
-	g++-8 -fopenmp -lboost_iostreams $(ITER_SET_COVER) -o iter_set_cover
-	./iter_set_cover
+# sssc:
+# 	$(CC) $(FLAGS)  $(SSSC) -o sssc
+# 	./sssc
+
+# sssc_test:
+# 	$(CC) $(FLAGS)  $(SSSC_TEST) -o sssc_test
+# 	./sssc_test
+
+# iter_set_cover:
+# 	$(CC) $(FLAGS)  $(ITER_SET_COVER) -o iter_set_cover
+# 	./iter_set_cover
 
 clean:
-	rm dfg dfg_test greedy greedy_test rfgreedy rfgreedy_test iter_set_cover
+	rm pg pgt dfg dfgt g gt
 
-.PHONY: dfg dfg_test greedy greedy_test rfgreedy rfgreedy_test sssc sssc_test ssc_utils_test pg pg_test
+.PHONY: pg pgt dfg dfgt g gt
 
 
 

@@ -24,8 +24,6 @@ struct Set{
 bool operator==(const Set& a1, const Set& a2);
 std::ostream& operator<<(std::ostream& o, const Set& s);
 
-vector<string> read_file(string filename);
-
 struct membuf: streambuf {
     membuf(char const* base, size_t size) {
         char* p(const_cast<char*>(base));
@@ -43,7 +41,5 @@ struct imemstream: virtual membuf, istream {
         , istream(static_cast<streambuf*>(this)) {
     }
 };
-
-void process_mem_usage(double* vm_usage, double* resident_set);
 
 #endif

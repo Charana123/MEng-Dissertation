@@ -7,14 +7,12 @@ using namespace std;
 string file_path = "../dataset/kosarak.dat";
 
 int counter = 0;
-Set* parse_line(string line){
+void parse_line(string line, Set& s){
     boost::tokenizer<> tok(line);
-    Set* s = new Set();
     for(auto beg=tok.begin(); beg!=tok.end(); ++beg){
-        s->vertices.insert(std::stoi(*beg));
+        s.vertices.insert(std::stoi(*beg));
     }
-    s->i = counter++;
-    return s;
+    s.i = counter++;
 }
 
 void time(string name, std::function<void()> func){
@@ -32,8 +30,9 @@ int main(){
     time("input file stream", []() -> void{
         std::ifstream ifs(file_path);
         for(string line; getline(ifs, line); ){
-            Set* s = parse_line(line);
-            delete s;
+            Set s;
+            parse_line(line, s);
+            /* delete s; */
         }
     });
 }

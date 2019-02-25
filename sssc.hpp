@@ -9,19 +9,23 @@ using HyperEdge = Set;
 struct SSSCInput
 {
     Stream* stream;
-    Set* universe;
+    set<int>* universe;
 };
 
-set<int>* sssc(SSSCInput* eci);
+map<int,int>* sssc(SSSCInput* sssci);
 
 class UnweightedCover {
     public:
-        UnweightedCover();
+        UnweightedCover(SSSCInput* sssci) {
+            for(int v : *sssci->universe){
+                (*eff)[v] = 0;
+            }
+        };
         void run(HyperEdge* he);
-        void get(map<int, int>* eid, vector<tuple<int, int>>* eff);
-    private:
-        map<int, set<int>> eid;
-        vector<tuple<int, int>> eff;
+        map<int,int>* eid = new map<int,int>();
+        map<int,int>* eff = new map<int,int>();
 };
+
+// lookup effectivity for vertices, sort, find i, transform to vertices
 
 #endif

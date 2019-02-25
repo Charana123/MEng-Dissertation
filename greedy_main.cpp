@@ -19,16 +19,17 @@ void summarise(string name, std::function<SetCoverOutput*()> func){
     cout << endl;
 }
 
-int main(){
+int main(int argc, char** argv){
+	string filename = string(argv[1]);
 
-    /* SetCoverInput* sci = read_sci("./dataset/test.dat"); */
-    /* summarise("test.dat", [&]() -> SetCoverOutput*{ */
-    /*     return greedy(sci); */
-    /* }); */
+    SetCoverInput* sci = read_sci("./dataset/" + string(argv[1]) + ".dat");
+    summarise(string(argv[1]) + ".dat", [&]() -> SetCoverOutput*{
+        return greedy(sci);
+    });
 
-    SetCoverInput* sci = read_sci("./dataset/chess.dat");
+    /* SetCoverInput* sci = read_sci("./dataset/chess.dat"); */
     /* summarise("chess.dat", [&]() -> SetCoverOutput*{ */
-    greedy(sci);
+    /* greedy(sci); */
     /* }); */
 
     /* sci = read_sci("./dataset/retail.dat"); */

@@ -25,6 +25,7 @@ int main(int argc, char** argv){
     summarise("p = 1", [&pgin]() -> void{
         ProgressiveGreedyOutput pgout;
         progressive_greedy_naive(&pgin, 1, &pgout);
+        cout << "Solution size: " << pgout.sol.size() << endl;
     });
 
 	/* pid_t pid = getpid(); */

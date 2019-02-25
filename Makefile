@@ -4,8 +4,8 @@ G_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_main.cpp
 GT_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_test.cpp
 # RFGREEDY = utils.cpp rfgreedy.cpp rfgreedy_main.cpp
 # RFGREEDY_TEST = utils.cpp rfgreedy.cpp rfgreedy_test.cpp
-# SSSC = gp_utils.cpp sc_utils.cpp ec_utils.cpp sssc.cpp sssc_main.cpp
-# SSSC_TEST = gp_utils.cpp sc_utils.cpp ec_utils.cpp sssc.cpp sssc_test.cpp
+SSSC_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_main.cpp
+SSSCT_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_test.cpp
 # ITER_SET_COVER = gp_utils.cpp ec_utils.cpp iter_set_cover.cpp
 PG_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
 PGT_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_test.cpp
@@ -44,10 +44,16 @@ gt:
 	$(CC) $(FLAGS)  $(GT_FILES) -o gt $(EXTRA) $(LIBS)
 	./gt
 
+sssc:
+	$(CC) $(FLAGS)  $(SSSC_FILES) -o sssc
+	./sssc retail
+
+sssct:
+	$(CC) $(FLAGS)  $(SSSCT_FILES) -o sssct
+
 # rfgreedy:
 # 	$(CC) $(FLAGS)  $(RFGREEDY) -o rfgreedy
 # 	./rfgreedy
-
 
 # ssc_utils_test:
 # 	$(CC) $(FLAGS)  $(SSC_UTILS_TEST) -o ssc_utils_test
@@ -57,22 +63,14 @@ gt:
 # 	$(CC) $(FLAGS)  $(RFGREEDY_TEST) -o rfgreedy_test
 # 	./rfgreedy_test
 
-# sssc:
-# 	$(CC) $(FLAGS)  $(SSSC) -o sssc
-# 	./sssc
-
-# sssc_test:
-# 	$(CC) $(FLAGS)  $(SSSC_TEST) -o sssc_test
-# 	./sssc_test
-
 # iter_set_cover:
 # 	$(CC) $(FLAGS)  $(ITER_SET_COVER) -o iter_set_cover
 # 	./iter_set_cover
 
 clean:
-	rm pg pgt dfg dfgt g gt
+	rm pg pgt dfg dfgt g gt sssc sssct
 
-.PHONY: pg pgt dfg dfgt g gt
+.PHONY: pg pgt dfg dfgt g gt sssc sssct
 
 
 

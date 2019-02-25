@@ -20,33 +20,15 @@ void summarise(string name, std::function<SetCoverOutput*()> func){
 }
 
 int main(int argc, char** argv){
-	string filename = string(argv[1]);
+	// string filename = string(argv[1]);
 
-    SetCoverInput* sci = read_sci("./dataset/" + string(argv[1]) + ".dat");
-    summarise(string(argv[1]) + ".dat", [&]() -> SetCoverOutput*{
-        return greedy(sci);
-    });
-
-    /* SetCoverInput* sci = read_sci("./dataset/chess.dat"); */
-    /* summarise("chess.dat", [&]() -> SetCoverOutput*{ */
-    /* greedy(sci); */
-    /* }); */
-
-    /* sci = read_sci("./dataset/retail.dat"); */
-    /* summarise("retail.dat", [&]() -> SetCoverOutput*{ */
-    /*     return greedy(sci); */
-    /* }); */
-
-    /* sci = read_sci("./dataset/pumsb.dat"); */
-    /* summarise("pumsb.dat", [&]() -> SetCoverOutput*{ */
-    /*     return greedy(sci); */
-    /* }); */
-
-    /* sci = read_sci("./dataset/kosarak.dat"); */
-    /* summarise("kosarak.dat", [&]() -> SetCoverOutput*{ */
-    /*     return greedy(sci); */
-    /* }); */
-
+	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak"};
+	for(string filename : files){
+		SetCoverInput* sci = read_sci("./dataset/" + filename + ".dat");
+		summarise(filename  + ".dat", [&]() -> SetCoverOutput*{
+			return greedy(sci);
+		});
+	}
 }
 
 

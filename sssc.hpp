@@ -2,6 +2,7 @@
 #define SSSC_H_
 
 #include "ssc_utils.hpp"
+#include <map>
 #include <cmath>
 
 using HyperEdge = Set;

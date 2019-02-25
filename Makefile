@@ -17,7 +17,8 @@ ifeq ($(shell uname -s),Darwin)
 	CC=g++-8
 else
 	CC=g++
-	EXTRA=-I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
+	EXTRA=
+# -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
 endif
 
 pg:

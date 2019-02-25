@@ -15,8 +15,8 @@ void UnweightedCover::run(HyperEdge* he){
 
     for(int j = 0; j <= i; j++){
         int v = s[j];
-        this->eid->at(v) = he->i;
-        this->eff->at(v) = i + 1;
+        (*this->eid)[v] = he->i;
+        (*this->eff)[v] = i + 1;
     }
 }
 

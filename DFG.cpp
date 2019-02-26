@@ -28,19 +28,19 @@ SetCoverOutput* DFG(map<int, vector<Set*>>* ktoCollection, float p = 1.05)
     int K = max(*keys.end(), *keys.begin());
     for(int k = K; k > 0; k--){
         for (Set *s: (*ktoCollection)[k]){
-            Set diff = {{}, -1};
-            set_difference(s->vertices.begin(), s->vertices.end(), C->begin(), C->end(), inserter(diff.vertices, diff.vertices.end()));
+            Set* diff = new Set{{}, -1};
+            set_difference(s->vertices.begin(), s->vertices.end(), C->begin(), C->end(), inserter(diff->vertices, diff->vertices.end()));
 
-            if(diff.vertices.size() >= pow(p, k)){
+            if(diff->vertices.size() >= pow(p, k)){
                 Sigma->insert(s->i);
-                C->insert(diff.vertices.begin(), diff.vertices.end());
+                C->insert(diff->vertices.begin(), diff->vertices.end());
             }
 
             else{
                 for(int k_prime = K; k_prime >= 0; k_prime--){
-                    if (diff.vertices.size() >= pow(p, k_prime) && diff.vertices.size() < pow(p, k_prime+1)){
-                        diff.i = s->i;
-                        (*ktoCollection)[k_prime]->push_back(diff);
+                    if (diff->vertices.size() >= pow(p, k_prime) && diff->vertices.size() < pow(p, k_prime+1)){
+                        diff->i = s->i;
+                        (*ktoCollection)[k_prime].push_back(diff);
                         break;
                     }
                 }
@@ -48,12 +48,12 @@ SetCoverOutput* DFG(map<int, vector<Set*>>* ktoCollection, float p = 1.05)
         }
     }
 
-    for(Set set: (*ktoCollection)[0]){
+    for(Set* s: (*ktoCollection)[0]){
         Set diff = {{}, -1};
-        set_difference(set.vertices.begin(), set.vertices.end(), C->begin(), C->end(), inserter(diff.vertices, diff.vertices.end()));
+        set_difference(s->vertices.begin(), s->vertices.end(), C->begin(), C->end(), inserter(diff.vertices, diff.vertices.end()));
 
         if(diff.vertices.size() == 1){
-            Sigma->insert(set.i);
+            Sigma->insert(s->i);
             C->insert(diff.vertices.begin(), diff.vertices.end());
         }
     }

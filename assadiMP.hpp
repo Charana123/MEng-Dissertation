@@ -6,7 +6,7 @@
 #include <map>
 #include <random>
 
-struct AssadiMP
+struct AssadiMPInput
 {
     int epsilon;
     // iterations of element sampling
@@ -21,7 +21,7 @@ struct AssadiMP
     int n;
 };
 
-set<int>* Algorithm1(AssadiMP* assadiMP, int opt_tilda);
-int assadiMP(AssadiMP* assadiMP);
+set<int>* Algorithm1(AssadiMPInput* assadiMPInput, int opt_tilda);
+set<int>* assadiMP(AssadiMPInput* assadiMPInput);
 
 #endif

@@ -10,8 +10,8 @@ SSSCT_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_test.cpp
 PG_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
 PGT_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_test.cpp
 # SSC_UTILS_TEST = gp_utils.cpp ssc_utils.cpp ssc_utils_test.cpp
-ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp assadiMP.cpp assadiMP_main.cpp
-ASSADIMPT_FILES = gp_utils.cpp sc_utils.cpp assadiMP.cpp assadiMP_test.cpp
+ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp ssc_utils.cpp assadiMP.cpp assadiMP_main.cpp
+ASSADIMPT_FILES = gp_utils.cpp sc_util.cpp DFG.cpp ssc_utils.cpp assadiMP.cpp assadiMP_test.cpp
 LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
 
 FLAGS=-std=c++17 -g -pthread

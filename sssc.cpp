@@ -3,8 +3,10 @@ using namespace std;
 
 void UnweightedCover::randomized_run(HyperEdge* he, float p){
 
-    int sample_size = he->vertices.size() * p;
-    int samples = he->vertices.size() / sample_size;
+    int set_size = he->vertices.size();
+    int sample_size = set_size * p;
+    if(sample_size == 0) sample_size = set_size;
+    int samples = set_size / sample_size;
 
     vector<int> he_sample;
     sample(he->vertices.begin(), he->vertices.end(),
@@ -17,12 +19,10 @@ void UnweightedCover::randomized_run(HyperEdge* he, float p){
     int i = sample_size - 1;
     for(; i >= 0 && (i*samples + 1) < 2*(*eff)[he_sample[i]]; i--) {}
     if(i == -1) return;
-    cout << "i: " << i << endl;
     int threshold_effectivity = (*eff)[he_sample[i]];
     set<int> T;
-    for(int v : he->vertices) if((*eff)[v] < threshold_effectivity) T.insert(v);
+    for(int v : he->vertices) if((*eff)[v] <= threshold_effectivity) T.insert(v);
     int eff_t = T.size();
-    cout << "eff_t: " << eff_t << endl;
 
     for(int v : T){
         (*this->eid)[v] = he->i;
@@ -62,7 +62,7 @@ map<int,int>* sssc(SSSCInput* sssci){
     UnweightedCover cover(sssci);
     for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
         /* cover.run(he); */
-        cover.randomized_run(he, 1);
+        cover.randomized_run(he, 0.5);
         cover.capture(he);
     }
     sssci->stream->reset();

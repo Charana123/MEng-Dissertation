@@ -1,5 +1,5 @@
-DFG_FILES = utils.cpp DFG.cpp DFG_main.cpp
-DFGT_FILES = utils.cpp DFG.cpp DFG_test.cpp
+DFG_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp DFG_main.cpp
+DFGT_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp DFG_test.cpp
 G_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_main.cpp
 GT_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_test.cpp
 # RFGREEDY = utils.cpp rfgreedy.cpp rfgreedy_main.cpp
@@ -10,6 +10,9 @@ SSSCT_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_test.cpp
 PG_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
 PGT_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_test.cpp
 # SSC_UTILS_TEST = gp_utils.cpp ssc_utils.cpp ssc_utils_test.cpp
+ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp assadiMP.cpp assadiMP_main.cpp
+ASSADIMPT_FILES = gp_utils.cpp sc_utils.cpp assadiMP.cpp assadiMP_test.cpp
+LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
 
 FLAGS=-std=c++17 -g -pthread
 LIBS=
@@ -34,7 +37,7 @@ dfg:
 	./dfg
 
 dfgt:
-	$(CC) $(FLAGS)  $(DFGT_FILES) -o dfg_test $(EXTRA) $(LIBS)
+	$(CC) $(FLAGS)  $(DFGT_FILES) -o dfgt $(EXTRA) $(LIBS)
 	./dfgt
 
 g:
@@ -43,14 +46,21 @@ g:
 
 gt:
 	$(CC) $(FLAGS)  $(GT_FILES) -o gt $(EXTRA) $(LIBS)
-	./gt
 
 sssc:
 	$(CC) $(FLAGS)  $(SSSC_FILES) -o sssc
-	./sssc retail
 
 sssct:
 	$(CC) $(FLAGS)  $(SSSCT_FILES) -o sssct
+
+assadiMP:
+	$(CC) $(FLAGS)  $(ASSADIMP_FILES) -o assadiMP
+
+assadiMPt:
+	$(CC) $(FLAGS)  $(ASSADIMPT_FILES) -o assadiMPt
+
+lowerbound:
+	$(CC) $(FLAGS)  $(LOWERBOUND_FILES) -o lowerbound
 
 # rfgreedy:
 # 	$(CC) $(FLAGS)  $(RFGREEDY) -o rfgreedy
@@ -71,7 +81,7 @@ sssct:
 clean:
 	rm pg pgt dfg dfgt g gt sssc sssct
 
-.PHONY: pg pgt dfg dfgt g gt sssc sssct
+.PHONY: pg pgt dfg dfgt g gt sssc sssct assadiMP assadiMPt lowerbound
 
 
 

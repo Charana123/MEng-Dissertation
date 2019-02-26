@@ -6,6 +6,7 @@
 #include <set>
 #include <vector>
 #include <string>
+#include <cmath>
 #include <algorithm>
 #include "prettyprint.hpp"
 #include <fstream>

@@ -36,7 +36,7 @@ void rand_pass(ProgressiveGreedyInput* pgin, int sample_size, ProgressiveGreedyO
 void progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p, ProgressiveGreedyOutput* pgout){
 
     assert(p >= 1);
-    rand_pass(pgin, 1000, pgout);
+    rand_pass(pgin, 2500, pgout);
     for(int j = 1; j <= p; j++){
         float threshold = pow(pgin->n, 1 - (float)j/p);
         greedy_pass(pgin, threshold, pgout);

@@ -24,7 +24,7 @@ int main(int argc, char** argv){
 
 	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak"};
 	for(string filename : files){
-		SetCoverInput* sci = read_sci("./dataset/" + filename + ".dat");
+		SetCoverInput* sci = read_sci("./dataset/FIMI/" + filename + ".dat");
 		summarise(filename  + ".dat", [&]() -> SetCoverOutput*{
 			return greedy(sci);
 		});

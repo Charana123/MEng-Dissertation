@@ -18,26 +18,25 @@ vector<string>* read_file(string filename)
 	return lines;
 }
 
-map<int, Set>* get_sets(vector<string>* lines){
-    map<int, Set>* sets = new map<int, Set>();
+vector<Set*>* get_sets(vector<string>* lines){
+    vector<Set*>* sets = new vector<Set*>();
     int counter = 0;
-	for(auto& line: *lines){
-		set<int> vertices;
+	for(string& line: *lines){
+		Set* s = new Set{{}, counter};
 		boost::tokenizer<> tokens(line);
 		for(auto& token : tokens){
-			vertices.insert(std::stoi(token));
+			s->vertices.insert(std::stoi(token));
 		}
-		(*sets)[counter] = {vertices, counter};
+        sets->push_back(s);
         counter++;
 	}
     return sets;
 }
 
-set<int>* get_universe(map<int, Set>* sets){
+set<int>* get_universe(vector<Set*>* sets){
     set<int>* universe = new set<int>();
-    for(auto& e: *sets){
-        Set& s = e.second;
-        universe->insert(s.vertices.begin(), s.vertices.end());
+    for(Set* s: *sets){
+        universe->insert(s->vertices.begin(), s->vertices.end());
     }
     return universe;
 }
@@ -45,7 +44,7 @@ set<int>* get_universe(map<int, Set>* sets){
 SetCoverInput* read_sci(string filename)
 {
     vector<string>* lines = read_file(filename);
-    map<int, Set>* sets = get_sets(lines);
+    vector<Set*>* sets = get_sets(lines);
     set<int>* universe = get_universe(sets);
 	return new SetCoverInput{sets, universe};
 }

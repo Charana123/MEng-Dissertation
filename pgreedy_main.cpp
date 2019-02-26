@@ -14,22 +14,22 @@ void summarise(string name, std::function<void()> func){
 }
 
 int main(int argc, char** argv){
-	// string filename = string(argv[1]);
-	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak"};
-	for(string filename : files){
-		Stream* stream = new Stream("./dataset/FIMI/" + filename + ".dat");
-		set<int>* universe = new set<int>();
-		int m;
-		stream->get_universe(universe, &m);
-		int n = universe->size();
-		ProgressiveGreedyInput pgin = {stream, universe, n, m};
+	string filename = string(argv[1]);
+	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak"}; */
+	/* for(string filename : files){ */
+    Stream* stream = new Stream("./dataset/FIMI/" + filename + ".dat");
+    set<int>* universe = new set<int>();
+    int m;
+    stream->get_universe(universe, &m);
+    int n = universe->size();
+    ProgressiveGreedyInput pgin = {stream, universe, n, m};
 
-		summarise(filename + ".dat", [&pgin]() -> void{
-			ProgressiveGreedyOutput pgout;
-			progressive_greedy_naive(&pgin, 1, &pgout);
-			cout << "Solution size: " << pgout.sol.size() << endl;
-		});
-	}
+    summarise(filename + ".dat", [&pgin]() -> void{
+        ProgressiveGreedyOutput pgout;
+        progressive_greedy_naive(&pgin, 1, &pgout);
+        cout << "Solution size: " << pgout.sol.size() << endl;
+    });
+	/* } */
 
 	/* pid_t pid = getpid(); */
     /* ofstream results(filename + ".res." + to_string(pid)); */

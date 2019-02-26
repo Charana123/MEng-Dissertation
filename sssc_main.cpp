@@ -51,6 +51,7 @@ int main(int argc, char** argv){
 			map<int,int>* eid = sssc(&sssci);
 			set<int> sol;
 			for(auto e : *eid) sol.insert(e.second);
+            /* cout << sol << endl; */
 			cout << "Solution size: " << sol.size() << endl;
 		});
 	}

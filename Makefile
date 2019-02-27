@@ -6,15 +6,15 @@ GT_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_test.cpp
 # RFGREEDY_TEST = utils.cpp rfgreedy.cpp rfgreedy_test.cpp
 SSSC_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_main.cpp
 SSSCT_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_test.cpp
-# ITER_SET_COVER = gp_utils.cpp ec_utils.cpp iter_set_cover.cpp
+ISC_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp iter_set_cover.cpp iter_set_cover_main.cpp
 PG_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
 PGT_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_test.cpp
 # SSC_UTILS_TEST = gp_utils.cpp ssc_utils.cpp ssc_utils_test.cpp
-ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp ssc_utils.cpp assadiMP.cpp assadiMP_main.cpp
-ASSADIMPT_FILES = gp_utils.cpp sc_util.cpp DFG.cpp ssc_utils.cpp assadiMP.cpp assadiMP_test.cpp
+ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp assadiMP.cpp assadiMP_main.cpp
+ASSADIMPT_FILES = gp_utils.cpp sc_util.cpp greedy.cpp ssc_utils.cpp assadiMP.cpp assadiMP_test.cpp
 LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
 
-FLAGS=-std=c++17 -g -pthread
+FLAGS=-std=c++17 -g -pthread -pipe -O3
 LIBS=
 ifeq ($(shell uname -s),Darwin)
 	CC=g++-8
@@ -49,6 +49,7 @@ gt:
 
 sssc:
 	$(CC) $(FLAGS)  $(SSSC_FILES) -o sssc
+	./sssc
 
 sssct:
 	$(CC) $(FLAGS)  $(SSSCT_FILES) -o sssct
@@ -74,14 +75,13 @@ lowerbound:
 # 	$(CC) $(FLAGS)  $(RFGREEDY_TEST) -o rfgreedy_test
 # 	./rfgreedy_test
 
-# iter_set_cover:
-# 	$(CC) $(FLAGS)  $(ITER_SET_COVER) -o iter_set_cover
-# 	./iter_set_cover
+isc:
+	$(CC) $(FLAGS)  $(ISC_FILES) -o isc
 
 clean:
-	rm pg pgt dfg dfgt g gt sssc sssct
+	rm pg pgt dfg dfgt g gt sssc sssct isc
 
-.PHONY: pg pgt dfg dfgt g gt sssc sssct assadiMP assadiMPt lowerbound
+.PHONY: pg pgt dfg dfgt g gt sssc sssct assadiMP assadiMPt lowerbound isc
 
 
 

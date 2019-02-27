@@ -23,6 +23,7 @@ Set* Stream::get_next_set(){
 }
 
 void Stream::get_universe(set<int>* universe, int* m){
+    *m = 0;
     for(Set* s; (s = get_next_set()) != nullptr; (*m)++){
         universe->insert(s->vertices.begin(), s->vertices.end());
     }

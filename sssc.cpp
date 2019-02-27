@@ -62,16 +62,16 @@ map<int,int>* sssc(SSSCInput* sssci){
     UnweightedCover cover(sssci);
     for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
         /* cover.run(he); */
-        cover.randomized_run(he, 0.5);
+        /* cover.randomized_run(he, 0.1); */
         cover.capture(he);
     }
     sssci->stream->reset();
 
-    map<int,int>* feid = new map<int, int>();
-    for(auto& e : *cover.eff){
-        if(e.second == 0) (*feid)[e.first] = (*cover.ceid)[e.first];
-        else (*feid)[e.first] = (*cover.eid)[e.first];
-    }
+    /* map<int,int>* feid = new map<int, int>(); */
+    /* for(auto& e : *cover.eff){ */
+    /*     if(e.second == 0) (*feid)[e.first] = (*cover.ceid)[e.first]; */
+    /*     else (*feid)[e.first] = (*cover.eid)[e.first]; */
+    /* } */
 
     /* vector<int> universe; */
     /* universe.insert(universe.begin(), sssci->universe->vertices.begin(), sssci->universe->vertices.end()); */
@@ -82,7 +82,7 @@ map<int,int>* sssc(SSSCInput* sssci){
     /*     root_n--; */
     /* } */
     /* for(int i = 0; i < root_n; i++) eid->erase(universe[i]); */
-    return feid;
+    return cover.ceid;
 }
 
 

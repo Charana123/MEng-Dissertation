@@ -4,6 +4,7 @@ G_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_main.cpp
 GT_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_test.cpp
 # RFGREEDY = utils.cpp rfgreedy.cpp rfgreedy_main.cpp
 # RFGREEDY_TEST = utils.cpp rfgreedy.cpp rfgreedy_test.cpp
+TG_FILES = gp_utils.cpp ssc_utils.cpp thgreedy.cpp thgreedy_main.cpp
 SSSC_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_main.cpp
 SSSCT_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_test.cpp
 ISC_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp iter_set_cover.cpp iter_set_cover_main.cpp
@@ -15,10 +16,14 @@ ASSADIMPT_FILES = gp_utils.cpp sc_util.cpp greedy.cpp ssc_utils.cpp assadiMP.cpp
 LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
 
 FLAGS=-std=c++17 -g -pthread -pipe -O3
+# VEC = -mllvm -force-vector-width=8
+# REPORT=-Rpass-analysis=loop-vectorize -Rpass=loop-vectorize -Rpass-missed=loop-vectorize
+# REPORT=-fopt-info-vec-missed
 LIBS=
 ifeq ($(shell uname -s),Darwin)
-	CC=clang++
+	# CC=clang++
 	# CC=g++-8
+	CC=icpc
 else
 	CC=g++
 	EXTRA=
@@ -48,8 +53,11 @@ g:
 gt:
 	$(CC) $(FLAGS)  $(GT_FILES) -o gt $(EXTRA) $(LIBS)
 
+tg:
+	$(CC) $(FLAGS)  $(TG_FILES) -o tg $(EXTRA) $(LIBS)
+
 sssc:
-	$(CC) $(FLAGS)  $(SSSC_FILES) -o sssc
+	$(CC) $(REPORT) $(FLAGS) $(SSSC_FILES) -o sssc
 	./sssc
 
 sssct:
@@ -80,9 +88,9 @@ isc:
 	$(CC) $(FLAGS)  $(ISC_FILES) -o isc
 
 clean:
-	rm pg pgt dfg dfgt g gt sssc sssct isc
+	rm pg pgt dfg dfgt g gt sssc sssct isc tg
 
-.PHONY: pg pgt dfg dfgt g gt sssc sssct assadiMP assadiMPt lowerbound isc
+.PHONY: pg pgt dfg dfgt g gt sssc sssct assadiMP assadiMPt lowerbound isc tg
 
 
 

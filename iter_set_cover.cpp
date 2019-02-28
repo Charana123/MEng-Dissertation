@@ -79,7 +79,7 @@ set<int>* iter_set_cover(IterSetCoverInput* isci){
         sols.push_back(sol);
     }
     set<int>* best_sol = nullptr;
-    unsigned long best_sol_size = std::numeric_limits<int>::max();;
+    unsigned long best_sol_size = std::numeric_limits<int>::max();
     for(set<int>* sol : sols) {
         if(sol->size() < best_sol_size) {
             best_sol_size = sol->size();

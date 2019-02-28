@@ -1,6 +1,5 @@
-#include "pgreedy.hpp"
-#include <sys/types.h>
-#include <unistd.h>
+#include "thgreedy.hpp"
+#include <chrono>
 
 void summarise(string name, std::function<void()> func){
     auto t1 = chrono::high_resolution_clock::now();
@@ -14,6 +13,7 @@ void summarise(string name, std::function<void()> func){
 }
 
 int main(int argc, char** argv){
+
 	/* string filename = string(argv[1]); */
 	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak"};
 	for(string filename : files){
@@ -22,22 +22,11 @@ int main(int argc, char** argv){
         int m;
         stream->get_universe(universe, &m);
         int n = universe->size();
-        ProgressiveGreedyInput pgin = {stream, universe, n, m};
+        ThresholdGreedyInput tgi = {stream, universe, n, m};
 
-        int passes = log2f(n);
         summarise(filename + ".dat", [&]() -> void{
-            ProgressiveGreedyOutput pgout;
-            progressive_greedy_naive(&pgin, passes, &pgout);
-            cout << "Solution size: " << pgout.sol.size() << endl;
+            set<int>* sol = threshold_greedy(&tgi);
+            cout << "Solution size: " << sol->size() << endl;
         });
 	}
-
-	/* pid_t pid = getpid(); */
-    /* ofstream results(filename + ".res." + to_string(pid)); */
-    /* for(int p = 1; p < 20; p+=1){ */
-        /* ProgressiveGreedyOutput pgout; */
-        /* progressive_greedy_naive(&pgin, p, &pgout); */
-        /* cout << p << " " << pgout.sol.size() << " " << endl; */
-        /* results << p << " " << pgout.sol.size() << " " << endl; */
-    /* } */
 }

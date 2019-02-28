@@ -9,7 +9,8 @@ int main(int argc, char** argv){
     stream->get_universe(universe, &m);
     cout << "m: " << m << endl;
     int n = universe->size();
-    int c = 10;
+    cout << "n: " << n << endl;
+    int c = 1;
     float accuracy_delta = 0.1;
     IterSetCoverInput* isci = new IterSetCoverInput{stream, universe, n, m, accuracy_delta, c};
 

@@ -29,8 +29,9 @@ set<int>* iter_set_cover(IterSetCoverInput* isci){
         set<int>* sol = new set<int>();
         // compute sample_size = cpk.n^delta.logn.logm
         int k = pow(2, i);
-        float rho = (p * logf(isci->n));
-        int sample_size = isci->c * rho * k * powf(isci->n, isci->accuracy_delta) * logf(isci->n) * logf(isci->m);
+        float rho = p * log2f(isci->n);
+        int sample_size = isci->c * rho * k * powf(isci->n, isci->accuracy_delta) * log2f(isci->n) * log2f(isci->m);
+        cout << "sample_size: " << sample_size << endl;
         unsigned long threshold = sample_size / k;
         // 1/delta
         int repeat = 1/isci->accuracy_delta;
@@ -77,10 +78,10 @@ set<int>* iter_set_cover(IterSetCoverInput* isci){
         }
         sols.push_back(sol);
     }
-    set<int>* best_sol;
-    unsigned long best_sol_size = 0;
+    set<int>* best_sol = nullptr;
+    unsigned long best_sol_size = std::numeric_limits<int>::max();;
     for(set<int>* sol : sols) {
-        if(sol->size() > best_sol_size) {
+        if(sol->size() < best_sol_size) {
             best_sol_size = sol->size();
             best_sol = sol;
         }

@@ -16,8 +16,8 @@ void summarise(string name, std::function<void()> func){
 
 int main(int argc, char** argv){
 	// string filename = string(argv[1]);
-	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak"}; */
-    vector<string> files = {"webdocs"};
+	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak"};
+    /* vector<string> files = {"webdocs"}; */
 	for(string filename : files){
 		Stream* stream = new Stream("./dataset/FIMI/" + filename + ".dat");
 		set<int>* universe = new set<int>();

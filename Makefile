@@ -17,7 +17,8 @@ LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
 FLAGS=-std=c++17 -g -pthread -pipe -O3
 LIBS=
 ifeq ($(shell uname -s),Darwin)
-	CC=g++-8
+	CC=clang++
+	# CC=g++-8
 else
 	CC=g++
 	EXTRA=

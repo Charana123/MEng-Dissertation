@@ -1,0 +1,68 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+
+Begin optimization report for: main()
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/memory(1644,13) inlined into test1.cpp(26,48)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/memory(1644,13) inlined into test1.cpp(26,48)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at test1.cpp(33,17)
+   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(2003,5) inlined into test1.cpp(34,25)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(284,5) inlined into test1.cpp(34,25)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(2003,5) inlined into test1.cpp(35,20)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(284,5) inlined into test1.cpp(35,20)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(2003,5) inlined into test1.cpp(36,20)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(284,5) inlined into test1.cpp(36,20)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: std::operator<<<std::__1::map<int, int, std::__1::less<int>, std::__1::allocator<std::__1::pair<const int, int>>>, char, std::__1::char_traits<char>>(std::__1::basic_ostream<char, std::__1::char_traits<char>> &, const std::__1::map<int, int, std::__1::less<int>, std::__1::allocator<std::__1::pair<const int, int>>> &)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(150,5) inlined into prettyprint.hpp(440,23)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(187,5) inlined into prettyprint.hpp(440,23)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+LOOP END
+
+
+Non-optimizable loops:
+
+
+LOOP BEGIN at prettyprint.hpp(128,21) inlined into prettyprint.hpp(440,23)
+   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ /Library/Developer/CommandLineTools/usr/include/c++/v1/ostream(739,14) ]
+LOOP END
+===========================================================================

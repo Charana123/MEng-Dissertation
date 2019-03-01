@@ -9,7 +9,10 @@ using namespace std;
 struct SetCoverInput
 {
     vector<Set*>* sets;
-    set<int>* universe;
+    vector<int>* universe;
+    int m;
+    int n;
+    int avg;
 };
 
 struct SetCoverOutput {

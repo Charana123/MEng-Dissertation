@@ -1,38 +1,61 @@
 #include "ssc_utils.hpp"
 
-Stream::Stream(string filename){
+OnlineStream::OnlineStream(string filename) : Stream() {
     this->mapping = bip::file_mapping(filename.c_str(), bip::read_only);
     this->mapped_rgn = bip::mapped_region(this->mapping, bip::read_only);
     char const* const mmaped_data = static_cast<char*>(mapped_rgn.get_address());
     size_t const mmap_size = mapped_rgn.get_size();
-    this->mmistream = imemstream(mmaped_data, mmap_size);
+    this->mmistream = new imemstream(mmaped_data, mmap_size);
 }
 
-Set* Stream::get_next_set(){
+OfflineStream::OfflineStream(string filename) : Stream() {
+    this->sci = read_sci(filename);
+}
+
+Set* OfflineStream::get_next_set(){
+    return (*this->sci->sets)[this->position++];
+}
+
+Set* OnlineStream::get_next_set(){
 
 	string line;
-    if(!getline(this->mmistream, line)) return nullptr;
+    if(!getline(*this->mmistream, line)) return nullptr;
 
-    set<int> vertices;
+    Set* s = new Set{{}, position};
     boost::tokenizer<> tokens(line);
     for(auto& token : tokens){
-        vertices.insert(std::stoi(token));
+        s->vertices.push_back(std::stoi(token));
     }
-    Set* s = new Set{vertices, this->counter++};
+    this->position++;
     return s;
 }
 
-void Stream::get_universe(set<int>* universe, int* m){
+void OfflineStream::get_universe(vector<int>* universe, int* m, int* avg){
+    *universe = *this->sci->universe;
+    *m = this->sci->m;
+    *avg = this->sci->avg;
+}
+
+void OnlineStream::get_universe(vector<int>* universe, int* m, int* avg){
     *m = 0;
+    int total = 0;
+    set<int> universe_s;
     for(Set* s; (s = get_next_set()) != nullptr; (*m)++){
-        universe->insert(s->vertices.begin(), s->vertices.end());
+        total += s->vertices.size();
+        universe_s.insert(s->vertices.begin(), s->vertices.end());
     }
+    universe->insert(universe->end(), universe_s.begin(), universe_s.end());
+    *avg = total/(*m);
     reset();
 }
 
-void Stream::reset(){
+void OfflineStream::reset(){
+    this->position = 0;
+}
+
+void OnlineStream::reset(){
     char const* const mmaped_data = static_cast<char*>(this->mapped_rgn.get_address());
     size_t const mmap_size = this->mapped_rgn.get_size();
-    this->mmistream = imemstream(mmaped_data, mmap_size);
-    this->counter = 0;
+    this->mmistream = new imemstream(mmaped_data, mmap_size);
+    this->position = 0;
 }

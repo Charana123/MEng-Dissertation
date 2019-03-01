@@ -18,7 +18,7 @@
 using namespace std;
 
 struct Set{
-    set<int> vertices;
+    vector<int> vertices;
     int i;
 };
 

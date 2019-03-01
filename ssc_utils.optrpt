@@ -1,0 +1,351 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+
+Begin optimization report for: OnlineStream::OnlineStream(OnlineStream *, std::__1::string *)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(3,15)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/interprocess/errors.hpp(199,4) inlined into ssc_utils.cpp(4,57)
+   remark #15523: loop was not vectorized: loop control variable _cur was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(4,57)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(4,19)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/interprocess/errors.hpp(199,4) inlined into ssc_utils.cpp(5,58)
+   remark #15523: loop was not vectorized: loop control variable _cur was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(5,58)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(5,58)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/interprocess/errors.hpp(199,4) inlined into ssc_utils.cpp(5,58)
+   remark #15523: loop was not vectorized: loop control variable _cur was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(5,58)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+===========================================================================
+
+Begin optimization report for: OnlineStream::OnlineStream(OnlineStream *const, std::__1::string *)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(3,15)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/interprocess/errors.hpp(199,4) inlined into ssc_utils.cpp(3,15)
+   remark #15523: loop was not vectorized: loop control variable _cur was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(3,15)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(3,15)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/interprocess/errors.hpp(199,4) inlined into ssc_utils.cpp(3,15)
+   remark #15523: loop was not vectorized: loop control variable _cur was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(3,15)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(3,15)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/interprocess/errors.hpp(199,4) inlined into ssc_utils.cpp(3,15)
+   remark #15523: loop was not vectorized: loop control variable _cur was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(3,15)
+   remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+LOOP END
+===========================================================================
+
+Begin optimization report for: OnlineStream::get_next_set(OnlineStream *)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(21,9)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(21,9)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/istream(1571,31) inlined into ssc_utils.cpp(22,9)
+   remark #15523: loop was not vectorized: loop control variable ___extr was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(25,31)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(25,31)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(25,31)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(25,31)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/token_functions.hpp(626,16) inlined into ssc_utils.cpp(26,23)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/token_functions.hpp(641,18) inlined into ssc_utils.cpp(26,23)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+LOOP END
+
+LOOP BEGIN at ssc_utils.cpp(26,23)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+      remark #15300: LOOP WAS VECTORIZED
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+      remark #15300: LOOP WAS VECTORIZED
+   LOOP END
+
+   LOOP BEGIN at /usr/local/include/boost/token_functions.hpp(626,16) inlined into ssc_utils.cpp(26,23)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /usr/local/include/boost/token_functions.hpp(641,18) inlined into ssc_utils.cpp(26,23)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+   <Remainder loop for vectorization>
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into ssc_utils.cpp(26,23)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: OnlineStream::get_universe(OnlineStream *, std::__1::vector<int, std::__1::allocator<int>> *, int *)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at ssc_utils.cpp(42,41)
+   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/set(608,51) inlined into ssc_utils.cpp(43,20)
+      remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+      LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(162,5) inlined into ssc_utils.cpp(43,20)
+         remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+      LOOP END
+
+      LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(203,5) inlined into ssc_utils.cpp(43,20)
+         remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+      LOOP END
+
+      LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(2003,5) inlined into ssc_utils.cpp(43,20)
+         remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+      LOOP END
+
+      LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(284,5) inlined into ssc_utils.cpp(43,20)
+         remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/iterator(574,20) inlined into ssc_utils.cpp(45,59)
+   remark #15523: loop was not vectorized: loop control variable ___r was found, but loop iteration count cannot be computed before executing the loop
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(150,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(187,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/iterator(545,9) inlined into ssc_utils.cpp(45,59)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+   remark #15346: vector dependence: assumed ANTI dependence between ___m.___m (921:11) and ___m.___m (920:7)
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(150,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(187,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/iterator(548,9) inlined into ssc_utils.cpp(45,59)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+   remark #15346: vector dependence: assumed ANTI dependence between ___m.___m (200:5) and ___m.___m (931:7)
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(162,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(203,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/memory(1644,29) inlined into ssc_utils.cpp(45,59)
+   remark #15308: loop was not vectorized: explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(150,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(187,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/vector(1720,5) inlined into ssc_utils.cpp(45,59)
+<Peeled loop for vectorization, Multiversioned v1>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/vector(1720,5) inlined into ssc_utils.cpp(45,59)
+<Multiversioned v1>
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/vector(1720,5) inlined into ssc_utils.cpp(45,59)
+<Remainder loop for vectorization, Multiversioned v1>
+   remark #15301: REMAINDER LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/vector(1720,5) inlined into ssc_utils.cpp(45,59)
+<Remainder loop for vectorization, Multiversioned v1>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/vector(1720,5) inlined into ssc_utils.cpp(45,59)
+<Multiversioned v2>
+   remark #15304: loop was not vectorized: non-vectorizable loop instance from multiversioning
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/vector(1720,5) inlined into ssc_utils.cpp(45,59)
+<Remainder, Multiversioned v2>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/algorithm(1811,20) inlined into ssc_utils.cpp(45,59)
+   remark #15523: loop was not vectorized: loop control variable __result was found, but loop iteration count cannot be computed before executing the loop
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(150,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(187,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__split_buffer(266,20) inlined into ssc_utils.cpp(45,59)
+   remark #15523: loop was not vectorized: loop control variable ___v.___v was found, but loop iteration count cannot be computed before executing the loop
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(150,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+
+   LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/__tree(187,5) inlined into ssc_utils.cpp(45,59)
+      remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: boost::char_delimiters_separator<char, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::traits_type>::operator()<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::const_iterator, std::__1::string>(boost::char_delimiters_separator<char, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::traits_type> *, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::const_iterator &, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::const_iterator, std::__1::string &)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into /usr/local/include/boost/token_functions.hpp(623,6)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into /usr/local/include/boost/token_functions.hpp(623,6)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into /usr/local/include/boost/token_functions.hpp(623,10)
+   remark #15300: LOOP WAS VECTORIZED
+LOOP END
+
+LOOP BEGIN at /Library/Developer/CommandLineTools/usr/include/c++/v1/string(1355,13) inlined into /usr/local/include/boost/token_functions.hpp(623,10)
+<Remainder loop for vectorization>
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/token_functions.hpp(626,16)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+LOOP END
+
+LOOP BEGIN at /usr/local/include/boost/token_functions.hpp(641,18)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+LOOP END
+===========================================================================

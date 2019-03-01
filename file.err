@@ -1,0 +1,339 @@
+Undefined symbols for architecture x86_64:
+  "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::find(char, unsigned long) const", referenced from:
+      bool boost::char_delimiters_separator<char, std::__1::char_traits<char> >::operator()<std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >(std::__1::__wrap_iter<char const*>&, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&) in sc_utils-1fc95a.o
+      bool boost::char_delimiters_separator<char, std::__1::char_traits<char> >::operator()<std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >(std::__1::__wrap_iter<char const*>&, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&) in ssc_utils-8b9518.o
+  "std::__1::__vector_base_common<true>::__throw_length_error() const", referenced from:
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      void std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >::__push_back_slow_path<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&>(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&&&) in sc_utils-1fc95a.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in sc_utils-1fc95a.o
+      void std::__1::vector<Set*, std::__1::allocator<Set*> >::__push_back_slow_path<Set* const&>(Set* const&&&) in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in ssc_utils-8b9518.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in ssc_utils-8b9518.o
+      std::__1::enable_if<(__is_forward_iterator<int*>::value) && (is_constructible<int, std::__1::iterator_traits<int*>::reference>::value), void>::type std::__1::vector<int, std::__1::allocator<int> >::assign<int*>(int*, int*) in ssc_utils-8b9518.o
+      ...
+  "std::__1::__basic_string_common<true>::__throw_length_error() const", referenced from:
+      boost::interprocess::file_mapping::file_mapping(char const*, boost::interprocess::mode_t) in sc_utils-1fc95a.o
+      boost::char_delimiters_separator<char, std::__1::char_traits<char> >::char_delimiters_separator(bool, char const*, char const*) in sc_utils-1fc95a.o
+      boost::interprocess::file_mapping::file_mapping(char const*, boost::interprocess::mode_t) in ssc_utils-8b9518.o
+      boost::char_delimiters_separator<char, std::__1::char_traits<char> >::char_delimiters_separator(bool, char const*, char const*) in ssc_utils-8b9518.o
+      std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > std::__1::operator+<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, char const*) in sssc_main-3bcc12.o
+  "std::__1::locale::use_facet(std::__1::locale::id&) const", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      OnlineStream::get_next_set() in ssc_utils-8b9518.o
+      summarise(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::function<void ()>) in sssc_main-3bcc12.o
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in sssc_main-3bcc12.o
+      std::__1::__function::__func<main::$_0, std::__1::allocator<main::$_0>, void ()>::operator()() in sssc_main-3bcc12.o
+  "std::__1::ios_base::getloc() const", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      OnlineStream::get_next_set() in ssc_utils-8b9518.o
+      summarise(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::function<void ()>) in sssc_main-3bcc12.o
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in sssc_main-3bcc12.o
+      std::__1::__function::__func<main::$_0, std::__1::allocator<main::$_0>, void ()>::operator()() in sssc_main-3bcc12.o
+  "std::exception::what() const", referenced from:
+      vtable for std::__1::bad_function_call in sssc_main-3bcc12.o
+  "std::logic_error::logic_error(char const*)", referenced from:
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in sc_utils-1fc95a.o
+      void std::__1::vector<Set*, std::__1::allocator<Set*> >::__push_back_slow_path<Set* const&>(Set* const&&&) in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in ssc_utils-8b9518.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in ssc_utils-8b9518.o
+  "std::length_error::~length_error()", referenced from:
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in sc_utils-1fc95a.o
+      void std::__1::vector<Set*, std::__1::allocator<Set*> >::__push_back_slow_path<Set* const&>(Set* const&&&) in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in ssc_utils-8b9518.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in ssc_utils-8b9518.o
+  "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::append(char const*)", referenced from:
+      _main in sssc_main-3bcc12.o
+  "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::append(char const*, unsigned long)", referenced from:
+      std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > std::__1::operator+<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, char const*) in sssc_main-3bcc12.o
+  "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::assign(char const*)", referenced from:
+      boost::interprocess::interprocess_exception::interprocess_exception(boost::interprocess::error_info const&, char const*) in sc_utils-1fc95a.o
+      boost::interprocess::interprocess_exception::interprocess_exception(boost::interprocess::error_info const&, char const*) in ssc_utils-8b9518.o
+  "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::push_back(char)", referenced from:
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in sc_utils-1fc95a.o
+      bool boost::char_delimiters_separator<char, std::__1::char_traits<char> >::operator()<std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >(std::__1::__wrap_iter<char const*>&, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&) in sc_utils-1fc95a.o
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in ssc_utils-8b9518.o
+      bool boost::char_delimiters_separator<char, std::__1::char_traits<char> >::operator()<std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >(std::__1::__wrap_iter<char const*>&, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&) in ssc_utils-8b9518.o
+  "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::basic_string(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)", referenced from:
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      boost::tokenizer<boost::char_delimiters_separator<char, std::__1::char_traits<char> >, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >::begin() const in sc_utils-1fc95a.o
+      boost::tokenizer<boost::char_delimiters_separator<char, std::__1::char_traits<char> >, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >::end() const in sc_utils-1fc95a.o
+      read_sci(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      void std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >::__push_back_slow_path<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&>(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&&&) in sc_utils-1fc95a.o
+      boost::token_iterator<boost::char_delimiters_separator<char, std::__1::char_traits<char> >, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >::token_iterator(boost::char_delimiters_separator<char, std::__1::char_traits<char> >, std::__1::__wrap_iter<char const*>, std::__1::__wrap_iter<char const*>) in sc_utils-1fc95a.o
+      OfflineStream::OfflineStream(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in ssc_utils-8b9518.o
+      ...
+  "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::~basic_string()", referenced from:
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      OnlineStream::OnlineStream(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in ssc_utils-8b9518.o
+  "std::__1::basic_istream<char, std::__1::char_traits<char> >::sentry::sentry(std::__1::basic_istream<char, std::__1::char_traits<char> >&, bool)", referenced from:
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in sc_utils-1fc95a.o
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in ssc_utils-8b9518.o
+  "std::__1::basic_istream<char, std::__1::char_traits<char> >::~basic_istream()", referenced from:
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in sc_utils-1fc95a.o
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_istream<char, std::__1::char_traits<char> >::~basic_istream()", referenced from:
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in sc_utils-1fc95a.o
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_istream<char, std::__1::char_traits<char> >::~basic_istream()", referenced from:
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      imemstream::~imemstream() in sc_utils-1fc95a.o
+      imemstream::~imemstream() in sc_utils-1fc95a.o
+      virtual thunk to imemstream::~imemstream() in sc_utils-1fc95a.o
+      virtual thunk to imemstream::~imemstream() in sc_utils-1fc95a.o
+      imemstream::~imemstream() in ssc_utils-8b9518.o
+      imemstream::~imemstream() in ssc_utils-8b9518.o
+      ...
+  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::put(char)", referenced from:
+      summarise(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::function<void ()>) in sssc_main-3bcc12.o
+      std::__1::__function::__func<main::$_0, std::__1::allocator<main::$_0>, void ()>::operator()() in sssc_main-3bcc12.o
+  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::flush()", referenced from:
+      summarise(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::function<void ()>) in sssc_main-3bcc12.o
+      std::__1::__function::__func<main::$_0, std::__1::allocator<main::$_0>, void ()>::operator()() in sssc_main-3bcc12.o
+  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::sentry::sentry(std::__1::basic_ostream<char, std::__1::char_traits<char> >&)", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in sssc_main-3bcc12.o
+  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::sentry::~sentry()", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in sssc_main-3bcc12.o
+  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::operator<<(int)", referenced from:
+      operator<<(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, Set const&) in gp_utils-e66b1d.o
+  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::operator<<(unsigned long)", referenced from:
+      std::__1::__function::__func<main::$_0, std::__1::allocator<main::$_0>, void ()>::operator()() in sssc_main-3bcc12.o
+  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::operator<<(long long)", referenced from:
+      summarise(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::function<void ()>) in sssc_main-3bcc12.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::sync()", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::imbue(std::__1::locale const&)", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::uflow()", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::setbuf(char*, long)", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::xsgetn(char*, long)", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::xsputn(char const*, long)", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::seekoff(long long, std::__1::ios_base::seekdir, unsigned int)", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::seekpos(std::__1::fpos<__mbstate_t>, unsigned int)", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::overflow(int)", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::pbackfail(int)", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::showmanyc()", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::underflow()", referenced from:
+      vtable for imemstream in sc_utils-1fc95a.o
+      vtable for imemstream in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::basic_streambuf()", referenced from:
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      OnlineStream::OnlineStream(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in ssc_utils-8b9518.o
+      OnlineStream::reset() in ssc_utils-8b9518.o
+  "std::__1::basic_streambuf<char, std::__1::char_traits<char> >::~basic_streambuf()", referenced from:
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      imemstream::~imemstream() in sc_utils-1fc95a.o
+      imemstream::~imemstream() in sc_utils-1fc95a.o
+      virtual thunk to imemstream::~imemstream() in sc_utils-1fc95a.o
+      virtual thunk to imemstream::~imemstream() in sc_utils-1fc95a.o
+      OnlineStream::OnlineStream(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in ssc_utils-8b9518.o
+      OnlineStream::reset() in ssc_utils-8b9518.o
+      ...
+  "std::__1::cout", referenced from:
+      summarise(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::function<void ()>) in sssc_main-3bcc12.o
+      std::__1::__function::__func<main::$_0, std::__1::allocator<main::$_0>, void ()>::operator()() in sssc_main-3bcc12.o
+  "std::__1::stoi(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, unsigned long*, int)", referenced from:
+      get_sets(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >*) in sc_utils-1fc95a.o
+      OnlineStream::get_next_set() in ssc_utils-8b9518.o
+  "std::__1::ctype<char>::id", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      OnlineStream::get_next_set() in ssc_utils-8b9518.o
+      summarise(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::function<void ()>) in sssc_main-3bcc12.o
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in sssc_main-3bcc12.o
+      std::__1::__function::__func<main::$_0, std::__1::allocator<main::$_0>, void ()>::operator()() in sssc_main-3bcc12.o
+  "std::__1::chrono::steady_clock::now()", referenced from:
+      summarise(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::function<void ()>) in sssc_main-3bcc12.o
+  "std::__1::locale::~locale()", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      OnlineStream::get_next_set() in ssc_utils-8b9518.o
+      summarise(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::function<void ()>) in sssc_main-3bcc12.o
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in sssc_main-3bcc12.o
+      std::__1::__function::__func<main::$_0, std::__1::allocator<main::$_0>, void ()>::operator()() in sssc_main-3bcc12.o
+  "std::__1::ios_base::__set_badbit_and_consider_rethrow()", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in sc_utils-1fc95a.o
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in ssc_utils-8b9518.o
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in sssc_main-3bcc12.o
+  "std::__1::ios_base::init(void*)", referenced from:
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      OnlineStream::OnlineStream(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in ssc_utils-8b9518.o
+      OnlineStream::reset() in ssc_utils-8b9518.o
+  "std::__1::ios_base::clear(unsigned int)", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in sc_utils-1fc95a.o
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in ssc_utils-8b9518.o
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in sssc_main-3bcc12.o
+  "std::__1::basic_ios<char, std::__1::char_traits<char> >::~basic_ios()", referenced from:
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      imemstream::~imemstream() in sc_utils-1fc95a.o
+      imemstream::~imemstream() in sc_utils-1fc95a.o
+      virtual thunk to imemstream::~imemstream() in sc_utils-1fc95a.o
+      virtual thunk to imemstream::~imemstream() in sc_utils-1fc95a.o
+      OnlineStream::OnlineStream(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in ssc_utils-8b9518.o
+      OnlineStream::reset() in ssc_utils-8b9518.o
+      ...
+  "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > std::__1::operator+<char, std::__1::char_traits<char>, std::__1::allocator<char> >(char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)", referenced from:
+      _main in sssc_main-3bcc12.o
+  "std::exception::~exception()", referenced from:
+      boost::interprocess::interprocess_exception::~interprocess_exception() in sc_utils-1fc95a.o
+      boost::interprocess::interprocess_exception::interprocess_exception(boost::interprocess::error_info const&, char const*) in sc_utils-1fc95a.o
+      boost::interprocess::interprocess_exception::~interprocess_exception() in sc_utils-1fc95a.o
+      boost::interprocess::interprocess_exception::~interprocess_exception() in ssc_utils-8b9518.o
+      boost::interprocess::interprocess_exception::interprocess_exception(boost::interprocess::error_info const&, char const*) in ssc_utils-8b9518.o
+      boost::interprocess::interprocess_exception::~interprocess_exception() in ssc_utils-8b9518.o
+      std::__1::bad_function_call::~bad_function_call() in sssc_main-3bcc12.o
+      ...
+  "std::terminate()", referenced from:
+      ___clang_call_terminate in gp_utils-e66b1d.o
+      ___clang_call_terminate in sc_utils-1fc95a.o
+      ___clang_call_terminate in ssc_utils-8b9518.o
+      ___clang_call_terminate in sssc_main-3bcc12.o
+  "typeinfo for std::__1::basic_istream<char, std::__1::char_traits<char> >", referenced from:
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in sc_utils-1fc95a.o
+      typeinfo for imemstream in sc_utils-1fc95a.o
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in ssc_utils-8b9518.o
+      typeinfo for imemstream in ssc_utils-8b9518.o
+  "typeinfo for std::__1::basic_streambuf<char, std::__1::char_traits<char> >", referenced from:
+      typeinfo for membuf in sc_utils-1fc95a.o
+      typeinfo for membuf in ssc_utils-8b9518.o
+  "typeinfo for std::length_error", referenced from:
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in sc_utils-1fc95a.o
+      void std::__1::vector<Set*, std::__1::allocator<Set*> >::__push_back_slow_path<Set* const&>(Set* const&&&) in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in ssc_utils-8b9518.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in ssc_utils-8b9518.o
+  "typeinfo for std::exception", referenced from:
+      typeinfo for boost::interprocess::interprocess_exception in sc_utils-1fc95a.o
+      typeinfo for boost::interprocess::interprocess_exception in ssc_utils-8b9518.o
+      typeinfo for std::__1::bad_function_call in sssc_main-3bcc12.o
+  "vtable for __cxxabiv1::__class_type_info", referenced from:
+      typeinfo for Stream in ssc_utils-8b9518.o
+      typeinfo for std::__1::__function::__base<void ()> in sssc_main-3bcc12.o
+      typeinfo for main::$_0 in sssc_main-3bcc12.o
+  NOTE: a missing vtable usually means the first non-inline virtual member function has no definition.
+  "vtable for __cxxabiv1::__si_class_type_info", referenced from:
+      typeinfo for boost::interprocess::interprocess_exception in sc_utils-1fc95a.o
+      typeinfo for membuf in sc_utils-1fc95a.o
+      typeinfo for OnlineStream in ssc_utils-8b9518.o
+      typeinfo for OfflineStream in ssc_utils-8b9518.o
+      typeinfo for boost::interprocess::interprocess_exception in ssc_utils-8b9518.o
+      typeinfo for membuf in ssc_utils-8b9518.o
+      typeinfo for std::__1::bad_function_call in sssc_main-3bcc12.o
+      ...
+  NOTE: a missing vtable usually means the first non-inline virtual member function has no definition.
+  "vtable for __cxxabiv1::__vmi_class_type_info", referenced from:
+      typeinfo for imemstream in sc_utils-1fc95a.o
+      typeinfo for imemstream in ssc_utils-8b9518.o
+  NOTE: a missing vtable usually means the first non-inline virtual member function has no definition.
+  "vtable for std::length_error", referenced from:
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in sc_utils-1fc95a.o
+      void std::__1::vector<Set*, std::__1::allocator<Set*> >::__push_back_slow_path<Set* const&>(Set* const&&&) in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in ssc_utils-8b9518.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in ssc_utils-8b9518.o
+  NOTE: a missing vtable usually means the first non-inline virtual member function has no definition.
+  "virtual thunk to std::__1::basic_istream<char, std::__1::char_traits<char> >::~basic_istream()", referenced from:
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in sc_utils-1fc95a.o
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in ssc_utils-8b9518.o
+  "virtual thunk to std::__1::basic_istream<char, std::__1::char_traits<char> >::~basic_istream()", referenced from:
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in sc_utils-1fc95a.o
+      construction vtable for std::__1::basic_istream<char, imemstream::char_traits<char> >-in-imemstream in ssc_utils-8b9518.o
+  "operator delete(void*)", referenced from:
+      std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> > std::__1::__pad_and_output<char, std::__1::char_traits<char> >(std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> >, char const*, char const*, char const*, std::__1::ios_base&, char) in gp_utils-e66b1d.o
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      get_sets(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >*) in sc_utils-1fc95a.o
+      boost::tokenizer<boost::char_delimiters_separator<char, std::__1::char_traits<char> >, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >::begin() const in sc_utils-1fc95a.o
+      boost::tokenizer<boost::char_delimiters_separator<char, std::__1::char_traits<char> >, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >::end() const in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      read_sci(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      ...
+  "operator new(unsigned long)", referenced from:
+      std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> > std::__1::__pad_and_output<char, std::__1::char_traits<char> >(std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> >, char const*, char const*, char const*, std::__1::ios_base&, char) in gp_utils-e66b1d.o
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      get_sets(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >*) in sc_utils-1fc95a.o
+      get_universe(std::__1::vector<Set*, std::__1::allocator<Set*> >*, std::__1::vector<int, std::__1::allocator<int> >*, int*) in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      read_sci(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      boost::interprocess::file_mapping::file_mapping(char const*, boost::interprocess::mode_t) in sc_utils-1fc95a.o
+      ...
+  "___cxa_allocate_exception", referenced from:
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      boost::interprocess::file_mapping::file_mapping(char const*, boost::interprocess::mode_t) in sc_utils-1fc95a.o
+      boost::interprocess::mapped_region::mapped_region<boost::interprocess::file_mapping>(boost::interprocess::file_mapping const&, boost::interprocess::mode_t, long long, unsigned long, void const*, int) in sc_utils-1fc95a.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in sc_utils-1fc95a.o
+      void std::__1::vector<Set*, std::__1::allocator<Set*> >::__push_back_slow_path<Set* const&>(Set* const&&&) in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in ssc_utils-8b9518.o
+      boost::interprocess::file_mapping::file_mapping(char const*, boost::interprocess::mode_t) in ssc_utils-8b9518.o
+      ...
+  "___cxa_begin_catch", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      ___clang_call_terminate in gp_utils-e66b1d.o
+      boost::interprocess::interprocess_exception::interprocess_exception(boost::interprocess::error_info const&, char const*) in sc_utils-1fc95a.o
+      ___clang_call_terminate in sc_utils-1fc95a.o
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in sc_utils-1fc95a.o
+      boost::interprocess::interprocess_exception::interprocess_exception(boost::interprocess::error_info const&, char const*) in ssc_utils-8b9518.o
+      ___clang_call_terminate in ssc_utils-8b9518.o
+      ...
+  "___cxa_end_catch", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      boost::interprocess::interprocess_exception::interprocess_exception(boost::interprocess::error_info const&, char const*) in sc_utils-1fc95a.o
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in sc_utils-1fc95a.o
+      boost::interprocess::interprocess_exception::interprocess_exception(boost::interprocess::error_info const&, char const*) in ssc_utils-8b9518.o
+      std::__1::basic_istream<char, std::__1::char_traits<char> >& std::__1::getline<char, std::__1::char_traits<char>, std::__1::allocator<char> >(std::__1::basic_istream<char, std::__1::char_traits<char> >&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >&, char) in ssc_utils-8b9518.o
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in sssc_main-3bcc12.o
+  "___cxa_free_exception", referenced from:
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      boost::interprocess::file_mapping::file_mapping(char const*, boost::interprocess::mode_t) in sc_utils-1fc95a.o
+      boost::interprocess::mapped_region::mapped_region<boost::interprocess::file_mapping>(boost::interprocess::file_mapping const&, boost::interprocess::mode_t, long long, unsigned long, void const*, int) in sc_utils-1fc95a.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in sc_utils-1fc95a.o
+      void std::__1::vector<Set*, std::__1::allocator<Set*> >::__push_back_slow_path<Set* const&>(Set* const&&&) in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in ssc_utils-8b9518.o
+      boost::interprocess::file_mapping::file_mapping(char const*, boost::interprocess::mode_t) in ssc_utils-8b9518.o
+      ...
+  "___cxa_throw", referenced from:
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in sc_utils-1fc95a.o
+      boost::interprocess::file_mapping::file_mapping(char const*, boost::interprocess::mode_t) in sc_utils-1fc95a.o
+      boost::interprocess::mapped_region::mapped_region<boost::interprocess::file_mapping>(boost::interprocess::file_mapping const&, boost::interprocess::mode_t, long long, unsigned long, void const*, int) in sc_utils-1fc95a.o
+      void std::__1::vector<int, std::__1::allocator<int> >::__push_back_slow_path<int>(int&&) in sc_utils-1fc95a.o
+      void std::__1::vector<Set*, std::__1::allocator<Set*> >::__push_back_slow_path<Set* const&>(Set* const&&&) in sc_utils-1fc95a.o
+      std::__1::enable_if<(__is_forward_iterator<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::value) && (is_constructible<int, std::__1::iterator_traits<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >::reference>::value), std::__1::__wrap_iter<int*> >::type std::__1::vector<int, std::__1::allocator<int> >::insert<std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long> >(std::__1::__wrap_iter<int const*>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>, std::__1::__tree_const_iterator<int, std::__1::__tree_node<int, void*>*, long>) in ssc_utils-8b9518.o
+      boost::interprocess::file_mapping::file_mapping(char const*, boost::interprocess::mode_t) in ssc_utils-8b9518.o
+      ...
+  "___gxx_personality_v0", referenced from:
+      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::__put_character_sequence<char, std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*, unsigned long) in gp_utils-e66b1d.o
+      std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> > std::__1::__pad_and_output<char, std::__1::char_traits<char> >(std::__1::ostreambuf_iterator<char, std::__1::char_traits<char> >, char const*, char const*, char const*, std::__1::ios_base&, char) in gp_utils-e66b1d.o
+      Dwarf Exception Unwind Info (__eh_frame) in gp_utils-e66b1d.o
+      read_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >) in sc_utils-1fc95a.o
+      get_sets(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >*) in sc_utils-1fc95a.o
+      boost::tokenizer<boost::char_delimiters_separator<char, std::__1::char_traits<char> >, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >::begin() const in sc_utils-1fc95a.o
+      boost::tokenizer<boost::char_delimiters_separator<char, std::__1::char_traits<char> >, std::__1::__wrap_iter<char const*>, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > >::end() const in sc_utils-1fc95a.o
+      ...
+ld: symbol(s) not found for architecture x86_64
+clang-7: error: linker command failed with exit code 1 (use -v to see invocation)

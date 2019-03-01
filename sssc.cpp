@@ -1,108 +1,112 @@
 #include "sssc.hpp"
 using namespace std;
 
-/* void UnweightedCover::randomized_run(HyperEdge* he, float p){ */
+void UnweightedCover::randomized_run(HyperEdge* he, float p){
 
-/*     int set_size = he->vertices.size(); */
-/*     int sample_size = set_size * p; */
-/*     if(sample_size == 0) sample_size = set_size; */
-/*     int samples = set_size / sample_size; */
+    int set_size = he->vertices.size();
+    int sample_size = set_size * p;
+    if(sample_size == 0) sample_size = set_size;
+    int samples = set_size / sample_size;
 
-/*     vector<int> he_sample; */
-/*     sample(he->vertices.begin(), he->vertices.end(), */
-/*             std::inserter(he_sample, he_sample.begin()), sample_size, */
-/*             std::mt19937{std::random_device{}()}); */
-/*     map<int,int>* eff = this->eff; */
-/*     sort(he_sample.begin(), he_sample.end(), [&eff](int v1, int v2) -> bool{ */
-/*         return (*eff)[v1] < (*eff)[v2]; */
-/*     }); */
-/*     int i = sample_size - 1; */
-/*     for(; i >= 0 && (i*samples + 1) < 2*(*eff)[he_sample[i]]; i--) {} */
-/*     if(i == -1) return; */
-/*     int threshold_effectivity = (*eff)[he_sample[i]]; */
-/*     set<int> T; */
-/*     for(int v : he->vertices) if((*eff)[v] <= threshold_effectivity) T.insert(v); */
-/*     int eff_t = T.size(); */
+    vector<int> he_sample(he->vertices.begin(), he->vertices.begin() + sample_size);
+    /* vector<int> he_sample; */
+    /* sample(he->vertices.begin(), he->vertices.end(), */
+    /*         std::inserter(he_sample, he_sample.begin()), sample_size, */
+    /*         std::mt19937{std::random_device{}()}); */
+    vector<int>* eff = this->eff;
+    sort(he_sample.begin(), he_sample.end(), [&eff](int v1, int v2) -> bool{
+        return (*eff)[v1] < (*eff)[v2];
+    });
+    int i = sample_size - 1;
+    for(; i >= 0 && (i*samples + 1) < 2*(*eff)[he_sample[i]]; i--) {}
+    if(i == -1) return;
+    int threshold_effectivity = (*eff)[he_sample[i]];
+    vector<int> T;
+    for(int v : he->vertices) if((*eff)[v] <= threshold_effectivity) T.push_back(v);
+    int eff_t = T.size();
 
-/*     for(int v : T){ */
-/*         (*this->eid)[v] = he->i; */
-/*         (*this->eff)[v] = eff_t; */
-/*     } */
-/* } */
+    for(int v : T){
+        (*this->eid)[v] = he->i;
+        (*this->eff)[v] = eff_t;
+    }
+}
 
-/* void UnweightedCover::run(HyperEdge* he){ */
-/*     vector<int> s; */
-/*     s.insert(s.begin(), he->vertices.begin(), he->vertices.end()); */
-/*     map<int,int>* eff = this->eff; */
-/*     sort(s.begin(), s.end(), [&eff](int v1, int v2) -> bool{ */
-/*         return (*eff)[v1] < (*eff)[v2]; */
-/*     }); */
-/*     int i = s.size() - 1; */
-/*     for(; i >= 0 && (i + 1) < (*eff)[s[i]]; i--) {} */
+void UnweightedCover::threshold_randomized_run(HyperEdge* he, int threshold){
 
-/*     for(int j = 0; j <= i; j++){ */
-/*         int v = s[j]; */
-/*         (*this->eid)[v] = he->i; */
-/*         (*this->eff)[v] = i + 1; */
-/*     } */
-/* } */
+    int set_size = he->vertices.size();
+    int sample_size = threshold < set_size && threshold > 0 ? threshold : set_size;
+    int samples = set_size / sample_size;
 
-/* void UnweightedCover::capture(const HyperEdge* he){ */
-/*     int eff = he->vertices.size(); */
-/*     #pragma clang loop vectorize(enable) interleave(enable) */
-/*     for(int v : he->vertices){ */
-/*         if(eff > (*this->ceff)[v]){ */
-/*             (*this->ceid)[v] = he->i; */
-/*             (*this->ceff)[v] = eff; */
-/*         } */
-/*     } */
-/* } */
+    vector<int> he_sample(he->vertices.begin(), he->vertices.begin() + sample_size);
+    /* vector<int> he_sample; */
+    /* sample(he->vertices.begin(), he->vertices.end(), */
+    /*         std::inserter(he_sample, he_sample.begin()), threshold, */
+    /*         std::mt19937{std::random_device{}()}); */
+    vector<int>* eff = this->eff;
+    sort(he_sample.begin(), he_sample.end(), [&eff](int v1, int v2) -> bool{
+        return (*eff)[v1] < (*eff)[v2];
+    });
+    int i = sample_size - 1;
+    for(; i >= 0 && (i*samples + 1) < 2*(*eff)[he_sample[i]]; i--) {}
+    if(i == -1) return;
+    int threshold_effectivity = (*eff)[he_sample[i]];
+    vector<int> T;
+    for(int v : he->vertices) if((*eff)[v] <= threshold_effectivity) T.push_back(v);
+    int eff_t = T.size();
 
-map<int,int>* sssc(SSSCInput* sssci){
+    for(int v : T){
+        (*this->eid)[v] = he->i;
+        (*this->eff)[v] = eff_t;
+    }
+}
 
-    /* UnweightedCover cover(sssci); */
-    int* ceid = new int[sssci->n];
-    int* ceff = new int[sssci->n];
-    /* map<int,int>* ceid = new map<int,int>(); */
-    /* map<int,int>* ceff = new map<int,int>(); */
-    for(const HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
-        /* cover.run(he); */
-        /* cover.randomized_run(he, 0.1); */
-        int eff = he->vertices.size();
+void UnweightedCover::run(HyperEdge* he){
 
-        /* #pragma clang loop vectorize(enable) interleave(enable) */
-        #pragma omp simd
-        for(int v : he->vertices){
-            ceid[v] = v;
-            /* if(eff > ceff[v]){ */
-            /*     ceid[v] = he->i; */
-            /*     ceff[v] = eff; */
-            /* } */
+    vector<int>* eff = this->eff;
+    sort(he->vertices.begin(), he->vertices.end(), [&eff](int v1, int v2) -> bool{
+        return (*eff)[v1] < (*eff)[v2];
+    });
+    int i = he->vertices.size() - 1;
+    for(; i >= 0 && (i + 1) < 2*(*eff)[he->vertices[i]]; i--) {}
+
+    for(int j = 0; j <= i; j++){
+        int v = he->vertices[j];
+        (*this->eid)[v] = he->i;
+        (*this->eff)[v] = i + 1;
+    }
+}
+
+void UnweightedCover::capture(HyperEdge* he){
+    int eff = he->vertices.size();
+    for(int v : he->vertices){
+        if(eff > (*this->ceff)[v]){
+            (*this->ceid)[v] = he->i;
+            (*this->ceff)[v] = eff;
         }
+    }
+}
+
+set<int>* sssc(SSSCInput* sssci, float p){
+
+    UnweightedCover cover(sssci);
+    for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
+        /* cover.run(he); */
+        /* cover.randomized_run(he, p); */
+        /* cover.threshold_randomized_run(he, p * sssci->avg); */
+        cover.capture(he);
     }
     sssci->stream->reset();
 
-    /* map<int,int>* feid = new map<int, int>(); */
-    /* for(auto& e : *cover.eff){ */
-    /*     if(e.second == 0) (*feid)[e.first] = (*cover.ceid)[e.first]; */
-    /*     else (*feid)[e.first] = (*cover.eid)[e.first]; */
+    /* for(int i : *sssci->universe){ */
+    /*     if((*cover.eid)[i] == -1 && (*cover.ceid)[i] != -1) { */
+    /*         (*cover.eid)[i] = (*cover.ceid)[i]; */
+    /*     } */
     /* } */
 
-    /* vector<int> universe; */
-    /* universe.insert(universe.begin(), sssci->universe->vertices.begin(), sssci->universe->vertices.end()); */
-    /* sort(sssci->universe->vertices.begin(), sssci->universe->vertices.end(), [&eff](int v1, int v2) -> bool{ return eff[v1] < eff[v2]; }); */
-    /* int root_n = sqrt(sssci->universe->vertices.size()); */
-    /* if(eff[root_n] == eff[root_n+1]){ */
-    /*     while(eff[root_n - 1] == eff[root_n]) root_n--; */
-    /*     root_n--; */
-    /* } */
-    /* for(int i = 0; i < root_n; i++) eid->erase(universe[i]); */
-    return nullptr;
+    set<int>* sol = new set<int>();
+    for(int v : *cover.ceid) if(v != -1) sol->insert(v);
+    return sol;
 }
-
-
-
-
 
 
 

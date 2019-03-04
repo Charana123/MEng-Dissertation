@@ -20,6 +20,7 @@ FLAGS=-std=c++17 -pthread -O3
 # LIBS=$(shell pkg-config --libs --cflags boost)
 # -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
 CC=icpc
+TCC=clang++
 
 pg:
 	$(CC) $(FLAGS) $(PG_FILES) -o pg.out
@@ -34,7 +35,7 @@ dfg:
 	./dfg.out test
 
 dfgt:
-	$(CC) $(FLAGS)  $(DFGT_FILES) -o dfgt.out
+	$(TCC) $(FLAGS)  $(DFGT_FILES) -o dfgt.out
 	./dfgt.out
 
 eg:

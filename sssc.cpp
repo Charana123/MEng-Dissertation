@@ -73,6 +73,7 @@ void UnweightedCover::run(HyperEdge* he){
         int v = he->vertices[j];
         (*this->eid)[v] = he->i;
         (*this->eff)[v] = i + 1;
+        (*this->ceff)[v] = he->vertices.size();
     }
 }
 
@@ -90,10 +91,10 @@ set<int>* sssc(SSSCInput* sssci, float p){
 
     UnweightedCover cover(sssci);
     for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
-        /* cover.run(he); */
+        cover.run(he);
         /* cover.randomized_run(he, p); */
         /* cover.threshold_randomized_run(he, p * sssci->avg); */
-        cover.capture(he);
+        /* cover.capture(he); */
     }
     sssci->stream->reset();
 
@@ -104,7 +105,7 @@ set<int>* sssc(SSSCInput* sssci, float p){
     /* } */
 
     set<int>* sol = new set<int>();
-    for(int v : *cover.ceid) if(v != -1) sol->insert(v);
+    for(int v : *cover.eid) if(v != -1) sol->insert(v);
     return sol;
 }
 

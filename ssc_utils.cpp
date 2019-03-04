@@ -13,7 +13,8 @@ OfflineStream::OfflineStream(string filename) : Stream() {
 }
 
 Set* OfflineStream::get_next_set(){
-    return (*this->sci->sets)[this->position++];
+    if(this->position >= m) return nullptr;
+    return &(*this->sci->sets)[this->position++];
 }
 
 Set* OnlineStream::get_next_set(){
@@ -33,6 +34,7 @@ Set* OnlineStream::get_next_set(){
 void OfflineStream::get_universe(vector<int>* universe, int* m, int* avg){
     *universe = *this->sci->universe;
     *m = this->sci->m;
+    this->m = *m;
     *avg = this->sci->avg;
 }
 

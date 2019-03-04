@@ -1,13 +1,11 @@
 DFG_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp DFG_main.cpp
 DFGT_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp DFG_test.cpp
-G_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_main.cpp
-GT_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_test.cpp
+EG_FILES = gp_utils.cpp sc_utils.cpp eager_greedy.cpp greedy_main.cpp
+LG_FILES = gp_utils.cpp sc_utils.cpp lazy_greedy.cpp greedy_main.cpp
 # RFGREEDY = utils.cpp rfgreedy.cpp rfgreedy_main.cpp
 # RFGREEDY_TEST = utils.cpp rfgreedy.cpp rfgreedy_test.cpp
 TG_FILES = gp_utils.cpp ssc_utils.cpp thgreedy.cpp thgreedy_main.cpp
 SSSC_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sssc.cpp sssc_main.cpp
-# SSSC_SIMD_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sssc_simd.cpp sssc_simd_main.cpp
-SSSC_SIMD_FILES = test1.c
 SSSCT_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_test.cpp
 ISC_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp iter_set_cover.cpp iter_set_cover_main.cpp
 PG_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
@@ -33,28 +31,26 @@ pgt:
 
 dfg:
 	$(CC) $(FLAGS)  $(DFG_FILES) -o dfg.out
-	./dfg
+	./dfg.out test
 
 dfgt:
 	$(CC) $(FLAGS)  $(DFGT_FILES) -o dfgt.out
-	./dfgt
+	./dfgt.out
 
-g:
-	$(CC) $(FLAGS)  $(G_FILES) -o g.out
-	./g
+eg:
+	$(CC) $(FLAGS)  $(EG_FILES) -o eg.out
+	./eg.out
 
-gt:
-	$(CC) $(FLAGS)  $(GT_FILES) -o gt.out
+lg:
+	$(CC) $(FLAGS)  $(LG_FILES) -o lg.out
+	./lg.out
 
 tg:
 	$(CC) $(FLAGS)  $(TG_FILES) -o tg.out
 
 sssc:
 	$(CC) $(FLAGS) $(REPORT) $(SSSC_FILES) -o sssc.out $(LIBS)
-	./sssc
-
-sssc_simd:
-	$(CC) $(FLAGS) $(REPORT) $(SSSC_SIMD_FILES) -o sssc_simd.out
+	./sssc.out
 
 sssct:
 	$(CC) $(FLAGS)  $(SSSCT_FILES) -o sssct.out

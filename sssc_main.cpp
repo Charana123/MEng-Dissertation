@@ -36,9 +36,6 @@ void check(SSSCInput* sssci, set<int>* sol){
 
 int main(int argc, char** argv){
 	/* string filename = string(argv[1]); */
-    /* string filename = "soc-LiveJournal1.txt"; */
-    /* string filename = "com-orkut.ungraph.txt"; */
-    /* string filename = "com-friendster.all.cmty.txt"; */
 	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak"};
     /* vector<string> files = {"webdocs"}; */
 	for(string filename : files){

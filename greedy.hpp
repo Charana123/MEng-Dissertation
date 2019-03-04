@@ -8,8 +8,6 @@
 #include <iterator>
 #include "sc_utils.hpp"
 
-SetCoverOutput* greedy(SetCoverInput* set_cover_input);
-SetCoverOutput* greedy_impl(SetCoverInput* set_cover_input, map<int, vector<Set*>>* inverted_index);
-map<int, vector<Set*>>* computeInvertedIndex(SetCoverInput* set_cover_input);
+vector<int>* greedy(SetCoverInput* sci);
 
 #endif

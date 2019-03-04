@@ -8,7 +8,7 @@ using namespace std;
 
 struct SetCoverInput
 {
-    vector<Set*>* sets;
+    vector<Set>* sets;
     vector<int>* universe;
     int m;
     int n;

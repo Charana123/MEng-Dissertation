@@ -37,6 +37,7 @@ class OfflineStream : public Stream {
     private:
         SetCoverInput* sci;
         int position = 0;
+        int m;
 };
 
 #endif

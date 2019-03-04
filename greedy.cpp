@@ -17,6 +17,9 @@ SetCoverOutput* greedy_impl(SetCoverInput* sci, map<int, vector<Set*>>* inverted
     for(Set* s : *sci->sets) universe.insert(s->vertices.begin(), s->vertices.end());
     set<int>* C = new set<int>(universe); //list of covered vertices
 
+    //Find maximum, for elements of set
+    //erase element from sets containing element, update set cardinality
+    //or add elements to set of covered elements and only update set cardinality from sets containing the element, you don't have to remove the elements from the sets because the chosen set because you iterate over only uncovered elements
     while(universe.size() > 0){
         sort(sci->sets->begin(), sci->sets->end(), [](Set* s1, Set* s2) -> bool{
             return s1->vertices.size() < s2->vertices.size();

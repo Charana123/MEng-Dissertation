@@ -47,21 +47,23 @@ vector<string>* read_file(string filename)
 
 /* vector<Set*>* get_sets(vector<string>* lines){ */
 /*     vector<Set*>* sets = new vector<Set*>(); */
-/*     int counter = 0; */
-/*     Set* s = new Set{{}, counter}; */
-/*     sets->push_back(s); */
+/*     int counter = -1; */
+/*     int prev_s = -1; */
 /* 	for(string& line: *lines){ */
 /* 		boost::tokenizer<> tokens(line); */
 /*         int s = std::stoi(*tokens.begin()); */
 /*         int d = std::stoi(*(++tokens.begin())); */
 /*         /1* cout << "(" << s << "," << d << ")" << endl; *1/ */
-/*         if(s == counter) (*sets)[counter]->vertices.push_back(d); */
+/*         if(s == prev_s) (*sets)[counter]->vertices.push_back(d); */
 /*         else { */
-/*             /1* cout << (*sets)[counter]->vertices << endl; *1/ */
-/*             Set* s = new Set{{d}, ++counter}; */
-/*             sets->push_back(s); */
+/*             /1* if(counter != -1) cout << (*sets)[counter]->vertices << endl; *1/ */
+/*             Set* sett = new Set{{d}, s}; */
+/*             prev_s = s; */
+/*             sets->push_back(sett); */
+/*             counter++; */
 /*         } */
 /* 	} */
+/*     /1* cout << "counter: " << counter << endl; *1/ */
 /*     return sets; */
 /* } */
 
@@ -71,18 +73,15 @@ struct set_compare {
     }
 };
 
-vector<Set*>* get_sets(vector<string>* lines){
+vector<Set>* get_sets(vector<string>* lines){
     /* multiset<Set*, set_compare>* sets = new multiset<Set*, set_compare>(); */
-    vector<Set*>* sets = new vector<Set*>();
+    vector<Set>* sets = new vector<Set>(lines->size());
     int counter = 0;
 	for(string& line: *lines){
-		Set* s = new Set{{}, counter};
+        (*sets)[counter].i = counter;
 		boost::tokenizer<> tokens(line);
-		for(auto& token : tokens){
-			s->vertices.push_back(std::stoi(token));
-		}
+		for(auto& token : tokens) (*sets)[counter].vertices.push_back(std::stoi(token));
         /* sets->insert(s); */
-        sets->push_back(s);
         counter++;
 	}
 
@@ -90,14 +89,14 @@ vector<Set*>* get_sets(vector<string>* lines){
     return sets;
 }
 
-void get_universe(vector<Set*>* sets, vector<int>* universe, int* m, int* avg){
+void get_universe(vector<Set>* sets, vector<int>* universe, int* m, int* avg){
     *m = 0;
     int total = 0;
     set<int> universe_s;
-    for(Set* s : *sets){
+    for(Set& s : *sets){
         (*m)++;
-        total += s->vertices.size();
-        universe_s.insert(s->vertices.begin(), s->vertices.end());
+        total += s.vertices.size();
+        universe_s.insert(s.vertices.begin(), s.vertices.end());
     }
     universe->insert(universe->end(), universe_s.begin(), universe_s.end());
     *avg = total/(*m);
@@ -106,7 +105,7 @@ void get_universe(vector<Set*>* sets, vector<int>* universe, int* m, int* avg){
 SetCoverInput* read_sci(string filename)
 {
     vector<string>* lines = read_file(filename);
-    vector<Set*>* sets = get_sets(lines);
+    vector<Set>* sets = get_sets(lines);
     vector<int>* universe = new vector<int>();
     int m, avg;
     get_universe(sets, universe, &m, &avg);

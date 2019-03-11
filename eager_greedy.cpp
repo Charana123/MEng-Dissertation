@@ -5,7 +5,7 @@ vector<vector<int>>* computeInvertedIndex(SetCoverInput* sci, int max_elem){
     Set* s = sci->sets->data();
     for(int i = 0; i < sci->m; i++){
         for(int v : (s+i)->vertices) {
-            cout << "v: " << v << endl;
+            /* cout << "v: " << v << ", s: " << (s+i)->i << endl; */
             (*inverted_index)[v].push_back((s+i)->i);
         }
     }

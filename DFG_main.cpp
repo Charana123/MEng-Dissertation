@@ -13,15 +13,17 @@ void summarise(string name, std::function<vector<int>*()> func){
     cout << name << endl;
     cout << "===========" << endl;
     cout << "time: " << chrono::duration_cast<chrono::milliseconds>(t2-t1).count() << " ms" << endl;
-    cout << endl;
     cout << "Solution size: " << sol->size() << endl;
 }
 
 int main(int argc, char** argv){
 
-	string filename = string(argv[1]);
-    SetCoverInput* sci = read_sci("./dataset/FIMI/" + filename + ".dat");
-    summarise(filename + ".dat", [&]() -> vector<int>*{
-        return DFG(sci, p);
-    });
+	/* string filename = string(argv[1]); */
+	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
+    for(string filename : files){
+        SetCoverInput* sci = read_sci("./dataset/FIMI/" + filename + ".dat");
+        summarise(filename + ".dat", [&]() -> vector<int>*{
+            return DFG(sci, p);
+        });
+    }
 }

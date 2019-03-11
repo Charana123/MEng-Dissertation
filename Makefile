@@ -8,23 +8,23 @@ TG_FILES = gp_utils.cpp ssc_utils.cpp thgreedy.cpp thgreedy_main.cpp
 SSSC_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sssc.cpp sssc_main.cpp
 SSSCT_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_test.cpp
 ISC_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp iter_set_cover.cpp iter_set_cover_main.cpp
-PG_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
+PG_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
 PGT_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_test.cpp
 # SSC_UTILS_TEST = gp_utils.cpp ssc_utils.cpp ssc_utils_test.cpp
 ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp assadiMP.cpp assadiMP_main.cpp
 ASSADIMPT_FILES = gp_utils.cpp sc_util.cpp greedy.cpp ssc_utils.cpp assadiMP.cpp assadiMP_test.cpp
 LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
+GEN_DATASET = gen_dataset.cpp
 
 FLAGS=-std=c++17 -pthread -O3
 # REPORT=-qopt-report=2 -qopt-report-phase=vec
 # LIBS=$(shell pkg-config --libs --cflags boost)
 # -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
-CC=icpc
-TCC=clang++
+CC=clang++
 
 pg:
 	$(CC) $(FLAGS) $(PG_FILES) -o pg.out
-	./pg
+	./pg.out
 
 pgt:
 	$(CC) $(FLAGS)  $(PGT_FILES) -o pgt.out
@@ -65,6 +65,10 @@ assadiMPt:
 lowerbound:
 	$(CC) $(FLAGS)  $(LOWERBOUND_FILES) -o lowerbound.out
 
+gen_dataset:
+	$(CC) $(FLAGS) $(GEN_DATASET) -o gen_dataset.out
+	# ./gen_dataset.out 0.1 25 `pwd`/file.out
+
 # rfgreedy:
 # 	$(CC) $(FLAGS)  $(RFGREEDY) -o rfgreedy
 # 	./rfgreedy
@@ -83,7 +87,7 @@ isc:
 clean:
 	rm *.out
 
-.PHONY: pg pgt dfg dfgt g gt sssc sssct assadiMP assadiMPt lowerbound isc tg
+.PHONY: pg pgt dfg dfgt g gt sssc sssct assadiMP assadiMPt lowerbound isc tg gen_dataset
 
 
 

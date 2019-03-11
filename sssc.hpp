@@ -17,7 +17,7 @@ struct SSSCInput
     int avg;
 };
 
-set<int>* sssc(SSSCInput* sssci, float p);
+unordered_set<int>* sssc(SSSCInput* sssci, float p);
 
 class UnweightedCover {
     public:

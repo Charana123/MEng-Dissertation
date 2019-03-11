@@ -3,9 +3,9 @@
 
 using namespace std;
 
-void summarise(string name, std::function<set<int>*()> func){
+void summarise(string name, std::function<unordered_set<int>*()> func){
     auto t1 = chrono::high_resolution_clock::now();
-    set<int>* sol = func();
+    unordered_set<int>* sol = func();
     auto t2 = chrono::high_resolution_clock::now();
     cout << "===========" << endl;
     cout << name << endl;
@@ -15,7 +15,7 @@ void summarise(string name, std::function<set<int>*()> func){
     cout << endl;
 }
 
-void check(SSSCInput* sssci, set<int>* sol){
+void check(SSSCInput* sssci, unordered_set<int>* sol){
     vector<int> v;
     v.insert(v.begin(), sol->begin(), sol->end());
     sort(v.begin(), v.end(), std::greater<int>());
@@ -36,25 +36,24 @@ void check(SSSCInput* sssci, set<int>* sol){
 
 int main(int argc, char** argv){
 	/* string filename = string(argv[1]); */
-	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak"};
-    /* vector<string> files = {"webdocs"}; */
+	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
 	for(string filename : files){
-		Stream* stream = new OfflineStream("./dataset/FIMI/" + filename + ".dat");
-		/* Stream* stream = new OfflineStream("./dataset/SNAP/" + filename); */
-		vector<int>* universe = new vector<int>();
-		int m, avg;
-		stream->get_universe(universe, &m, &avg);
-		int n = universe->size();
-		SSSCInput sssci = {stream, universe, n, m, avg};
+        Stream* stream = new OfflineStream("./dataset/FIMI/" + filename + ".dat");
+        /* Stream* stream = new OfflineStream("./dataset/SNAP/" + filename); */
+        vector<int>* universe = new vector<int>();
+        int m, avg, M;
+        stream->get_universe(universe, &m, &avg, &M);
+        int n = universe->size();
+        SSSCInput sssci = {stream, universe, n, m, avg};
+
         cout << "n: " << n << endl;
         cout << "m: " << m << endl;
         cout << "avg: " << avg << endl;
+        cout << "M: " << M << endl;
 
-        /* for(int i = 0; i < 10; i++){ */
-            summarise(filename + ".dat", [&]() -> set<int>*{
-                return sssc(&sssci, 0.1);
-            });
-        /* } */
+        summarise(filename + ".dat", [&]() -> unordered_set<int>*{
+            return sssc(&sssci, 0.1);
+        });
 	}
 }
 

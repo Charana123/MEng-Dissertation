@@ -74,32 +74,30 @@ struct set_compare {
 };
 
 vector<Set>* get_sets(vector<string>* lines){
-    /* multiset<Set*, set_compare>* sets = new multiset<Set*, set_compare>(); */
+    /* multiset<Set, set_compare>* sets = new multiset<Set*, set_compare>(); */
     vector<Set>* sets = new vector<Set>(lines->size());
     int counter = 0;
 	for(string& line: *lines){
         (*sets)[counter].i = counter;
 		boost::tokenizer<> tokens(line);
 		for(auto& token : tokens) (*sets)[counter].vertices.push_back(std::stoi(token));
-        /* sets->insert(s); */
         counter++;
 	}
 
-    /* return new vector<Set*>(sets->begin(), sets->end()); */
     return sets;
 }
 
-void get_universe(vector<Set>* sets, vector<int>* universe, int* m, int* avg){
+void get_universe(vector<Set>* sets, vector<int>* universe, int* m, int* avg, int* M){
     *m = 0;
-    int total = 0;
+    *M = 0;
     set<int> universe_s;
     for(Set& s : *sets){
         (*m)++;
-        total += s.vertices.size();
+        *M += s.vertices.size();
         universe_s.insert(s.vertices.begin(), s.vertices.end());
     }
     universe->insert(universe->end(), universe_s.begin(), universe_s.end());
-    *avg = total/(*m);
+    *avg = *M/(*m);
 }
 
 SetCoverInput* read_sci(string filename)
@@ -107,10 +105,10 @@ SetCoverInput* read_sci(string filename)
     vector<string>* lines = read_file(filename);
     vector<Set>* sets = get_sets(lines);
     vector<int>* universe = new vector<int>();
-    int m, avg;
-    get_universe(sets, universe, &m, &avg);
+    int m, avg, M;
+    get_universe(sets, universe, &m, &avg, &M);
     int n = universe->size();
-	return new SetCoverInput{sets, universe, m, n, avg};
+	return new SetCoverInput{sets, universe, m, n, avg, M};
 }
 
 

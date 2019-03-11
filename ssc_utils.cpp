@@ -31,23 +31,24 @@ Set* OnlineStream::get_next_set(){
     return s;
 }
 
-void OfflineStream::get_universe(vector<int>* universe, int* m, int* avg){
+void OfflineStream::get_universe(vector<int>* universe, int* m, int* avg, int* M){
     *universe = *this->sci->universe;
     *m = this->sci->m;
     this->m = *m;
     *avg = this->sci->avg;
+    *M = this->sci->M;
 }
 
-void OnlineStream::get_universe(vector<int>* universe, int* m, int* avg){
+void OnlineStream::get_universe(vector<int>* universe, int* m, int* avg, int* M){
     *m = 0;
-    int total = 0;
+    *M = 0;
     set<int> universe_s;
     for(Set* s; (s = get_next_set()) != nullptr; (*m)++){
-        total += s->vertices.size();
+        *M += s->vertices.size();
         universe_s.insert(s->vertices.begin(), s->vertices.end());
     }
     universe->insert(universe->end(), universe_s.begin(), universe_s.end());
-    *avg = total/(*m);
+    *avg = (*M)/(*m);
     reset();
 }
 

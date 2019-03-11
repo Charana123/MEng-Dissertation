@@ -1,46 +1,55 @@
 #include "pgreedy.hpp"
 
-void greedy_pass(ProgressiveGreedyInput* pgin, int threshold, ProgressiveGreedyOutput* pgout){
+void greedy_pass(ProgressiveGreedyInput* pgin, int threshold, vector<int>* covered, set<int>* sol){
     for(Set* s; (s = pgin->stream->get_next_set()) != nullptr; ){
-        set<int> diff;
-        for(int i : s->vertices){
-            if(!pgout->covered[i]) diff.insert(i);
-        }
+        vector<int> diff;
+        for(int v : s->vertices) if((*covered)[v] == 0) diff.push_back(v);
         if(diff.size() >= threshold){
-            pgout->sol.insert(s->i);
-            for(int i : diff) pgout->covered[i] = true;
+            sol->insert(s->i);
+            for(int v : diff) (*covered)[v] = 1;
         }
     }
     pgin->stream->reset();
 }
 
-void rand_pass(ProgressiveGreedyInput* pgin, int sample_size, ProgressiveGreedyOutput* pgout){
+/* void rand_pass(ProgressiveGreedyInput* pgin, int sample_size, ProgressiveGreedyOutput* pgout){ */
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    vector<int> sample_m;
-    sample_m.insert(sample_m.begin(), pgin->universe->begin(), pgin->universe->end());
-    shuffle(sample_m.begin(), sample_m.end(), std::default_random_engine(seed));
-    sample_m.erase(sample_m.begin() + sample_size, sample_m.end());
-    sort(sample_m.begin(), sample_m.end(), std::less<int>());
+/*     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); */
+/*     vector<int> sample_m; */
+/*     sample_m.insert(sample_m.begin(), pgin->universe->begin(), pgin->universe->end()); */
+/*     shuffle(sample_m.begin(), sample_m.end(), std::default_random_engine(seed)); */
+/*     sample_m.erase(sample_m.begin() + sample_size, sample_m.end()); */
+/*     sort(sample_m.begin(), sample_m.end(), std::less<int>()); */
 
-    pgout->sol.insert(sample_m.begin(), sample_m.end());
-    for(Set* s; (s = pgin->stream->get_next_set()) != nullptr; ){
-        if(s->i == sample_m.back()) {
-            for(int i : s->vertices) pgout->covered[i] = true;
-            sample_m.pop_back();
-        }
-    }
-    pgin->stream->reset();
-}
+/*     pgout->sol.insert(sample_m.begin(), sample_m.end()); */
+/*     for(Set* s; (s = pgin->stream->get_next_set()) != nullptr; ){ */
+/*         if(s->i == sample_m.back()) { */
+/*             for(int i : s->vertices) pgout->covered[i] = true; */
+/*             sample_m.pop_back(); */
+/*         } */
+/*     } */
+/*     pgin->stream->reset(); */
+/* } */
 
-void progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p, ProgressiveGreedyOutput* pgout){
+set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p){
 
     assert(p >= 1);
+    cout << "here" << endl;
+    int max_elem = *std::max_element(pgin->universe->begin(), pgin->universe->end());
+    set<int>* sol = new set<int>();
+    vector<int>* covered = new vector<int>(max_elem);
     /* rand_pass(pgin, 2500, pgout); */
-    for(int j = 1; j <= p; j++){
-        float threshold = pow(pgin->n, 1 - (float)j/p);
-        greedy_pass(pgin, threshold, pgout);
+    cout << "here2" << endl;
+    vector<int> precomp(p + 1);
+    precomp.push_back(1); precomp.push_back(pow(pgin->n, (float)1/p));
+    cout << "here3" << endl;
+    for(int j = 2; j < p+1; j++) precomp[j] = precomp[j-1] * precomp[j-1];
+    cout << "here4" << endl;
+    for(int j = p; j >= 0; j--){
+        cout << "here5" << endl;
+        greedy_pass(pgin, precomp[j], covered, sol);
     }
+    return sol;
 }
 
 

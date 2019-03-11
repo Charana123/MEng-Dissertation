@@ -13,6 +13,7 @@ struct SetCoverInput
     int m;
     int n;
     int avg;
+    int M;
 };
 
 struct SetCoverOutput {

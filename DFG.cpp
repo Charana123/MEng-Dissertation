@@ -26,7 +26,7 @@ vector<int>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vector<vector<
     // Globals
     vector<int>* sol = new vector<int>(); //list of indices of chosen sets
     int max_elem = *std::max_element(sci->universe->begin(), sci->universe->end());
-    vector<bool> covered(max_elem);
+    vector<bool> covered(max_elem + 1);
 
     for(int k = ktoCollection->size()-1; k > 0; k--){
         for (Set *s: (*ktoCollection)[k]){

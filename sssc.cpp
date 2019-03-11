@@ -86,29 +86,74 @@ void UnweightedCover::capture(HyperEdge* he){
     }
 }
 
-unordered_set<int>* sssc(SSSCInput* sssci, float p){
+unordered_set<int>* capture(SSSCInput* sssci){
 
     UnweightedCover cover(sssci);
     for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
-        /* cover.run(he); */
-        /* cover.randomized_run(he, p); */
-        /* cover.threshold_randomized_run(he, p * sssci->avg); */
         cover.capture(he);
     }
     sssci->stream->reset();
-
-    /* for(int i : *sssci->universe){ */
-    /*     if((*cover.eid)[i] == -1 && (*cover.ceid)[i] != -1) { */
-    /*         (*cover.eid)[i] = (*cover.ceid)[i]; */
-    /*     } */
-    /* } */
 
     unordered_set<int>* sol = new unordered_set<int>();
     for(int v : *cover.ceid) if(v != -1) sol->insert(v);
     return sol;
 }
 
+unordered_set<int>* sssc(SSSCInput* sssci){
 
+    UnweightedCover cover(sssci);
+    for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
+        cover.run(he);
+    }
+    sssci->stream->reset();
+
+    unordered_set<int>* sol = new unordered_set<int>();
+    for(int v : *cover.eid) if(v != -1) sol->insert(v);
+    return sol;
+}
+
+
+unordered_set<int>* randomized_sssc(SSSCInput* sssci){
+
+    UnweightedCover cover(sssci);
+    float p = 0.25;
+    for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
+        cover.randomized_run(he, p);
+        cover.capture(he);
+    }
+    sssci->stream->reset();
+
+    for(int i : *sssci->universe){
+        if((*cover.eid)[i] == -1 && (*cover.ceid)[i] != -1) {
+            (*cover.eid)[i] = (*cover.ceid)[i];
+        }
+    }
+
+    unordered_set<int>* sol = new unordered_set<int>();
+    for(int v : *cover.eid) if(v != -1) sol->insert(v);
+    return sol;
+}
+
+
+unordered_set<int>* threshold_randomized_sssc(SSSCInput* sssci){
+
+    UnweightedCover cover(sssci);
+    for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
+        cover.threshold_randomized_run(he, 0.25 * sssci->avg);
+        cover.capture(he);
+    }
+    sssci->stream->reset();
+
+    for(int i : *sssci->universe){
+        if((*cover.eid)[i] == -1 && (*cover.ceid)[i] != -1) {
+            (*cover.eid)[i] = (*cover.ceid)[i];
+        }
+    }
+
+    unordered_set<int>* sol = new unordered_set<int>();
+    for(int v : *cover.eid) if(v != -1) sol->insert(v);
+    return sol;
+}
 
 
 

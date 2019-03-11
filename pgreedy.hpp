@@ -17,5 +17,5 @@ struct ProgressiveGreedyInput
     int m;
 };
 
-set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p);
+unordered_set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p);
 #endif

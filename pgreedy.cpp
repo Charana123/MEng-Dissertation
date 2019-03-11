@@ -1,6 +1,6 @@
 #include "pgreedy.hpp"
 
-void greedy_pass(ProgressiveGreedyInput* pgin, int threshold, vector<int>* covered, set<int>* sol){
+void greedy_pass(ProgressiveGreedyInput* pgin, int threshold, vector<int>* covered, unordered_set<int>* sol){
     for(Set* s; (s = pgin->stream->get_next_set()) != nullptr; ){
         vector<int> diff;
         for(int v : s->vertices) if((*covered)[v] == 0) diff.push_back(v);
@@ -31,11 +31,11 @@ void greedy_pass(ProgressiveGreedyInput* pgin, int threshold, vector<int>* cover
 /*     pgin->stream->reset(); */
 /* } */
 
-set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p){
+unordered_set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p){
 
     assert(p >= 1);
     int max_elem = *std::max_element(pgin->universe->begin(), pgin->universe->end());
-    set<int>* sol = new set<int>();
+    unordered_set<int>* sol = new unordered_set<int>();
     vector<int>* covered = new vector<int>(max_elem);
     /* rand_pass(pgin, 2500, pgout); */
     vector<int> precomp;

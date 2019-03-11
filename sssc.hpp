@@ -17,7 +17,10 @@ struct SSSCInput
     int avg;
 };
 
-unordered_set<int>* sssc(SSSCInput* sssci, float p);
+unordered_set<int>* sssc(SSSCInput* sssci);
+unordered_set<int>* capture(SSSCInput* sssci);
+unordered_set<int>* randomized_sssc(SSSCInput* sssci);
+unordered_set<int>* threshold_randomized_sssc(SSSCInput* sssci);
 
 class UnweightedCover {
     public:

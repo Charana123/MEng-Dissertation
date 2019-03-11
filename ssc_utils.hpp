@@ -34,8 +34,8 @@ class OfflineStream : public Stream {
         Set* get_next_set();
         virtual void get_universe(vector<int>* universe, int* m, int* avg, int* M);
         void reset();
-    private:
         SetCoverInput* sci;
+    private:
         int position = 0;
         int m;
 };

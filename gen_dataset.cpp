@@ -36,6 +36,7 @@ int main(int argc, char** argv){
     std::default_random_engine rng(dev());
     std::uniform_int_distribution<unsigned long> dist_n(0,n-1);
     std::uniform_int_distribution<int> dist_avg(1,avg);
+    std::vector<unsigned long> covered(n);
 
     std::ofstream outfile;
     outfile.open(out_filename);
@@ -45,11 +46,17 @@ int main(int argc, char** argv){
         vector<unsigned long> s;
         for(int i = 0; i < size; i++) {
             unsigned long v = dist_n(rng);
+            covered[v] = 1;
             s.push_back(v);
         }
         outfile << s << endl;
     }
+
+    std::vector<unsigned long> s;
+    for(int i = 0; i < n; i++) if(covered[i] == 0) s.push_back(i);
+    if(s.size() > 0) outfile << s << endl;
 }
+
 
 
 

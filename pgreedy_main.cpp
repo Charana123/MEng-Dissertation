@@ -20,8 +20,8 @@ int main(int argc, char** argv){
 	for(string filename : files){
         Stream* stream = new OfflineStream("./dataset/FIMI/" + filename + ".dat");
         vector<int>* universe = new vector<int>();
-        int m, avg;
-        stream->get_universe(universe, &m, &avg);
+        int m, avg, M;
+        stream->get_universe(universe, &m, &avg, &M);
         int n = universe->size();
         ProgressiveGreedyInput pgin = {stream, universe, n, m};
 

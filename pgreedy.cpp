@@ -34,19 +34,14 @@ void greedy_pass(ProgressiveGreedyInput* pgin, int threshold, vector<int>* cover
 set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p){
 
     assert(p >= 1);
-    cout << "here" << endl;
     int max_elem = *std::max_element(pgin->universe->begin(), pgin->universe->end());
     set<int>* sol = new set<int>();
     vector<int>* covered = new vector<int>(max_elem);
     /* rand_pass(pgin, 2500, pgout); */
-    cout << "here2" << endl;
-    vector<int> precomp(p + 1);
+    vector<int> precomp;
     precomp.push_back(1); precomp.push_back(pow(pgin->n, (float)1/p));
-    cout << "here3" << endl;
     for(int j = 2; j < p+1; j++) precomp[j] = precomp[j-1] * precomp[j-1];
-    cout << "here4" << endl;
     for(int j = p; j >= 0; j--){
-        cout << "here5" << endl;
         greedy_pass(pgin, precomp[j], covered, sol);
     }
     return sol;

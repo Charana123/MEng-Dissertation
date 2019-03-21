@@ -5,6 +5,7 @@
 #include <map>
 #include <cmath>
 #include <random>
+#include <numeric>
 
 using HyperEdge = Set;
 
@@ -30,15 +31,30 @@ class UnweightedCover {
             this->ceff = new vector<int>(max_elem, 0);
             this->eid = new vector<int>(max_elem, -1);
             this->eff = new vector<int>(max_elem, 0);
+            this->ben = new vector<int>(max_elem, 0);
         };
         int max_elem;
         void run(HyperEdge* he);
+        void mrun(HyperEdge* he);
         void randomized_run(HyperEdge* he, float p);
         void threshold_randomized_run(HyperEdge* he, int threshold);
         void capture(HyperEdge* he);
-        vector<int> *ceid, *ceff, *eid, *eff;
+        vector<int> *ceid, *ceff, *eid, *eff, *ben;
+
+        // Value
+        float M = 0;
+        float S = 0;
 };
 
 // lookup effectivity for vertices, sort, find i, transform to vertices
+
+
+
+
+
+
+
+
+
 
 #endif

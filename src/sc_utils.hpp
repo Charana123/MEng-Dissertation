@@ -13,6 +13,8 @@ struct SetCoverInput
     int m;
     int n;
     int avg;
+    int median;
+    int largest;
     int M;
 };
 

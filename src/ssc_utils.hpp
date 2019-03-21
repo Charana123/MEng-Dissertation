@@ -11,7 +11,7 @@ class Stream {
     public:
         Stream(){};
         virtual Set* get_next_set() = 0;
-        virtual void get_universe(vector<int>* universe, int* m, int* avg, int* M) = 0;
+        virtual void get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M) = 0;
         virtual void reset() = 0;
 };
 
@@ -19,7 +19,7 @@ class OnlineStream : public Stream {
     public:
         OnlineStream(string filename);
         Set* get_next_set();
-        virtual void get_universe(vector<int>* universe, int* m, int* avg, int* M);
+        virtual void get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M);
         void reset();
     private:
         bip::file_mapping mapping;
@@ -32,7 +32,7 @@ class OfflineStream : public Stream {
     public:
         OfflineStream(string filename);
         Set* get_next_set();
-        virtual void get_universe(vector<int>* universe, int* m, int* avg, int* M);
+        virtual void get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M);
         void reset();
         SetCoverInput* sci;
     private:

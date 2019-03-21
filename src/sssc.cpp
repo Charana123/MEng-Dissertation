@@ -60,6 +60,55 @@ void UnweightedCover::threshold_randomized_run(HyperEdge* he, int threshold){
     }
 }
 
+void UnweightedCover::mrun(HyperEdge* he){
+
+    vector<int>* eff = this->eff;
+    sort(he->vertices.begin(), he->vertices.end(), [&eff](int v1, int v2) -> bool{
+        return (*eff)[v1] < (*eff)[v2];
+    });
+    int i = he->vertices.size() - 1;
+    float old_M = this->M;
+    this->M = this->M + ((i+1)-this->M)/(he->i + 1);
+    this->S = this->S + ((i+1)-old_M) * ((i+1)-this->M);
+    float var = this->S/(he->i);
+    float fast_sigmoid_var = var / 1 + var;
+    float benefit;
+    for(; i >= 0; i--) {
+        /* if((i+1) > (*eff)[he->vertices[i]]) break; */
+        if((i+1) > (*eff)[he->vertices[i]]) {
+            benefit  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0,
+                [&eff](int v1, int v2) -> float {
+                    return (1/(*eff)[v1] + 1/(*eff)[v2]);
+                }
+            );
+            benefit = benefit * (1 - fast_sigmoid_var) + he->vertices.size() - i;
+            /* benefit = he->vertices.size() - i; */
+            break;
+		}
+        else if((i+1) == (*eff)[he->vertices[i]]){
+            benefit  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0,
+                [&eff](int v1, int v2) -> float {
+                    return (1/(*eff)[v1] + 1/(*eff)[v2]);
+                }
+            );
+            benefit = benefit * (1 - fast_sigmoid_var) + he->vertices.size() - i;
+            /* benefit = he->vertices.size() - i; */
+            // compare the additional benefit of the current set to the previous effective set
+            // if the subset cover is of the same size.
+            if(benefit > (*this->ben)[he->vertices[i]]){
+                break;
+            }
+        }
+    }
+
+    for(int j = 0; j <= i; j++){
+        int v = he->vertices[j];
+        (*this->eid)[v] = he->i;
+        (*this->eff)[v] = i + 1;
+        (*this->ben)[v] = benefit;
+    }
+}
+
 void UnweightedCover::run(HyperEdge* he){
 
     vector<int>* eff = this->eff;

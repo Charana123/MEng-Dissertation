@@ -1,4 +1,4 @@
-#include "DFG.hpp"
+#include "naive.hpp"
 #include <string>
 #include <chrono>
 
@@ -16,14 +16,13 @@ void summarise(string name, std::function<vector<int>*()> func){
     cout << "Solution size: " << sol->size() << endl;
 }
 
-int main(int argc, char** argv){
+int main(){
 
-	/* string filename = string(argv[1]); */
 	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
     for(string filename : files){
-        SetCoverInput* sci = read_sci("./dataset/FIMI/" + filename + ".dat");
+        SetCoverInput* sci = read_sci("../dataset/FIMI/" + filename + ".dat");
         summarise(filename + ".dat", [&]() -> vector<int>*{
-            return DFG(sci, p);
+            return naive(sci);
         });
     }
 }

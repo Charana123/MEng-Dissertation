@@ -87,17 +87,23 @@ vector<Set>* get_sets(vector<string>* lines){
     return sets;
 }
 
-void get_universe(vector<Set>* sets, vector<int>* universe, int* m, int* avg, int* M){
+void get_universe(vector<Set>* sets, vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M){
     *m = 0;
     *M = 0;
+    *median = 0; *largest = 0;
+    vector<int> set_sizes = {};
     set<int> universe_s;
     for(Set& s : *sets){
         (*m)++;
         *M += s.vertices.size();
+        set_sizes.push_back(s.vertices.size());
+        if(s.vertices.size() > *largest) *largest = s.vertices.size();
         universe_s.insert(s.vertices.begin(), s.vertices.end());
     }
     universe->insert(universe->end(), universe_s.begin(), universe_s.end());
     *avg = *M/(*m);
+    std::nth_element(set_sizes.begin(), set_sizes.begin() + set_sizes.size()/2, set_sizes.end());
+    *median = set_sizes[set_sizes.size()/2];
 }
 
 SetCoverInput* read_sci(string filename)
@@ -105,10 +111,10 @@ SetCoverInput* read_sci(string filename)
     vector<string>* lines = read_file(filename);
     vector<Set>* sets = get_sets(lines);
     vector<int>* universe = new vector<int>();
-    int m, avg, M;
-    get_universe(sets, universe, &m, &avg, &M);
+    int m, avg, median, largest, M;
+    get_universe(sets, universe, &m, &avg, &median, &largest, &M);
     int n = universe->size();
-	return new SetCoverInput{sets, universe, m, n, avg, M};
+	return new SetCoverInput{sets, universe, m, n, avg, median, largest, M};
 }
 
 

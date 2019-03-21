@@ -1,3 +1,6 @@
+SS_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp single-assadi.cpp DFG.cpp single-assadi-main.cpp
+GREEDY_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_main.cpp
+NAIVE_FILES = gp_utils.cpp sc_utils.cpp naive.cpp naive_main.cpp
 DFG_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp DFG_main.cpp
 DFGT_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp DFG_test.cpp
 EG_FILES = gp_utils.cpp sc_utils.cpp eager_greedy.cpp greedy_main.cpp
@@ -6,6 +9,7 @@ LG_FILES = gp_utils.cpp sc_utils.cpp lazy_greedy.cpp greedy_main.cpp
 # RFGREEDY_TEST = utils.cpp rfgreedy.cpp rfgreedy_test.cpp
 TG_FILES = gp_utils.cpp ssc_utils.cpp thgreedy.cpp thgreedy_main.cpp
 SSSC_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sssc.cpp sssc_main.cpp
+PPG_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sssc.cpp DFG.cpp pp_greedy.cpp
 SSSCT_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_test.cpp
 ISC_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp iter_set_cover.cpp iter_set_cover_main.cpp
 PG_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
@@ -22,6 +26,22 @@ FLAGS=-std=c++17 -pthread -O3
 # LIBS=$(shell pkg-config --libs --cflags boost)
 # -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
 CC=clang++
+
+ss:
+	$(CC) $(FLAGS) $(SS_FILES) -o ss.out
+	./ss.out
+
+g:
+	$(CC) $(FLAGS) $(GREEDY_FILES) -o greedy.out
+	./greedy.out
+
+naive:
+	$(CC) $(FLAGS) $(NAIVE_FILES) -o naive.out
+	./naive.out
+
+ppg:
+	$(CC) $(FLAGS) $(PPG_FILES) -o ppg.out
+	./ppg.out
 
 all:
 	$(CC) $(FLAGS) $(ALL_FILES) -o all.out

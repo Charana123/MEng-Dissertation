@@ -32,7 +32,7 @@ void greedy_pass(ProgressiveGreedyInput* pgin, int threshold, vector<int>* cover
 /* } */
 
 unordered_set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p){
-
+    cout << "started" << endl;
     assert(p >= 1);
     int max_elem = *std::max_element(pgin->universe->begin(), pgin->universe->end());
     unordered_set<int>* sol = new unordered_set<int>();
@@ -40,10 +40,12 @@ unordered_set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p
     /* rand_pass(pgin, 2500, pgout); */
     vector<int> precomp;
     precomp.push_back(1); precomp.push_back(pow(pgin->n, (float)1/p));
-    for(int j = 2; j < p+1; j++) precomp[j] = precomp[j-1] * precomp[j-1];
+    for(int j = 2; j < p+1; j++) precomp[j] = precomp[j-1] * precomp[1];
     for(int j = p; j >= 0; j--){
+        cout << "pass: " << j << endl;
         greedy_pass(pgin, precomp[j], covered, sol);
     }
+    cout << "end" << endl;
     return sol;
 }
 

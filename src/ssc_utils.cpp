@@ -31,24 +31,32 @@ Set* OnlineStream::get_next_set(){
     return s;
 }
 
-void OfflineStream::get_universe(vector<int>* universe, int* m, int* avg, int* M){
+void OfflineStream::get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M){
     *universe = *this->sci->universe;
     *m = this->sci->m;
     this->m = *m;
     *avg = this->sci->avg;
     *M = this->sci->M;
+    *median = this->sci->median;
+    *largest = this->sci->largest;
 }
 
-void OnlineStream::get_universe(vector<int>* universe, int* m, int* avg, int* M){
+void OnlineStream::get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M){
     *m = 0;
     *M = 0;
+    *median = 0; *largest = 0;
+    vector<int> set_sizes;
     set<int> universe_s;
     for(Set* s; (s = get_next_set()) != nullptr; (*m)++){
         *M += s->vertices.size();
+        set_sizes.push_back(s->vertices.size());
+        if(s->vertices.size() > *largest) *largest = s->vertices.size();
         universe_s.insert(s->vertices.begin(), s->vertices.end());
     }
     universe->insert(universe->end(), universe_s.begin(), universe_s.end());
     *avg = (*M)/(*m);
+    std::nth_element(set_sizes.begin(), set_sizes.begin() + set_sizes.size()/2, set_sizes.end());
+    *median = set_sizes[set_sizes.size()/2];
     reset();
 }
 

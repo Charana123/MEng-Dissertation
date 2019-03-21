@@ -8,6 +8,11 @@
 #include <iterator>
 #include "sc_utils.hpp"
 
-vector<int>* greedy(SetCoverInput* sci);
+struct CardinalitySet{
+    int i;
+    int cardinality;
+};
+
+vector<int>* greedy(SetCoverInput* sci, int type);
 
 #endif

@@ -35,12 +35,13 @@ void check(SSSCInput* sssci, unordered_set<int>* sol){
 }
 
 int main(int argc, char** argv){
-	/* string filename = string(argv[1]); */
-	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
+	string filename = string(argv[1]);
+	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
 	/* vector<string> files = {"chess"}; */
-	for(string filename : files){
-        Stream* stream = new OfflineStream("../dataset/FIMI/" + filename + ".dat");
-        /* Stream* stream = new OfflineStream("./dataset/SNAP/" + filename); */
+	/* for(string filename : files){ */
+        /* Stream* stream = new OfflineStream("../dataset/FIMI/" + filename + ".dat"); */
+        Stream* stream = new OfflineStream("/Users/charana/Documents/thesis/papers/SCL/SPMF/" + filename);
+        /* Stream* stream = new OfflineStream("/Users/charana/Documents/thesis/implementations/other/" + filename); */
         vector<int>* universe = new vector<int>();
         int m, M, avg, median, largest;
         stream->get_universe(universe, &m, &avg, &median, &largest, &M);
@@ -61,7 +62,11 @@ int main(int argc, char** argv){
             unordered_set<int>* sol = sssc(&sssci);
             return sol;
         });
-	}
+        summarise(filename + ".dat", [&]() -> unordered_set<int>*{
+            unordered_set<int>* sol = capture(&sssci);
+            return sol;
+        });
+	/* } */
 }
 
 

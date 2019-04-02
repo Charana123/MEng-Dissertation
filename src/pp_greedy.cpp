@@ -1,27 +1,34 @@
 #include "DFG.hpp"
 #include "sssc.hpp"
+#include "boost/range/algorithm/remove_if.hpp"
 #include <chrono>
 
 vector<int>* compose(OfflineStream* stream){
 
     vector<int>* universe = new vector<int>();
-    int m, avg, M;
-    stream->get_universe(universe, &m, &avg, &M);
+    int m, M, avg, median, largest;
+    stream->get_universe(universe, &m, &avg, &median, &largest, &M);
     int n = universe->size();
     SSSCInput sssci = {stream, universe, n, m, avg};
 
-
     unordered_set<int>* sol = sssc(&sssci);
-    /* cout << "sol: " << sol->size() << endl; */
-    vector<Set>* sets = stream->sci->sets;
-    vector<Set>* projected_sets = new vector<Set>();
-    for(int sid : *sol) projected_sets->push_back((*sets)[sid]);
-    /* cout << *sets << endl; */
-    /* cout << *projected_sets << endl; */
+    vector<int> chosen(m, 0);
+    for(int sid: *sol) chosen[sid] = 1;
+    /* vector<Set>* sets = stream->sci->sets; */
+    /* sets->erase( */
+    /*     std::remove_if(sets->begin(), sets->end(), [&chosen](Set& s) -> bool{ */
+    /*         return chosen[s.i] == 0; */
+    /*     }), */
+    /*     sets->end() */
+    /* ); */
+    vector<Set>* sets = new vector<Set>();
+    for(Set* s; (s = sssci.stream->get_next_set()) != nullptr; ){
+        if(chosen[s->i]) sets->push_back(*s);
+    }
 
     int proj_m = sol->size();
-    SetCoverInput* sci = new SetCoverInput{projected_sets, universe, proj_m, n, avg, M};
-    vector<int>* final_sol = DFG(sci, 1.05);
+    SetCoverInput* sci = new SetCoverInput{sets, universe, proj_m, n, -1, -1, -1, -1};
+    vector<int>* final_sol = DFG(sci, 1.01);
     return final_sol;
 }
 
@@ -38,6 +45,7 @@ void summarise(string name, std::function<vector<int>*()> func){
 
 int main(int argc, char** argv){
 	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
+	/* vector<string> files = {"test"}; */
 	for(string filename : files){
         cout << "filename: " << filename << endl;
         OfflineStream* stream = new OfflineStream("../dataset/FIMI/" + filename + ".dat");

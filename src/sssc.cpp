@@ -67,35 +67,31 @@ void UnweightedCover::mrun(HyperEdge* he){
         return (*eff)[v1] < (*eff)[v2];
     });
     int i = he->vertices.size() - 1;
-    float old_M = this->M;
-    this->M = this->M + ((i+1)-this->M)/(he->i + 1);
-    this->S = this->S + ((i+1)-old_M) * ((i+1)-this->M);
-    float var = this->S/(he->i);
-    float fast_sigmoid_var = var / 1 + var;
-    float benefit;
+    float benefit, benefit1;
+    float prob = 1;
     for(; i >= 0; i--) {
         /* if((i+1) > (*eff)[he->vertices[i]]) break; */
         if((i+1) > (*eff)[he->vertices[i]]) {
-            benefit  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0,
+            benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0,
                 [&eff](int v1, int v2) -> float {
                     return (1/(*eff)[v1] + 1/(*eff)[v2]);
                 }
             );
-            benefit = benefit * (1 - fast_sigmoid_var) + he->vertices.size() - i;
+            benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i;
             /* benefit = he->vertices.size() - i; */
             break;
 		}
         else if((i+1) == (*eff)[he->vertices[i]]){
-            benefit  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0,
+            benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0,
                 [&eff](int v1, int v2) -> float {
                     return (1/(*eff)[v1] + 1/(*eff)[v2]);
                 }
             );
-            benefit = benefit * (1 - fast_sigmoid_var) + he->vertices.size() - i;
+            benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i;
             /* benefit = he->vertices.size() - i; */
             // compare the additional benefit of the current set to the previous effective set
             // if the subset cover is of the same size.
-            if(benefit > (*this->ben)[he->vertices[i]]){
+            if(benefit > (*this->ben)[he->vertices[i]] || (benefit == (*this->ben)[he->vertices[i]] && benefit1 > (*this->ben1)[he->vertices[i]])){
                 break;
             }
         }
@@ -106,6 +102,7 @@ void UnweightedCover::mrun(HyperEdge* he){
         (*this->eid)[v] = he->i;
         (*this->eff)[v] = i + 1;
         (*this->ben)[v] = benefit;
+        /* (*this->ben1)[v] = benefit1; */
     }
 }
 

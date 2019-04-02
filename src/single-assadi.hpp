@@ -9,7 +9,7 @@
 
 using namespace std;
 
-struct SSInput
+struct SAInput
 {
     Stream* stream;
     vector<int>* universe;
@@ -17,5 +17,5 @@ struct SSInput
     int m;
 };
 
-vector<int>* single_sublinear(SSInput* ssi, int alpha);
+vector<int>* single_sublinear(SAInput* ssi, int alpha);
 #endif

@@ -24,7 +24,7 @@ int main(){
         int m, M, avg, median, largest;
         stream->get_universe(universe, &m, &avg, &median, &largest, &M);
         int n = universe->size();
-        SSInput ssi = {stream, universe, n, m};
+        SAInput ssi = {stream, universe, n, m};
 
         /* int alpha = sqrt(n); */
         /* int alpha = sqrt(n) / log(n); */

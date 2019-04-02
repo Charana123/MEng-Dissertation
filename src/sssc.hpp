@@ -32,6 +32,7 @@ class UnweightedCover {
             this->eid = new vector<int>(max_elem, -1);
             this->eff = new vector<int>(max_elem, 0);
             this->ben = new vector<int>(max_elem, 0);
+            this->ben1 = new vector<int>(max_elem, 0);
         };
         int max_elem;
         void run(HyperEdge* he);
@@ -39,11 +40,7 @@ class UnweightedCover {
         void randomized_run(HyperEdge* he, float p);
         void threshold_randomized_run(HyperEdge* he, int threshold);
         void capture(HyperEdge* he);
-        vector<int> *ceid, *ceff, *eid, *eff, *ben;
-
-        // Value
-        float M = 0;
-        float S = 0;
+        vector<int> *ceid, *ceff, *eid, *eff, *ben, *ben1;
 };
 
 // lookup effectivity for vertices, sort, find i, transform to vertices

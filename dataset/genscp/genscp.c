@@ -87,7 +87,7 @@ int main(int argc, char *argv[]){
     fprintf(stderr,"Can't get seed of random number generator!\n");
     return(EXIT_FAILURE);
   }
-  if(sscanf(argv[5],"%s", &out) != 1){
+  if(sscanf(argv[5],"%s", out) != 1){
     fprintf(stderr,"Can't get the location of the output file");
     return(EXIT_FAILURE);
   }

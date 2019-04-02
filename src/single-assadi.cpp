@@ -1,7 +1,7 @@
 #include "single-assadi.hpp"
 #include "DFG.hpp"
 
-vector<int>* single_sublinear(SSInput* ssi, int alpha){
+vector<int>* single_sublinear(SAInput* ssi, int alpha){
     int m = (float)ssi->m/alpha;
     if(ssi->m % alpha > 0) m++;
     vector<unordered_set<int>>* vertices = new vector<unordered_set<int>>(m);

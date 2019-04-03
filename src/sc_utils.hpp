@@ -9,18 +9,18 @@ using namespace std;
 struct SetCoverInput
 {
     vector<Set>* sets;
-    vector<int>* universe;
-    int m;
-    int n;
-    int avg;
-    int median;
-    int largest;
-    int M;
+    vector<unsigned long>* universe;
+    unsigned long m;
+    unsigned long n;
+    unsigned long avg;
+    unsigned long median;
+    unsigned long largest;
+    unsigned long M;
 };
 
 struct SetCoverOutput {
-    set<int>* Sigma;
-    set<int>* C;
+    set<unsigned long>* Sigma;
+    set<unsigned long>* C;
 };
 
 SetCoverInput* read_sci(string filename);

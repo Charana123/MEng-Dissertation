@@ -5,9 +5,9 @@
 using namespace std;
 float p = 1.05;
 
-void summarise(string name, std::function<vector<int>*()> func){
+void summarise(string name, std::function<vector<unsigned long>*()> func){
     auto t1 = chrono::high_resolution_clock::now();
-    vector<int>* sol = func();
+    vector<unsigned long>* sol = func();
     auto t2 = chrono::high_resolution_clock::now();
     cout << "===========" << endl;
     cout << name << endl;
@@ -18,13 +18,13 @@ void summarise(string name, std::function<vector<int>*()> func){
 
 int main(int argc, char** argv){
 
-	string filename = string(argv[1]);
-	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
-    /* for(string filename : files){ */
-        /* SetCoverInput* sci = read_sci("../dataset/FIMI/" + filename + ".dat"); */
-        SetCoverInput* sci = read_sci("/Users/charana/Documents/thesis/papers/SCL/SPMF/" + filename);
-        summarise(filename + ".dat", [&]() -> vector<int>*{
+	/* string filename = string(argv[1]); */
+	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
+    for(string filename : files){
+        SetCoverInput* sci = read_sci("../implementations/dataset/FIMI/" + filename + ".dat");
+        /* SetCoverInput* sci = read_sci("/Users/charana/Documents/thesis/papers/SCL/SPMF/" + filename); */
+        summarise(filename + ".dat", [&]() -> vector<unsigned long>*{
             return DFG(sci, p);
         });
-    /* } */
+    }
 }

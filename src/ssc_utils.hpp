@@ -11,7 +11,7 @@ class Stream {
     public:
         Stream(){};
         virtual Set* get_next_set() = 0;
-        virtual void get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M) = 0;
+        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M) = 0;
         virtual void reset() = 0;
 };
 
@@ -19,25 +19,25 @@ class OnlineStream : public Stream {
     public:
         OnlineStream(string filename);
         Set* get_next_set();
-        virtual void get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M);
+        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M);
         void reset();
     private:
         bip::file_mapping mapping;
         bip::mapped_region mapped_rgn;
         imemstream* mmistream;
-        int position = 0;
+        unsigned long position = 0;
 };
 
 class OfflineStream : public Stream {
     public:
         OfflineStream(string filename);
         Set* get_next_set();
-        virtual void get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M);
+        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M);
         void reset();
         SetCoverInput* sci;
     private:
-        int position = 0;
-        int m;
+        unsigned long position = 0;
+        unsigned long m;
 };
 
 #endif

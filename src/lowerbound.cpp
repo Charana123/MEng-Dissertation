@@ -1,33 +1,28 @@
 #include "sc_utils.hpp"
 
-void compute_lowerbound(string filename){
-
-    SetCoverInput* sci = read_sci("./dataset/FIMI/" + filename + ".dat");
-
-    // Compute universe
-    set<int> universe;
-    for(Set* s : *sci->sets) universe.insert(s->vertices.begin(), s->vertices.end());
+int compute_lowerbound(SetCoverInput* sci){
 
     // Sort sets by size
-    sort(sci->sets->begin(), sci->sets->end(), [](Set* s1, Set* s2) -> bool{
-        return s1->vertices.size() < s2->vertices.size();
+    sort(sci->sets->begin(), sci->sets->end(), [](Set& s1, Set& s2) -> bool{
+        return s1.vertices.size() < s2.vertices.size();
     });
-    set<int> covered_universe;
-    int sol_size = -1;
-    for(Set* s : *sci->sets){
-        covered_universe.insert(s->vertices.begin(), s->vertices.end());
-        if(covered_universe.size() == universe.size()) {
-            sol_size = s->i;
-            break;
-        }
+    int i = 0;
+    for(int size = 0; i < sci->m; i++){
+        Set& s = sci->sets->at(i);
+        size += s.vertices.size();
+        if(size >= sci->n) break;
     }
-    cout << "file: " << filename + ".dat" << endl;
-    cout << "solution size: " << sol_size << endl;
+    return i;
 }
 
 int main(int argc, char** argv){
     /* string filename = string(argv[1]); */
     vector<string> files = {"test", "chess", "pumsb", "retail", "kosarak"};
-    for(string filename : files) compute_lowerbound(filename);
+    for(string filename : files) {
+        SetCoverInput* sci = read_sci("../implementations/dataset/FIMI/" + filename + ".dat");
+        /* SetCoverInput* sci = read_sci(filename); */
+        int lowerbound = compute_lowerbound(sci);
+        cout << "lowerbound: " << lowerbound << endl;
+    }
 }
 

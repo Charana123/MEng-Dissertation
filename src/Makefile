@@ -1,4 +1,5 @@
 SS_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp single-assadi.cpp DFG.cpp single-assadi-main.cpp
+EXACT_FILES = gp_utils.cpp sc_utils.cpp exact.cpp exact_main.cpp
 GREEDY_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_main.cpp
 NAIVE_FILES = gp_utils.cpp sc_utils.cpp naive.cpp naive_main.cpp
 DFG_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp DFG_main.cpp
@@ -25,7 +26,7 @@ FLAGS=-std=c++17 -pthread -O3
 # REPORT=-qopt-report=2 -qopt-report-phase=vec
 # LIBS=$(shell pkg-config --libs --cflags boost)
 # -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
-ifeq ($(uname), "Darwin")
+ifeq ($(uname), Darwin)
 	CC=clang++
 else
 	CC=g++
@@ -38,6 +39,10 @@ ss:
 g:
 	$(CC) $(FLAGS) $(GREEDY_FILES) -o greedy.out
 	./greedy.out
+
+exact:
+	$(CC) $(FLAGS) $(EXACT_FILES) -o exact.out
+	./exact.out
 
 naive:
 	$(CC) $(FLAGS) $(NAIVE_FILES) -o naive.out

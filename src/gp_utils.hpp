@@ -18,8 +18,8 @@
 using namespace std;
 
 struct Set{
-    vector<int> vertices;
-    int i;
+    vector<unsigned long> vertices;
+    unsigned long i;
 };
 
 bool operator==(const Set& a1, const Set& a2);

@@ -31,7 +31,7 @@ Set* OnlineStream::get_next_set(){
     return s;
 }
 
-void OfflineStream::get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M){
+void OfflineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M){
     *universe = *this->sci->universe;
     *m = this->sci->m;
     this->m = *m;
@@ -41,12 +41,12 @@ void OfflineStream::get_universe(vector<int>* universe, int* m, int* avg, int* m
     *largest = this->sci->largest;
 }
 
-void OnlineStream::get_universe(vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M){
+void OnlineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M){
     *m = 0;
     *M = 0;
     *median = 0; *largest = 0;
-    vector<int> set_sizes;
-    set<int> universe_s;
+    vector<unsigned long> set_sizes;
+    set<unsigned long> universe_s;
     for(Set* s; (s = get_next_set()) != nullptr; (*m)++){
         *M += s->vertices.size();
         set_sizes.push_back(s->vertices.size());

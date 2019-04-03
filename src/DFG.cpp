@@ -6,8 +6,8 @@ void OrderBySubCollection(SetCoverInput* sci, float p, vector<float>* p_pow_k, v
 
     Set* s = sci->sets->data();
     p_pow_k->push_back(1);
-    for(int i = 0; i < sci->m; i++){
-        for(int k = 0; ; k++){
+    for(unsigned long i = 0; i < sci->m; i++){
+        for(unsigned long k = 0; ; k++){
             if(p_pow_k->size() <= k + 1) {
                 p_pow_k->push_back(powf(p,k+1));
             }
@@ -21,24 +21,28 @@ void OrderBySubCollection(SetCoverInput* sci, float p, vector<float>* p_pow_k, v
 }
 
 // Disk Friendly Greedy
-vector<int>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vector<vector<Set*>>* ktoCollection, float p)
+vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vector<vector<Set*>>* ktoCollection, float p)
 {
     // Globals
-    vector<int>* sol = new vector<int>(); //list of indices of chosen sets
-    int max_elem = *std::max_element(sci->universe->begin(), sci->universe->end());
+    vector<unsigned long>* sol = new vector<unsigned long>(); //list of indices of chosen sets
+    unsigned long max_elem = *std::max_element(sci->universe->begin(), sci->universe->end());
     vector<bool> covered(max_elem + 1);
 
-    for(int k = ktoCollection->size()-1; k > 0; k--){
+    for(unsigned long k = ktoCollection->size()-1; k != static_cast<unsigned long>(-1); --k){
         for (Set *s: (*ktoCollection)[k]){
             Set* diff = new Set{{}, s->i};
-            for(int v : s->vertices) if(!covered[v]) diff->vertices.push_back(v);
+            for(unsigned long v : s->vertices) {
+                if(!covered[v]) {
+                    diff->vertices.push_back(v);
+                }
+            }
 
             if(diff->vertices.size() >= (*p_pow_k)[k]) {
                 sol->push_back(s->i);
-                for(int v : diff->vertices) covered[v] = true;
+                for(unsigned long v : diff->vertices) covered[v] = true;
             }
             else{
-                for(int k_prime = k-1; k_prime >= 0; k_prime--){
+                for(unsigned long k_prime = k-1; k_prime != static_cast<unsigned long>(-1); --k_prime){
                     if (diff->vertices.size() >= (*p_pow_k)[k_prime] && diff->vertices.size() < (*p_pow_k)[k_prime+1]){
                         (*ktoCollection)[k_prime].push_back(diff);
                         break;
@@ -49,8 +53,8 @@ vector<int>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vector<vector<
     }
 
     for(Set* s: (*ktoCollection)[0]){
-        vector<int> diff;
-        for(int v : s->vertices) if(!covered[v]) diff.push_back(v);
+        vector<unsigned long> diff;
+        for(unsigned long v : s->vertices) if(!covered[v]) diff.push_back(v);
         if(diff.size() == 1) {
             sol->push_back(s->i);
             covered[diff[0]] = true;
@@ -59,7 +63,7 @@ vector<int>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vector<vector<
     return sol;
 }
 
-vector<int>* DFG(SetCoverInput* sci, float p = 1.05){
+vector<unsigned long>* DFG(SetCoverInput* sci, float p = 1.05){
     vector<float>* p_pow_k = new vector<float>();
     vector<vector<Set*>>* ktoCollection = new vector<vector<Set*>>();
     OrderBySubCollection(sci, p, p_pow_k, ktoCollection);

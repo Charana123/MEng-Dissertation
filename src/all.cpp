@@ -6,9 +6,9 @@
 
 using namespace std;
 
-void summarise(string name, std::function<vector<int>*()> func){
+void summarise(string name, std::function<vector<unsigned long>*()> func){
     auto t1 = chrono::high_resolution_clock::now();
-    vector<int>* sol = func();
+    vector<unsigned long>* sol = func();
     auto t2 = chrono::high_resolution_clock::now();
     cout << "===========" << endl;
     cout << name << endl;
@@ -18,9 +18,9 @@ void summarise(string name, std::function<vector<int>*()> func){
     cout << endl;
 }
 
-void summarise(string name, std::function<unordered_set<int>*()> func){
+void summarise(string name, std::function<unordered_set<unsigned long>*()> func){
     auto t1 = chrono::high_resolution_clock::now();
-    unordered_set<int>* sol = func();
+    unordered_set<unsigned long>* sol = func();
     auto t2 = chrono::high_resolution_clock::now();
     cout << "===========" << endl;
     cout << name << endl;
@@ -29,17 +29,16 @@ void summarise(string name, std::function<unordered_set<int>*()> func){
     cout << "Solution size: " << sol->size() << endl;
     cout << endl;
 }
-
 
 int main(int argc, char** argv){
 	string filename = string(argv[1]);
     OfflineStream* offline_stream = new OfflineStream(filename);
     SetCoverInput* sci = offline_stream->sci;
     Stream* stream = offline_stream;
-    vector<int>* universe = new vector<int>();
-    int m, M, avg, median, largest;
+    vector<unsigned long>* universe = new vector<unsigned long>();
+    unsigned long m, M, avg, median, largest;
     stream->get_universe(universe, &m, &avg, &median, &largest, &M);
-    int n = universe->size();
+    unsigned long n = universe->size();
 
     cout << "==============" << endl;
     cout << "n: " << n << endl;
@@ -50,17 +49,17 @@ int main(int argc, char** argv){
     cout << "largest: " << largest << endl;
     cout << "==============" << endl;
 
-    summarise("DFG", [&]() -> vector<int>*{
+    summarise("DFG", [&]() -> vector<unsigned long>*{
         float p = 1.05;
         return DFG(sci, p);
     });
 
-    summarise("capture", [&]() -> unordered_set<int>*{
+    summarise("capture", [&]() -> unordered_set<unsigned long>*{
         SSSCInput sssci = {stream, universe, n, m, avg};
         return capture(&sssci);
     });
 
-    summarise("sssc", [&]() -> unordered_set<int>*{
+    summarise("sssc", [&]() -> unordered_set<unsigned long>*{
         SSSCInput sssci = {stream, universe, n, m, avg};
         return sssc(&sssci);
     });

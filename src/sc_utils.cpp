@@ -76,7 +76,7 @@ struct set_compare {
 vector<Set>* get_sets(vector<string>* lines){
     /* multiset<Set, set_compare>* sets = new multiset<Set*, set_compare>(); */
     vector<Set>* sets = new vector<Set>(lines->size());
-    int counter = 0;
+    unsigned long counter = 0;
 	for(string& line: *lines){
         (*sets)[counter].i = counter;
 		boost::tokenizer<> tokens(line);
@@ -87,12 +87,12 @@ vector<Set>* get_sets(vector<string>* lines){
     return sets;
 }
 
-void get_universe(vector<Set>* sets, vector<int>* universe, int* m, int* avg, int* median, int* largest, int* M){
+void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M){
     *m = 0;
     *M = 0;
     *median = 0; *largest = 0;
-    vector<int> set_sizes = {};
-    set<int> universe_s;
+    vector<unsigned long> set_sizes = {};
+    set<unsigned long> universe_s;
     for(Set& s : *sets){
         (*m)++;
         *M += s.vertices.size();
@@ -110,10 +110,10 @@ SetCoverInput* read_sci(string filename)
 {
     vector<string>* lines = read_file(filename);
     vector<Set>* sets = get_sets(lines);
-    vector<int>* universe = new vector<int>();
-    int m, avg, median, largest, M;
+    vector<unsigned long>* universe = new vector<unsigned long>();
+    unsigned long m, avg, median, largest, M;
     get_universe(sets, universe, &m, &avg, &median, &largest, &M);
-    int n = universe->size();
+    unsigned long n = universe->size();
 	return new SetCoverInput{sets, universe, m, n, avg, median, largest, M};
 }
 

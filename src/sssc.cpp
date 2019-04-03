@@ -72,23 +72,23 @@ void UnweightedCover::mrun(HyperEdge* he){
     for(; i >= 0; i--) {
         /* if((i+1) > (*eff)[he->vertices[i]]) break; */
         if((i+1) > (*eff)[he->vertices[i]]) {
-            benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0,
-                [&eff](int v1, int v2) -> float {
-                    return (1/(*eff)[v1] + 1/(*eff)[v2]);
-                }
-            );
-            benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i;
-            /* benefit = he->vertices.size() - i; */
+            /* benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0, */
+            /*     [&eff](int v1, int v2) -> float { */
+            /*         return (1/(*eff)[v1] + 1/(*eff)[v2]); */
+            /*     } */
+            /* ); */
+            /* benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i; */
+            benefit = he->vertices.size() - i;
             break;
 		}
         else if((i+1) == (*eff)[he->vertices[i]]){
-            benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0,
-                [&eff](int v1, int v2) -> float {
-                    return (1/(*eff)[v1] + 1/(*eff)[v2]);
-                }
-            );
-            benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i;
-            /* benefit = he->vertices.size() - i; */
+            /* benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0, */
+                /* [&eff](int v1, int v2) -> float { */
+                /*     return (1/(*eff)[v1] + 1/(*eff)[v2]); */
+                /* } */
+            /* ); */
+            /* benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i; */
+            benefit = he->vertices.size() - i;
             // compare the additional benefit of the current set to the previous effective set
             // if the subset cover is of the same size.
             if(benefit > (*this->ben)[he->vertices[i]] || (benefit == (*this->ben)[he->vertices[i]] && benefit1 > (*this->ben1)[he->vertices[i]])){

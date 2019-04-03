@@ -40,7 +40,7 @@ int main(int argc, char** argv){
 	/* vector<string> files = {"chess"}; */
 	/* for(string filename : files){ */
         /* Stream* stream = new OfflineStream("../dataset/FIMI/" + filename + ".dat"); */
-        Stream* stream = new OfflineStream("/Users/charana/Documents/thesis/papers/SCL/SPMF/" + filename);
+        Stream* stream = new OfflineStream(filename);
         /* Stream* stream = new OfflineStream("/Users/charana/Documents/thesis/implementations/other/" + filename); */
         vector<int>* universe = new vector<int>();
         int m, M, avg, median, largest;
@@ -48,15 +48,15 @@ int main(int argc, char** argv){
         int n = universe->size();
         SSSCInput sssci = {stream, universe, n, m, avg};
 
-        /* cout << filename << endl; */
-        /* cout << "==============" << endl; */
-        /* cout << "n: " << n << endl; */
-        /* cout << "m: " << m << endl; */
-        /* cout << "M: " << M << endl; */
-        /* cout << "avg: " << avg << endl; */
-        /* cout << "median: " << median << endl; */
-        /* cout << "largest: " << largest << endl; */
-        /* cout << "==============" << endl; */
+        cout << filename << endl;
+        cout << "==============" << endl;
+        cout << "n: " << n << endl;
+        cout << "m: " << m << endl;
+        cout << "M: " << M << endl;
+        cout << "avg: " << avg << endl;
+        cout << "median: " << median << endl;
+        cout << "largest: " << largest << endl;
+        cout << "==============" << endl;
 
         summarise(filename + ".dat", [&]() -> unordered_set<int>*{
             unordered_set<int>* sol = sssc(&sssci);

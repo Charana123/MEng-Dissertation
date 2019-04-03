@@ -25,7 +25,11 @@ FLAGS=-std=c++17 -pthread -O3
 # REPORT=-qopt-report=2 -qopt-report-phase=vec
 # LIBS=$(shell pkg-config --libs --cflags boost)
 # -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
-CC=clang++
+ifeq ($(uname), "Darwin")
+	CC=clang++
+else
+	CC=g++
+endif
 
 ss:
 	$(CC) $(FLAGS) $(SS_FILES) -o ss.out

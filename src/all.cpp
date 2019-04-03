@@ -37,13 +37,18 @@ int main(int argc, char** argv){
     SetCoverInput* sci = offline_stream->sci;
     Stream* stream = offline_stream;
     vector<int>* universe = new vector<int>();
-    int m, avg, M;
-    stream->get_universe(universe, &m, &avg, &M);
+    int m, M, avg, median, largest;
+    stream->get_universe(universe, &m, &avg, &median, &largest, &M);
     int n = universe->size();
 
-    /* summarise("lazy greedy", [&]() -> vector<int>*{ */
-    /*     return greedy(sci); */
-    /* }); */
+    cout << "==============" << endl;
+    cout << "n: " << n << endl;
+    cout << "m: " << m << endl;
+    cout << "M: " << M << endl;
+    cout << "avg: " << avg << endl;
+    cout << "median: " << median << endl;
+    cout << "largest: " << largest << endl;
+    cout << "==============" << endl;
 
     summarise("DFG", [&]() -> vector<int>*{
         float p = 1.05;
@@ -60,21 +65,21 @@ int main(int argc, char** argv){
         return sssc(&sssci);
     });
 
-    summarise("randomized sssc", [&]() -> unordered_set<int>*{
-        SSSCInput sssci = {stream, universe, n, m, avg};
-        return randomized_sssc(&sssci);
-    });
+    /* summarise("randomized sssc", [&]() -> unordered_set<int>*{ */
+    /*     SSSCInput sssci = {stream, universe, n, m, avg}; */
+    /*     return randomized_sssc(&sssci); */
+    /* }); */
 
     /* summarise("randomized sssc", [&]() -> unordered_set<int>*{ */
     /*     SSSCInput sssci = {stream, universe, n, m, avg}; */
     /*     return threshold_randomized_sssc(&sssci); */
     /* }); */
 
-    summarise("pg", [&]() -> unordered_set<int>*{
-        ProgressiveGreedyInput pgin = {stream, universe, n, m};
-        int passes = 1;
-        return progressive_greedy_naive(&pgin, passes);
-    });
+    /* summarise("pg", [&]() -> unordered_set<int>*{ */
+    /*     ProgressiveGreedyInput pgin = {stream, universe, n, m}; */
+    /*     int passes = 1; */
+    /*     return progressive_greedy_naive(&pgin, passes); */
+    /* }); */
 }
 
 

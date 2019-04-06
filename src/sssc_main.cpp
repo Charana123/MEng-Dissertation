@@ -34,38 +34,57 @@ void check(SSSCInput* sssci, unordered_set<unsigned long>* sol){
     cout << diff << endl;
 }
 
+void parr(string filename){
+    POfflineStream** streams = get_streams(filename, 28);
+    cout << "here" << endl;
+    vector<unsigned long>* universe = new vector<unsigned long>();
+    unsigned long m, M, avg, median, largest;
+    streams[0]->get_universe(universe, &m, &avg, &median, &largest, &M);
+    unsigned long n = universe->size();
+    PSSSCInput psssci = {streams, universe, n, m};
+    cout << "here1" << endl;
+    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
+        unordered_set<unsigned long>* sol = capture(&psssci, 28);
+        return sol;
+    });
+
+}
+
+void seqq(string filename){
+    Stream* stream = new OfflineStream(filename);
+    vector<unsigned long>* universe = new vector<unsigned long>();
+    unsigned long m, M, avg, median, largest;
+    stream->get_universe(universe, &m, &avg, &median, &largest, &M);
+    unsigned long n = universe->size();
+    SSSCInput sssci = {stream, universe, n, m, avg};
+
+    /* cout << filename << endl; */
+    /* cout << "==============" << endl; */
+    /* cout << "n: " << n << endl; */
+    /* cout << "m: " << m << endl; */
+    /* cout << "M: " << M << endl; */
+    /* cout << "avg: " << avg << endl; */
+    /* cout << "median: " << median << endl; */
+    /* cout << "largest: " << largest << endl; */
+    /* cout << "==============" << endl; */
+
+    /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
+    /*     unordered_set<unsigned long>* sol = sssc(&sssci); */
+    /*     return sol; */
+    /* }); */
+    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
+        unordered_set<unsigned long>* sol = capture(&sssci);
+        return sol;
+    });
+}
+
 int main(int argc, char** argv){
-	/* string filename = string(argv[1]); */
-	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
-	for(string filename : files){
-        Stream* stream = new OfflineStream("../implementations/dataset/FIMI/" + filename + ".dat");
-        /* Stream* stream = new OfflineStream(filename); */
-        /* Stream* stream = new OfflineStream("/Users/charana/Documents/thesis/implementations/other/" + filename); */
-        vector<unsigned long>* universe = new vector<unsigned long>();
-        unsigned long m, M, avg, median, largest;
-        stream->get_universe(universe, &m, &avg, &median, &largest, &M);
-        unsigned long n = universe->size();
-        SSSCInput sssci = {stream, universe, n, m, avg};
-
-        /* cout << filename << endl; */
-        /* cout << "==============" << endl; */
-        /* cout << "n: " << n << endl; */
-        /* cout << "m: " << m << endl; */
-        /* cout << "M: " << M << endl; */
-        /* cout << "avg: " << avg << endl; */
-        /* cout << "median: " << median << endl; */
-        /* cout << "largest: " << largest << endl; */
-        /* cout << "==============" << endl; */
-
-        summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
-            unordered_set<unsigned long>* sol = sssc(&sssci);
-            return sol;
-        });
-        /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
-        /*     unordered_set<unsigned long>* sol = capture(&sssci); */
-        /*     return sol; */
-        /* }); */
-	}
+	string filename = string(argv[1]);
+	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
+	/* for(string filename : files){ */
+        /* parr(filename); */
+        seqq(filename);
+	/* } */
 }
 
 

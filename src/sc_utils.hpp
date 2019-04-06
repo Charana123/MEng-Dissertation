@@ -18,6 +18,18 @@ struct SetCoverInput
     unsigned long M;
 };
 
+struct PSetCoverInput
+{
+    vector<Set*>* sets;
+    vector<unsigned long>* universe;
+    unsigned long m;
+    unsigned long n;
+    unsigned long avg;
+    unsigned long median;
+    unsigned long largest;
+    unsigned long M;
+};
+
 struct SetCoverOutput {
     set<unsigned long>* Sigma;
     set<unsigned long>* C;

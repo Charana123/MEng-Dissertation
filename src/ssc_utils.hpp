@@ -18,9 +18,9 @@ class Stream {
 class OnlineStream : public Stream {
     public:
         OnlineStream(string filename);
-        Set* get_next_set();
+        virtual Set* get_next_set();
         virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M);
-        void reset();
+        virtual void reset();
     private:
         bip::file_mapping mapping;
         bip::mapped_region mapped_rgn;
@@ -31,18 +31,32 @@ class OnlineStream : public Stream {
 class OfflineStream : public Stream {
     public:
         OfflineStream(string filename);
-        Set* get_next_set();
+        virtual Set* get_next_set();
         virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M);
-        void reset();
+        virtual void reset();
         SetCoverInput* sci;
     private:
         unsigned long position = 0;
         unsigned long m;
 };
 
+class POfflineStream : public Stream {
+    // override the constructor and next set methods
+    public:
+        POfflineStream(PSetCoverInput* psci, int t, int ts, unsigned long tsize);
+        virtual Set* get_next_set() override;
+        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M) override;
+        virtual void reset() override;
+        PSetCoverInput* psci;
+    private:
+        int t, ts;
+        unsigned long position, tsize;
+        unsigned long m;
+};
+
+POfflineStream** get_streams(string filename, int ts);
+
 #endif
-
-
 
 
 

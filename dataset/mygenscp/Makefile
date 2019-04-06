@@ -1,16 +1,14 @@
-CC=clang++
-FLAGS=-std=c++17 -O3
+CC=g++
+FLAGS=-std=c++17 -O3 -fopenmp
 
-gen1:
-	$(CC) $(FLAGS) gen_dataset.cpp -o gend.out
-	./gend.out
+random_graph_gen:
+	$(CC) $(FLAGS) random_graph_gen.cpp -o random_graph_gen.out
 
-gen2:
-	$(CC) $(FLAGS) gen_dataset1.cpp -o gend1.out
-	./gend1.out
+random_graph_gen1:
+	$(CC) $(FLAGS) random_graph_gen1.cpp -o random_graph_gen1.out
 
-clean:
-	rm parsing_benchmarks
+random_graph_gen_file:
+	$(CC) $(FLAGS) random_graph_gen_file.cpp -o random_graph_gen_file.out
 
-.PHONY: parse
+.PHONY: random_graph_gen
 

@@ -127,6 +127,21 @@ void UnweightedCover::run(HyperEdge* he){
     /* cout << "ended" << endl; */
 }
 
+
+unordered_set<unsigned long>* sssc(SSSCInput* sssci){
+
+    UnweightedCover cover(sssci->universe);
+    for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
+        cover.run(he);
+    }
+    /* cout << "after" << endl; */
+    sssci->stream->reset();
+
+    unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
+    for(unsigned long v : *cover.eid) if(v != static_cast<unsigned long>(-1)) sol->insert(v);
+    return sol;
+}
+
 void UnweightedCover::capture(HyperEdge* he){
     unsigned long eff = he->vertices.size();
     for(unsigned long v : he->vertices){
@@ -139,7 +154,7 @@ void UnweightedCover::capture(HyperEdge* he){
 
 unordered_set<unsigned long>* capture(SSSCInput* sssci){
 
-    UnweightedCover cover(sssci);
+    UnweightedCover cover(sssci->universe);
     for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
         cover.capture(he);
     }
@@ -150,20 +165,50 @@ unordered_set<unsigned long>* capture(SSSCInput* sssci){
     return sol;
 }
 
-unordered_set<unsigned long>* sssc(SSSCInput* sssci){
-
-    UnweightedCover cover(sssci);
-    for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
-        cover.run(he);
+void PUC::capture(HyperEdge* he, int t){
+    cout << "here2.1" << endl;
+    unsigned long eff = he->vertices.size();
+    for(unsigned long v : he->vertices){
+        if(eff > this->ceffs[t][v]){
+            this->ceids[t][v] = he->i;
+            this->ceffs[t][v] = eff;
+        }
     }
-    /* cout << "after" << endl; */
-    sssci->stream->reset();
-
-    unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
-    for(unsigned long v : *cover.eid) if(v != static_cast<unsigned long>(-1)) sol->insert(v);
-    return sol;
+    cout << "here2.2" << endl;
 }
 
+unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts){
+
+    PUC puc(psssci->universe, ts);
+    cout << "here2" << endl;
+    /* #pragma omp parallel for */
+    for(int t = 0; t < ts; t++){
+        for(HyperEdge* he; (he = psssci->streams[t]->get_next_set())!= nullptr; ){
+            puc.capture(he, t);
+        }
+        cout << "here3" << endl;
+        psssci->streams[t]->reset();
+        cout << "here4" << endl;
+        /* for(unsigned long i = puc.max_elem * t; i < puc.max_elem * (t+1); i++){ */
+        /*     unsigned long max_ceff = 0; unsigned long max_ceid = -1; */
+        /*     for(int t = 0; t < ts; t++){ */
+        /*         if(puc.ceffs[t][i] > max_ceff) { */
+        /*             max_ceff = puc.ceffs[t][i]; */
+        /*             max_ceid = puc.ceids[t][i]; */
+        /*         } */
+        /*     } */
+        /*     puc.fceid[i] = max_ceid; */
+        /* } */
+    }
+
+    unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
+    for(int i = 0; i < puc.max_elem; i++){
+        if(puc.fceid[i] != static_cast<unsigned long>(-1)){
+            sol->insert(puc.fceid[i]);
+        }
+    }
+    return sol;
+}
 
 /* unordered_set<int>* randomized_sssc(SSSCInput* sssci){ */
 

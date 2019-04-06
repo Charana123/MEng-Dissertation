@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#SBATCH --job-name=data_mining_proc_job
+#SBATCH --partition=veryshort
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --time=6:00:00
+#SBATCH --mem=100gb
+
+../all.out /mnt/storage/scratch/an15739/random_graphs/2mil400d.dat

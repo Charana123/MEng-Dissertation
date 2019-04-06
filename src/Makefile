@@ -85,7 +85,7 @@ tg:
 
 sssc:
 	$(CC) $(FLAGS) $(REPORT) $(SSSC_FILES) -o sssc.out $(LIBS)
-	./sssc.out
+	./sssc.out ../dataset/FIMI/kosarak.dat
 
 sssct:
 	$(CC) $(FLAGS)  $(SSSCT_FILES) -o sssct.out

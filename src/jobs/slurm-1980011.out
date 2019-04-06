@@ -1,0 +1,23 @@
+==============
+n: 2000000
+m: 1999984
+M: 799972330
+avg: 399
+median: 400
+largest: 501
+==============
+===========
+DFG
+===========
+time: 65136 ms
+Solution size: 17006
+
+===========
+capture
+===========
+time: 4256 ms
+Solution size: 29505
+
+slurmstepd: error: Job 1980011 exceeded memory limit (55568816 > 52428800), being killed
+slurmstepd: error: Exceeded job memory limit
+slurmstepd: error: *** JOB 1980011 ON compute082 CANCELLED AT 2019-04-06T18:54:32 ***

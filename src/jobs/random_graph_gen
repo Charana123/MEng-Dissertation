@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#SBATCH --job-name=random_graph_gen_job
+#SBATCH --partition=veryshort
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --time=6:00:00
+#SBATCH --mem=100M
+
+../dataset/mygenscp/random_graph_gen.out /mnt/storage/scratch/an15739/random_graphs/2mil.dat 
+../dataset/mygenscp/random_graph_gen.out /mnt/storage/scratch/an15739/random_graphs/2mil.dat
+../dataset/mygenscp/random_graph_gen.out /mnt/storage/scratch/an15739/random_graphs/2mil.dat
+../dataset/mygenscp/random_graph_gen.out /mnt/storage/scratch/an15739/random_graphs/2mil.dat

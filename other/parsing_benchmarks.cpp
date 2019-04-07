@@ -1,10 +1,11 @@
-#include "../gp_utils.hpp"
+#include "../src/gp_utils.hpp"
 #include <algorithm>
 #include <fstream>
 #include <chrono>
 #include <cstdio>
 
 using namespace std;
+namespace bip = boost::interprocess;
 
 void process_mem_usage(double* vm_usage, double* resident_set)
 {
@@ -48,12 +49,26 @@ int filesize(const char* filename)
     return static_cast<int>(in.tellg());
 }
 
-vector<int> parse_line(string line){
+void parse_line(string line){
     boost::trim(line);
-    boost::tokenizer<> tok(line);
-    vector<int> s;
-    /* transform(tok.begin(), tok.end(), s.begin(), [](string c) -> int{ return stoi(c); }); */
-    return s;
+
+    // boost tokenizer
+    /* boost::tokenizer<> tok(line); */
+    /* vector<string> ts; */
+    /* for(auto& t : tok) { */
+    /*     ts.push_back(t); */
+    /* } */
+
+    // strtok tokenizer
+    char* cline = new char[line.size() + 1];
+    strcpy(cline, line.c_str());
+    char *t = std::strtok(cline, " ");
+    vector<char*> ts;
+    while (t != NULL) {
+        ts.push_back(t);
+        t = std::strtok(NULL, " ");
+    }
+    delete[] cline;
 }
 
 void time(string name, std::function<void()> func){
@@ -67,19 +82,17 @@ void time(string name, std::function<void()> func){
     cout << endl;
 }
 
-string file_path = "../dataset/kosarak.dat";
-namespace bip = boost::interprocess;
+int main(int argc, char** argv){
+    string file_path = string(argv[1]);
 
-int main(){
+    /* time("ifstream", []() -> void{ */
+    /*     std::ifstream ifs(file_path); */
+    /*     for(string line; getline(ifs, line); ){ */
+    /*         parse_line(line); */
+    /*     } */
+    /* }); */
 
-    time("ifstream", []() -> void{
-        std::ifstream ifs(file_path);
-        for(string line; getline(ifs, line); ){
-            parse_line(line);
-        }
-    });
-
-    time("boost::mmap entire", []() -> void{
+    time("boost::mmap entire", [&]() -> void{
         bip::file_mapping mapping(file_path.c_str(), bip::read_only);
         bip::mapped_region mapped_rgn(mapping, bip::read_only);
         char const* const mmaped_data = static_cast<char*>(mapped_rgn.get_address());
@@ -87,44 +100,44 @@ int main(){
 
         imemstream mmifs(mmaped_data, mmap_size);
         for(string line; getline(mmifs, line); ){
-            /* parse_line(line); */
+            parse_line(line);
         }
     });
 
-    time("boost::mmap paging", []() -> void{
-        bip::file_mapping mapping(file_path.c_str(), bip::read_only);
-        int file_size = filesize(file_path.c_str());
-        int page_size = bip::mapped_region::get_page_size();
-        int pages = file_size / page_size;
-        int remain = file_size % page_size;
+    /* time("boost::mmap paging", []() -> void{ */
+    /*     bip::file_mapping mapping(file_path.c_str(), bip::read_only); */
+    /*     int file_size = filesize(file_path.c_str()); */
+    /*     int page_size = bip::mapped_region::get_page_size(); */
+    /*     int pages = file_size / page_size; */
+    /*     int remain = file_size % page_size; */
 
-        int lines = 0;
-        for(int page = 0; page < pages; page++){
-            bip::mapped_region mapped_rgn(mapping, bip::read_only, page * page_size, page_size);
-            char const* const mmaped_data = static_cast<char*>(mapped_rgn.get_address());
-            size_t const mmap_size = mapped_rgn.get_size();
+    /*     int lines = 0; */
+    /*     for(int page = 0; page < pages; page++){ */
+    /*         bip::mapped_region mapped_rgn(mapping, bip::read_only, page * page_size, page_size); */
+    /*         char const* const mmaped_data = static_cast<char*>(mapped_rgn.get_address()); */
+    /*         size_t const mmap_size = mapped_rgn.get_size(); */
 
-            imemstream mmifs(mmaped_data, mmap_size);
-            for(string line; getline(mmifs, line); ){
-                lines++;
-            }
-        }
-        cout << lines << endl;
-    });
+    /*         imemstream mmifs(mmaped_data, mmap_size); */
+    /*         for(string line; getline(mmifs, line); ){ */
+    /*             lines++; */
+    /*         } */
+    /*     } */
+    /*     cout << lines << endl; */
+    /* }); */
 
-    time("cstyle fgets", []() -> void{
-        FILE * pFile;
-        size_t buffer_size = 1024*16;
-        char line [buffer_size];
-        pFile = fopen(file_path.c_str() , "r");
-        int lines = 0;
-        double vm_usage, resident_set;
-        for(; fgets (line, buffer_size, pFile) != NULL; ){
-            lines++;
-        }
-        cout << lines << endl;
-        fclose (pFile);
-    });
+    /* time("cstyle fgets", []() -> void{ */
+    /*     FILE * pFile; */
+    /*     size_t buffer_size = 1024*16; */
+    /*     char line [buffer_size]; */
+    /*     pFile = fopen(file_path.c_str() , "r"); */
+    /*     int lines = 0; */
+    /*     double vm_usage, resident_set; */
+    /*     for(; fgets (line, buffer_size, pFile) != NULL; ){ */
+    /*         lines++; */
+    /*     } */
+    /*     cout << lines << endl; */
+    /*     fclose (pFile); */
+    /* }); */
 
     /* time("cstyle fread", []() -> void{ */
     /*     FILE* pFile = fopen(file_path.c_str() , "r"); */

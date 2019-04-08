@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#SBATCH --job-name=gen_webgraph
+#SBATCH --partition=veryshort
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=28
+#SBATCH --cpus-per-task=1
+#SBATCH --time=6:00:00
+#SBATCH --mem=100gb
+
+cd ../webgraph
+java -cp "*" it.unimi.dsi.webgraph.ArcListASCIIGraph -g BVGraph /mnt/storage/scratch/an15739/LAW/twitter-2010 /mnt/storage/scratch/an15739/LAW/twitter-2010.edges

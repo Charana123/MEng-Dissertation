@@ -13,7 +13,6 @@ struct SetCoverInput
     unsigned long m;
     unsigned long n;
     unsigned long avg;
-    unsigned long median;
     unsigned long largest;
     unsigned long M;
 };
@@ -25,7 +24,6 @@ struct PSetCoverInput
     unsigned long m;
     unsigned long n;
     unsigned long avg;
-    unsigned long median;
     unsigned long largest;
     unsigned long M;
 };

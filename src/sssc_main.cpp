@@ -12,6 +12,7 @@ void summarise(string name, std::function<unordered_set<unsigned long>*()> func)
     cout << "===========" << endl;
     cout << "time: " << chrono::duration_cast<chrono::milliseconds>(t2-t1).count() << " ms" << endl;
     cout << "Solution size: " << sol->size() << endl;
+    delete sol;
     cout << endl;
 }
 
@@ -34,21 +35,20 @@ void check(SSSCInput* sssci, unordered_set<unsigned long>* sol){
     cout << diff << endl;
 }
 
-void parr(string filename){
-    POfflineStream** streams = get_streams(filename, 28);
-    cout << "here" << endl;
-    vector<unsigned long>* universe = new vector<unsigned long>();
-    unsigned long m, M, avg, median, largest;
-    streams[0]->get_universe(universe, &m, &avg, &median, &largest, &M);
-    unsigned long n = universe->size();
-    PSSSCInput psssci = {streams, universe, n, m};
-    cout << "here1" << endl;
-    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
-        unordered_set<unsigned long>* sol = capture(&psssci, 28);
-        return sol;
-    });
-
-}
+/* void parr(string filename){ */
+/*     POfflineStream** streams = get_streams(filename, 28); */
+/*     cout << "here" << endl; */
+/*     vector<unsigned long>* universe = new vector<unsigned long>(); */
+/*     unsigned long m, M, avg, median, largest; */
+/*     streams[0]->get_universe(universe, &m, &avg, &median, &largest, &M); */
+/*     unsigned long n = universe->size(); */
+/*     PSSSCInput psssci = {streams, universe, n, m}; */
+/*     cout << "here1" << endl; */
+/*     summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
+/*         unordered_set<unsigned long>* sol = capture(&psssci, 28); */
+/*         return sol; */
+/*     }); */
+/* } */
 
 void seqq(string filename){
     /* Stream* stream = new OfflineStream(filename); */

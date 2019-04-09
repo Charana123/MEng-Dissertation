@@ -18,8 +18,13 @@
 using namespace std;
 
 struct Set{
+    Set(vector<unsigned long> vertices, unsigned long i){
+        this->vertices = vertices;
+        this->i = i;
+    }
     vector<unsigned long> vertices;
     unsigned long i;
+    virtual ~Set(){};
 };
 
 bool operator==(const Set& a1, const Set& a2);

@@ -3,17 +3,17 @@
 #include "boost/range/algorithm/remove_if.hpp"
 #include <chrono>
 
-vector<int>* compose(OfflineStream* stream){
+vector<unsigned long>* compose(OfflineStream* stream){
 
-    vector<int>* universe = new vector<int>();
-    int m, M, avg, median, largest;
-    stream->get_universe(universe, &m, &avg, &median, &largest, &M);
-    int n = universe->size();
+    vector<unsigned long>* universe = new vector<unsigned long>();
+    unsigned long m, M, avg, largest;
+    stream->get_universe(universe, &m, &avg, &largest, &M);
+    unsigned long n = universe->size();
     SSSCInput sssci = {stream, universe, n, m, avg};
 
-    unordered_set<int>* sol = sssc(&sssci);
-    vector<int> chosen(m, 0);
-    for(int sid: *sol) chosen[sid] = 1;
+    unordered_set<unsigned long>* sol = sssc(&sssci);
+    vector<bool> chosen(m, 0);
+    for(unsigned long sid: *sol) chosen[sid] = true;
     /* vector<Set>* sets = stream->sci->sets; */
     /* sets->erase( */
     /*     std::remove_if(sets->begin(), sets->end(), [&chosen](Set& s) -> bool{ */
@@ -26,15 +26,15 @@ vector<int>* compose(OfflineStream* stream){
         if(chosen[s->i]) sets->push_back(*s);
     }
 
-    int proj_m = sol->size();
-    SetCoverInput* sci = new SetCoverInput{sets, universe, proj_m, n, -1, -1, -1, -1};
-    vector<int>* final_sol = DFG(sci, 1.01);
+    unsigned long proj_m = sol->size();
+    SetCoverInput* sci = new SetCoverInput{sets, universe, proj_m, n, 0, 0, 0};
+    vector<unsigned long>* final_sol = DFG(sci, 1.05);
     return final_sol;
 }
 
-void summarise(string name, std::function<vector<int>*()> func){
+void summarise(string name, std::function<vector<unsigned long>*()> func){
     auto t1 = chrono::high_resolution_clock::now();
-    vector<int>* sol = func();
+    vector<unsigned long>* sol = func();
     auto t2 = chrono::high_resolution_clock::now();
     cout << "===========" << endl;
     cout << name << endl;
@@ -44,16 +44,16 @@ void summarise(string name, std::function<vector<int>*()> func){
 }
 
 int main(int argc, char** argv){
-	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
+    string filename = string(argv[1]);
+	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
 	/* vector<string> files = {"test"}; */
-	for(string filename : files){
+	/* for(string filename : files){ */
         cout << "filename: " << filename << endl;
         OfflineStream* stream = new OfflineStream("../dataset/FIMI/" + filename + ".dat");
-        summarise(filename + ".dat", [&]() -> vector<int>*{
-            vector<int>* sol = compose(stream);
-            return sol;
+        summarise(filename + ".dat", [&]() -> vector<unsigned long>*{
+            return compose(stream);
         });
-	}
+	/* } */
 }
 
 

@@ -17,7 +17,7 @@ POfflineStream** get_streams(string filename, int ts) {
     }
     for(int t = 0; t < ts - 1; t++) {
         PSetCoverInput* psci = new PSetCoverInput{sets + t,
-            stream->sci->universe, stream->sci->m, stream->sci->n, 0, 0, 0, 0};
+            stream->sci->universe, stream->sci->m, stream->sci->n, 0, 0, 0};
         streams[t] = new POfflineStream(psci, t, ts, tblock + t != ts ? stream->sci->m % ts : 0);
     }
     return streams;
@@ -51,63 +51,69 @@ Set* OfflineStream::get_next_set(){
 }
 
 Set* POfflineStream::get_next_set(){
-    cout << "here2.1.1" << endl;
     if(this->position >= this->tsize) return nullptr;
     Set* s = (*this->psci->sets)[this->position++];
-    cout << "here2.1.2" << endl;
     return s;
 }
 
 Set* OnlineStream::get_next_set(){
 
+    delete this->last_set;
 	string line;
-    if(!getline(*this->mmistream, line)) return nullptr;
-
-    Set* s = new Set{{}, position};
-    boost::tokenizer<> tokens(line);
-    for(auto& token : tokens){
-        s->vertices.push_back(std::stoi(token));
+    if(!getline(*this->mmistream, line)) {
+        this->last_set = nullptr;
+        return nullptr;
     }
-    this->position++;
+
+    Set* s = new Set{{}, position++};
+    char* cline = new char[line.size() + 1];
+    strcpy(cline, line.c_str());
+    char* cs = std::strtok(cline, " \t");
+    /* s->vertices.push_back(stoul(cs)); */
+    for(; (cs = std::strtok(NULL, " \t")) != NULL; ){
+        s->vertices.push_back(stoul(cs));
+    }
+    this->last_set = s;
     return s;
 }
 
-void OfflineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M){
+void OfflineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M){
     *universe = *this->sci->universe;
     *m = this->sci->m;
     *avg = this->sci->avg;
     *M = this->sci->M;
-    *median = this->sci->median;
     *largest = this->sci->largest;
 }
 
-void POfflineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M){
+void POfflineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M){
     *universe = *this->psci->universe;
     *m = this->psci->m;
     *avg = this->psci->avg;
     *M = this->psci->M;
-    *median = this->psci->median;
     *largest = this->psci->largest;
 }
 
-void OnlineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M){
-    *m = 0;
-    *M = 0;
-    *median = 0; *largest = 0;
-    vector<unsigned long> set_sizes;
-    set<unsigned long> universe_s;
+void OnlineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M){
+    *m = 0; *M = 0; *largest = 0;
+    unsigned long maxx = 0;
     for(Set* s; (s = get_next_set()) != nullptr; (*m)++){
         *M += s->vertices.size();
-        set_sizes.push_back(s->vertices.size());
         if(s->vertices.size() > *largest) *largest = s->vertices.size();
-        universe_s.insert(s->vertices.begin(), s->vertices.end());
+        unsigned long c_maxx = *std::max_element(s->vertices.begin(), s->vertices.end());
+        if(c_maxx > maxx) maxx = c_maxx;
     }
-    universe->insert(universe->end(), universe_s.begin(), universe_s.end());
-    *avg = (*M)/(*m);
-    std::nth_element(set_sizes.begin(), set_sizes.begin() + set_sizes.size()/2, set_sizes.end());
-    *median = set_sizes[set_sizes.size()/2];
+    *avg = *M/(*m);
+    reset();
+
+    bool* covered = new bool[maxx+1];
+    for(Set* s; (s = get_next_set()) != nullptr; ){
+        for(unsigned long v : s->vertices) covered[v] = 1;
+    }
+    for(unsigned long i = 0; i < maxx+1; i++) if(covered[i] == 1) universe->push_back(i);
+    delete[] covered;
     reset();
 }
+
 
 void OfflineStream::reset(){
     this->position = 0;

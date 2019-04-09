@@ -60,63 +60,60 @@ using namespace std;
 /*     } */
 /* } */
 
-void UnweightedCover::mrun(HyperEdge* he){
+/* void UnweightedCover::mrun(HyperEdge* he){ */
 
+/*     vector<unsigned long>* eff = this->eff; */
+/*     sort(he->vertices.begin(), he->vertices.end(), [&eff](unsigned long v1, unsigned long v2) -> bool{ */
+/*         return (*eff)[v1] < (*eff)[v2]; */
+/*     }); */
+/*     unsigned long i = he->vertices.size() - 1; */
+/*     unsigned long benefit; */
+/*     double benefit1; */
+/*     float prob = 1; */
+/*     for(; i >= 0; i--) { */
+/*         /1* if((i+1) > (*eff)[he->vertices[i]]) break; *1/ */
+/*         if((i+1) > (*eff)[he->vertices[i]]) { */
+/*             /1* benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0, *1/ */
+/*             /1*     [&eff](unsigned long v1, unsigned long v2) -> float { *1/ */
+/*             /1*         return (1/(*eff)[v1] + 1/(*eff)[v2]); *1/ */
+/*             /1*     } *1/ */
+/*             /1* ); *1/ */
+/*             /1* benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i; *1/ */
+/*             benefit = he->vertices.size() - i; */
+/*             break; */
+/* 		} */
+/*         else if((i+1) == (*eff)[he->vertices[i]]){ */
+/*             /1* benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0, *1/ */
+/*                 /1* [&eff](unsigned long v1, unsigned long v2) -> float { *1/ */
+/*                 /1*     return (1/(*eff)[v1] + 1/(*eff)[v2]); *1/ */
+/*                 /1* } *1/ */
+/*             /1* ); *1/ */
+/*             /1* benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i; *1/ */
+/*             benefit = he->vertices.size() - i; */
+/*             // compare the additional benefit of the current set to the previous effective set */
+/*             // if the subset cover is of the same size. */
+/*             if(benefit > (*this->ben)[he->vertices[i]] || (benefit == (*this->ben)[he->vertices[i]] && benefit1 > (*this->ben1)[he->vertices[i]])){ */
+/*                 break; */
+/*             } */
+/*         } */
+/*     } */
+
+/*     for(unsigned long j = 0; j <= i; j++){ */
+/*         unsigned long v = he->vertices[j]; */
+/*         (*this->eid)[v] = he->i; */
+/*         (*this->eff)[v] = i + 1; */
+/*         (*this->ben)[v] = benefit; */
+/*         /1* (*this->ben1)[v] = benefit1; *1/ */
+/*     } */
+/* } */
+
+void SSSCCover::run(HyperEdge* he){
     vector<unsigned long>* eff = this->eff;
     sort(he->vertices.begin(), he->vertices.end(), [&eff](unsigned long v1, unsigned long v2) -> bool{
         return (*eff)[v1] < (*eff)[v2];
     });
-    unsigned long i = he->vertices.size() - 1;
-    unsigned long benefit;
-    double benefit1;
-    float prob = 1;
-    for(; i >= 0; i--) {
-        /* if((i+1) > (*eff)[he->vertices[i]]) break; */
-        if((i+1) > (*eff)[he->vertices[i]]) {
-            /* benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0, */
-            /*     [&eff](unsigned long v1, unsigned long v2) -> float { */
-            /*         return (1/(*eff)[v1] + 1/(*eff)[v2]); */
-            /*     } */
-            /* ); */
-            /* benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i; */
-            benefit = he->vertices.size() - i;
-            break;
-		}
-        else if((i+1) == (*eff)[he->vertices[i]]){
-            /* benefit1  = std::reduce(he->vertices.begin() + i, he->vertices.end(), 0.0, */
-                /* [&eff](unsigned long v1, unsigned long v2) -> float { */
-                /*     return (1/(*eff)[v1] + 1/(*eff)[v2]); */
-                /* } */
-            /* ); */
-            /* benefit = benefit1/(he->vertices.size() - i) * prob + he->vertices.size() - i; */
-            benefit = he->vertices.size() - i;
-            // compare the additional benefit of the current set to the previous effective set
-            // if the subset cover is of the same size.
-            if(benefit > (*this->ben)[he->vertices[i]] || (benefit == (*this->ben)[he->vertices[i]] && benefit1 > (*this->ben1)[he->vertices[i]])){
-                break;
-            }
-        }
-    }
-
-    for(unsigned long j = 0; j <= i; j++){
-        unsigned long v = he->vertices[j];
-        (*this->eid)[v] = he->i;
-        (*this->eff)[v] = i + 1;
-        (*this->ben)[v] = benefit;
-        /* (*this->ben1)[v] = benefit1; */
-    }
-}
-
-void UnweightedCover::run(HyperEdge* he){
-    /* cout << "started" << endl; */
-    vector<unsigned long>* eff = this->eff;
-    sort(he->vertices.begin(), he->vertices.end(), [&eff](unsigned long v1, unsigned long v2) -> bool{
-        return (*eff)[v1] < (*eff)[v2];
-    });
-    /* cout << "here" << endl; */
     unsigned long i = he->vertices.size() - 1;
     for(; i != static_cast<unsigned long>(-1) && (i + 1) < 2*(*eff)[he->vertices[i]]; i--) {}
-    /* cout << "here1" << endl; */
 
     if(i ==  static_cast<unsigned long>(-1)) return;
     for(unsigned long j = 0; j <= i; j++){
@@ -124,13 +121,12 @@ void UnweightedCover::run(HyperEdge* he){
         (*this->eid)[v] = he->i;
         (*this->eff)[v] = i + 1;
     }
-    /* cout << "ended" << endl; */
 }
 
 
 unordered_set<unsigned long>* sssc(SSSCInput* sssci){
 
-    UnweightedCover cover(sssci->universe);
+    SSSCCover cover(sssci->universe);
     for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
         cover.run(he);
     }
@@ -142,7 +138,7 @@ unordered_set<unsigned long>* sssc(SSSCInput* sssci){
     return sol;
 }
 
-void UnweightedCover::capture(HyperEdge* he){
+void CaptureCover::capture(HyperEdge* he){
     unsigned long eff = he->vertices.size();
     for(unsigned long v : he->vertices){
         if(eff > (*this->ceff)[v]){
@@ -154,7 +150,7 @@ void UnweightedCover::capture(HyperEdge* he){
 
 unordered_set<unsigned long>* capture(SSSCInput* sssci){
 
-    UnweightedCover cover(sssci->universe);
+    CaptureCover cover(sssci->universe);
     for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
         cover.capture(he);
     }
@@ -166,7 +162,6 @@ unordered_set<unsigned long>* capture(SSSCInput* sssci){
 }
 
 void PUC::capture(HyperEdge* he, int t){
-    cout << "here2.1" << endl;
     unsigned long eff = he->vertices.size();
     for(unsigned long v : he->vertices){
         if(eff > this->ceffs[t][v]){
@@ -174,41 +169,40 @@ void PUC::capture(HyperEdge* he, int t){
             this->ceffs[t][v] = eff;
         }
     }
-    cout << "here2.2" << endl;
 }
 
-unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts){
+/* unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts){ */
 
-    PUC puc(psssci->universe, ts);
-    cout << "here2" << endl;
-    /* #pragma omp parallel for */
-    for(int t = 0; t < ts; t++){
-        for(HyperEdge* he; (he = psssci->streams[t]->get_next_set())!= nullptr; ){
-            puc.capture(he, t);
-        }
-        cout << "here3" << endl;
-        psssci->streams[t]->reset();
-        cout << "here4" << endl;
-        /* for(unsigned long i = puc.max_elem * t; i < puc.max_elem * (t+1); i++){ */
-        /*     unsigned long max_ceff = 0; unsigned long max_ceid = -1; */
-        /*     for(int t = 0; t < ts; t++){ */
-        /*         if(puc.ceffs[t][i] > max_ceff) { */
-        /*             max_ceff = puc.ceffs[t][i]; */
-        /*             max_ceid = puc.ceids[t][i]; */
-        /*         } */
-        /*     } */
-        /*     puc.fceid[i] = max_ceid; */
-        /* } */
-    }
+/*     PUC puc(psssci->universe, ts); */
+/*     cout << "here2" << endl; */
+/*     /1* #pragma omp parallel for *1/ */
+/*     for(int t = 0; t < ts; t++){ */
+/*         for(HyperEdge* he; (he = psssci->streams[t]->get_next_set())!= nullptr; ){ */
+/*             puc.capture(he, t); */
+/*         } */
+/*         cout << "here3" << endl; */
+/*         psssci->streams[t]->reset(); */
+/*         cout << "here4" << endl; */
+/*         /1* for(unsigned long i = puc.max_elem * t; i < puc.max_elem * (t+1); i++){ *1/ */
+/*         /1*     unsigned long max_ceff = 0; unsigned long max_ceid = -1; *1/ */
+/*             /1* for(int t = 0; t < ts; t++){ *1/ */
+/*         /1*         if(puc.ceffs[t][i] > max_ceff) { *1/ */
+/*         /1*             max_ceff = puc.ceffs[t][i]; *1/ */
+/*         /1*             max_ceid = puc.ceids[t][i]; *1/ */
+/*         /1*         } *1/ */
+/*         /1*     } *1/ */
+/*         /1*     puc.fceid[i] = max_ceid; *1/ */
+/*         /1* } *1/ */
+/*     } */
 
-    unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
-    for(int i = 0; i < puc.max_elem; i++){
-        if(puc.fceid[i] != static_cast<unsigned long>(-1)){
-            sol->insert(puc.fceid[i]);
-        }
-    }
-    return sol;
-}
+/*     unordered_set<unsigned long>* sol = new unordered_set<unsigned long>(); */
+/*     for(int i = 0; i < puc.max_elem; i++){ */
+/*         if(puc.fceid[i] != static_cast<unsigned long>(-1)){ */
+/*             sol->insert(puc.fceid[i]); */
+/*         } */
+/*     } */
+/*     return sol; */
+/* } */
 
 /* unordered_set<int>* randomized_sssc(SSSCInput* sssci){ */
 

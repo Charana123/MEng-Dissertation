@@ -3,12 +3,13 @@
 #SBATCH --job-name=directed_to_sc
 #SBATCH --partition=veryshort
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=28
+#SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 #SBATCH --time=6:00:00
 #SBATCH --mem=100gb
 
-./directed_to_sc.out /mnt/storage/scratch/an15739/SNAP/txt/com-friendster.ungraph.txt /mnt/storage/scratch/an15739/SNAP/dat/friendster.dat 0
-./directed_to_sc.out /mnt/storage/scratch/an15739/LAW/sk-2005.edges /mnt/storage/scratch/an15739/LAW/sk-2005.dat 1
-./directed_to_sc.out /mnt/storage/scratch/an15739/LAW/twitter-2010.edges /mnt/storage/scratch/an15739/LAW/twitter-2010.dat 1
-./directed_to_sc.out /mnt/storage/scratch/an15739/LAW/uk-union-2006-06-2007-05-underlying.edges /mnt/storage/scratch/an15739/LAW/uk-union-2006-06-2007-05-underlying.dat 1
+cd ../SNAP
+./directed_to_sc.out ./SNAP/txt/com-friendster.ungraph.txt ./SNAP/dat/friendster.dat
+# ./directed_to_sc.out ./LAW/sk-2005.edges ./LAW/sk-2005.dat
+# ./directed_to_sc.out ./LAW/twitter-2010.edges ./LAW/twitter-2010.dat
+./directed_to_sc.out ./LAW/uk-union-2006-06-2007-05-underlying.edges ./LAW/uk-union-2006-06-2007-05-underlying.dat

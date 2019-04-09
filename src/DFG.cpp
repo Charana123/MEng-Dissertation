@@ -2,6 +2,11 @@
 using namespace std;
 using namespace boost;
 
+struct SSet : public Set {
+    SSet(vector<unsigned long> vertices, unsigned long i)
+        : Set(vertices, i) {}
+};
+
 void OrderBySubCollection(SetCoverInput* sci, float p, vector<float>* p_pow_k, vector<vector<Set*>>* ktoCollection){
 
     Set* s = sci->sets->data();
@@ -29,7 +34,7 @@ vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vect
 
     for(unsigned long k = ktoCollection->size()-1; k != static_cast<unsigned long>(-1); --k){
         for (Set *s: (*ktoCollection)[k]){
-            Set* diff = new Set{{}, s->i};
+            Set* diff = new SSet{{}, s->i};
             for(unsigned long v : s->vertices) {
                 if(!covered[v]) {
                     diff->vertices.push_back(v);
@@ -49,6 +54,9 @@ vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vect
                 }
             }
         }
+        for(Set* s : (*ktoCollection)[k]){
+            if(SSet* ss = dynamic_cast<SSet*>(s)) delete ss;
+        }
         (*ktoCollection)[k].clear();
     }
 
@@ -67,6 +75,7 @@ vector<unsigned long>* DFG(SetCoverInput* sci, float p = 1.05){
     vector<float>* p_pow_k = new vector<float>();
     vector<vector<Set*>>* ktoCollection = new vector<vector<Set*>>();
     OrderBySubCollection(sci, p, p_pow_k, ktoCollection);
+    cout << "done" << endl;
     vector<unsigned long>* sol = DFG_impl(sci, p_pow_k, ktoCollection, p);
     delete p_pow_k;
     delete ktoCollection;

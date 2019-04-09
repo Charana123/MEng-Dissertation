@@ -47,7 +47,7 @@ POfflineStream::POfflineStream(PSetCoverInput* psci, int t, int ts, unsigned lon
 
 Set* OfflineStream::get_next_set(){
     if(this->position >= m) return nullptr;
-    return &(*this->sci->sets)[this->position++];
+    return this->sci->sets->data() + (this->position++);
 }
 
 Set* POfflineStream::get_next_set(){

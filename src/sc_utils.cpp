@@ -3,7 +3,7 @@
 using namespace boost;
 namespace bip = boost::interprocess;
 
-vector<string>* read_file(string filename)
+vector<Set>* read_sets(string filename)
 {
     bip::file_mapping mapping(filename.c_str(), bip::read_only);
     bip::mapped_region mapped_rgn(mapping, bip::read_only);
@@ -11,12 +11,25 @@ vector<string>* read_file(string filename)
 	size_t const mmap_size = mapped_rgn.get_size();
 
 	imemstream mmistream(mmaped_data, mmap_size);
-	vector<string>* lines = new vector<string>();
+
+    vector<Set>* sets = new vector<Set>();
+    unsigned long counter = 0;
 	for(string line; getline(mmistream, line);){
-		lines->push_back(line);
+        sets->push_back(Set{{}, counter});
+        Set& sett = sets->at(sets->size()-1);
+        sett.i = counter++;
+        char* cline = new char[line.size() + 1];
+        strcpy(cline, line.c_str());
+        char* cs = std::strtok(cline, " \t");
+        sett.vertices.push_back(stoul(cs));
+        for(; (cs = std::strtok(NULL, " \t")) != NULL; ){
+            sett.vertices.push_back(stoul(cs));
+        }
+        delete[] cline;
 	}
-	return lines;
+    return sets;
 }
+
 
 /* vector<Set*>* get_sets(vector<string>* lines){ */
 /*     vector<Set*>* m = new vector<Set*>(129613600); */
@@ -73,48 +86,39 @@ struct set_compare {
     }
 };
 
-vector<Set>* get_sets(vector<string>* lines){
-    /* multiset<Set, set_compare>* sets = new multiset<Set*, set_compare>(); */
-    vector<Set>* sets = new vector<Set>(lines->size());
-    unsigned long counter = 0;
-	for(string& line: *lines){
-        (*sets)[counter].i = counter;
-		boost::tokenizer<> tokens(line);
-		for(auto& token : tokens) (*sets)[counter].vertices.push_back(std::stoi(token));
-        counter++;
-	}
-
-    return sets;
-}
-
-void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* median, unsigned long* largest, unsigned long* M){
+void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M){
     *m = 0;
     *M = 0;
-    *median = 0; *largest = 0;
-    vector<unsigned long> set_sizes = {};
-    set<unsigned long> universe_s;
-    for(Set& s : *sets){
+    *largest = 0;
+    unsigned long maxx = 0;
+    Set* sets_data = sets->data();
+    for(unsigned long i = 0; i < sets->size(); i++){
         (*m)++;
-        *M += s.vertices.size();
-        set_sizes.push_back(s.vertices.size());
-        if(s.vertices.size() > *largest) *largest = s.vertices.size();
-        universe_s.insert(s.vertices.begin(), s.vertices.end());
+        *M += (sets_data+i)->vertices.size();
+        if((sets_data+i)->vertices.size() > *largest) *largest = (sets_data+i)->vertices.size();
+        unsigned long c_maxx = *std::max_element((sets_data+i)->vertices.begin(), (sets_data+i)->vertices.end());
+        if(c_maxx > maxx) maxx = c_maxx;
     }
-    universe->insert(universe->end(), universe_s.begin(), universe_s.end());
     *avg = *M/(*m);
-    std::nth_element(set_sizes.begin(), set_sizes.begin() + set_sizes.size()/2, set_sizes.end());
-    *median = set_sizes[set_sizes.size()/2];
+
+    bool* covered = new bool[maxx+1];
+    for(unsigned long i = 0; i < sets->size(); i++){
+        for(unsigned long v : (sets_data+i)->vertices){
+            covered[v] = 1;
+        }
+    }
+    for(unsigned long i = 0; i < maxx+1; i++) if(covered[i] == 1) universe->push_back(i);
+    delete[] covered;
 }
 
 SetCoverInput* read_sci(string filename)
 {
-    vector<string>* lines = read_file(filename);
-    vector<Set>* sets = get_sets(lines);
+    vector<Set>* sets = read_sets(filename);
     vector<unsigned long>* universe = new vector<unsigned long>();
-    unsigned long m, avg, median, largest, M;
-    get_universe(sets, universe, &m, &avg, &median, &largest, &M);
+    unsigned long m, avg, largest, M;
+    get_universe(sets, universe, &m, &avg, &largest, &M);
     unsigned long n = universe->size();
-	return new SetCoverInput{sets, universe, m, n, avg, median, largest, M};
+	return new SetCoverInput{sets, universe, m, n, avg, largest, M};
 }
 
 

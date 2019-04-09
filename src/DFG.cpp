@@ -21,8 +21,7 @@ void OrderBySubCollection(SetCoverInput* sci, float p, vector<float>* p_pow_k, v
 }
 
 // Disk Friendly Greedy
-vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vector<vector<Set*>>* ktoCollection, float p)
-{
+vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vector<vector<Set*>>* ktoCollection, float p){
     // Globals
     vector<unsigned long>* sol = new vector<unsigned long>(); //list of indices of chosen sets
     unsigned long max_elem = *std::max_element(sci->universe->begin(), sci->universe->end());
@@ -50,6 +49,7 @@ vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vect
                 }
             }
         }
+        (*ktoCollection)[k].clear();
     }
 
     for(Set* s: (*ktoCollection)[0]){
@@ -67,7 +67,10 @@ vector<unsigned long>* DFG(SetCoverInput* sci, float p = 1.05){
     vector<float>* p_pow_k = new vector<float>();
     vector<vector<Set*>>* ktoCollection = new vector<vector<Set*>>();
     OrderBySubCollection(sci, p, p_pow_k, ktoCollection);
-    return DFG_impl(sci, p_pow_k, ktoCollection, p);
+    vector<unsigned long>* sol = DFG_impl(sci, p_pow_k, ktoCollection, p);
+    delete p_pow_k;
+    delete ktoCollection;
+    return sol;
 }
 
 

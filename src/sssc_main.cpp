@@ -51,7 +51,8 @@ void parr(string filename){
 }
 
 void seqq(string filename){
-    Stream* stream = new OfflineStream(filename);
+    /* Stream* stream = new OfflineStream(filename); */
+    Stream* stream = new OfflineStream("../dataset/FIMI/" + filename + ".dat");
     vector<unsigned long>* universe = new vector<unsigned long>();
     unsigned long m, M, avg, median, largest;
     stream->get_universe(universe, &m, &avg, &median, &largest, &M);
@@ -68,10 +69,10 @@ void seqq(string filename){
     /* cout << "largest: " << largest << endl; */
     /* cout << "==============" << endl; */
 
-    /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
-    /*     unordered_set<unsigned long>* sol = sssc(&sssci); */
-    /*     return sol; */
-    /* }); */
+    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
+        unordered_set<unsigned long>* sol = sssc(&sssci);
+        return sol;
+    });
     summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
         unordered_set<unsigned long>* sol = capture(&sssci);
         return sol;
@@ -80,11 +81,11 @@ void seqq(string filename){
 
 int main(int argc, char** argv){
 	string filename = string(argv[1]);
-	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
-	/* for(string filename : files){ */
+	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
+	for(string filename : files){
         /* parr(filename); */
         seqq(filename);
-	/* } */
+	}
 }
 
 

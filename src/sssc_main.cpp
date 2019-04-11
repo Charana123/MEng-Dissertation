@@ -54,38 +54,45 @@ void seqq(string filename){
     /* Stream* stream = new OfflineStream(filename); */
     Stream* stream = new OfflineStream("../dataset/FIMI/" + filename + ".dat");
     vector<unsigned long>* universe = new vector<unsigned long>();
-    unsigned long m, M, avg, median, largest;
-    stream->get_universe(universe, &m, &avg, &median, &largest, &M);
+    unsigned long m, M, avg, largest;
+    float var;
+    stream->get_universe(universe, &m, &avg, &largest, &M, &var);
     unsigned long n = universe->size();
     SSSCInput sssci = {stream, universe, n, m, avg};
 
-    /* cout << filename << endl; */
-    /* cout << "==============" << endl; */
-    /* cout << "n: " << n << endl; */
-    /* cout << "m: " << m << endl; */
-    /* cout << "M: " << M << endl; */
-    /* cout << "avg: " << avg << endl; */
-    /* cout << "median: " << median << endl; */
-    /* cout << "largest: " << largest << endl; */
-    /* cout << "==============" << endl; */
+    cout << filename << endl;
+    cout << "==============" << endl;
+    cout << "n: " << n << endl;
+    cout << "m: " << m << endl;
+    cout << "M: " << M << endl;
+    cout << "avg: " << avg << endl;
+    cout << "largest: " << largest << endl;
+    cout << "variance: " << var << endl;
+    cout << "==============" << endl;
 
     summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
         unordered_set<unsigned long>* sol = sssc(&sssci);
         return sol;
     });
-    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
-        unordered_set<unsigned long>* sol = capture(&sssci);
-        return sol;
-    });
+    /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
+    /*     unordered_set<unsigned long>* sol = capture(&sssci); */
+    /*     return sol; */
+    /* }); */
 }
 
+#include "rss.hpp"
 int main(int argc, char** argv){
 	string filename = string(argv[1]);
-	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
-	for(string filename : files){
+	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
+	/* for(string filename : files){ */
         /* parr(filename); */
         seqq(filename);
-	}
+	/* } */
+
+    size_t peakSize = getPeakRSS();
+    cout << "peakSize: " << peakSize << endl;
+    size_t currentSize = getCurrentRSS();
+    cout << "currentSize: " << currentSize << endl;
 }
 
 

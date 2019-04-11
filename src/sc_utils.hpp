@@ -15,6 +15,7 @@ struct SetCoverInput
     unsigned long avg;
     unsigned long largest;
     unsigned long M;
+    float var;
 };
 
 struct PSetCoverInput
@@ -26,6 +27,7 @@ struct PSetCoverInput
     unsigned long avg;
     unsigned long largest;
     unsigned long M;
+    float var;
 };
 
 struct SetCoverOutput {

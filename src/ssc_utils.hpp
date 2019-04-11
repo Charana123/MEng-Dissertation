@@ -11,16 +11,16 @@ class Stream {
     public:
         Stream(){};
         virtual Set* get_next_set() = 0;
-        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M) = 0;
+        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M, float* var) = 0;
         virtual void reset() = 0;
 };
 
 class OnlineStream : public Stream {
     public:
         OnlineStream(string filename);
-        virtual Set* get_next_set();
-        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M);
-        virtual void reset();
+        virtual Set* get_next_set() override;
+        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M, float* var) override;
+        virtual void reset() override;
     private:
         bip::file_mapping mapping;
         bip::mapped_region mapped_rgn;
@@ -32,9 +32,9 @@ class OnlineStream : public Stream {
 class OfflineStream : public Stream {
     public:
         OfflineStream(string filename);
-        virtual Set* get_next_set();
-        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M);
-        virtual void reset();
+        virtual Set* get_next_set() override;
+        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M, float* var) override;
+        virtual void reset() override;
         SetCoverInput* sci;
     private:
         unsigned long position = 0;
@@ -46,7 +46,7 @@ class POfflineStream : public Stream {
     public:
         POfflineStream(PSetCoverInput* psci, int t, int ts, unsigned long tsize);
         virtual Set* get_next_set() override;
-        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M) override;
+        virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M, float* var) override;
         virtual void reset() override;
         PSetCoverInput* psci;
     private:

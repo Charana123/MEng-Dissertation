@@ -21,7 +21,7 @@ vector<Set>* read_sets(string filename)
         char* cline = new char[line.size() + 1];
         strcpy(cline, line.c_str());
         char* cs = std::strtok(cline, " \t");
-        /* sett.vertices.push_back(stoul(cs)); */
+        sett.vertices.push_back(stoul(cs));
         for(; (cs = std::strtok(NULL, " \t")) != NULL; ){
             sett.vertices.push_back(stoul(cs));
         }
@@ -86,10 +86,11 @@ struct set_compare {
     }
 };
 
-void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M){
+void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M, float* var){
     *m = 0;
     *M = 0;
     *largest = 0;
+    *var = 0.0;
     unsigned long maxx = 0;
     Set* sets_data = sets->data();
     for(unsigned long i = 0; i < sets->size(); i++){
@@ -103,10 +104,10 @@ void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned l
 
     bool* covered = new bool[maxx+1];
     for(unsigned long i = 0; i < sets->size(); i++){
-        for(unsigned long v : (sets_data+i)->vertices){
-            covered[v] = 1;
-        }
+        *var = ((sets_data+i)->vertices.size() - *avg) * ((sets_data+i)->vertices.size() - *avg);
+        for(unsigned long v : (sets_data+i)->vertices) covered[v] = 1;
     }
+    *var = (*var)/(*m);
     for(unsigned long i = 0; i < maxx+1; i++) if(covered[i] == 1) universe->push_back(i);
     delete[] covered;
 }
@@ -116,9 +117,10 @@ SetCoverInput* read_sci(string filename)
     vector<Set>* sets = read_sets(filename);
     vector<unsigned long>* universe = new vector<unsigned long>();
     unsigned long m, avg, largest, M;
-    get_universe(sets, universe, &m, &avg, &largest, &M);
+    float var;
+    get_universe(sets, universe, &m, &avg, &largest, &M, &var);
     unsigned long n = universe->size();
-	return new SetCoverInput{sets, universe, m, n, avg, largest, M};
+	return new SetCoverInput{sets, universe, m, n, avg, largest, M, var};
 }
 
 

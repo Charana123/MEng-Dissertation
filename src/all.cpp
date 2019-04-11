@@ -21,6 +21,7 @@ void summarise(string name, std::function<vector<unsigned long>*()> func){
 }
 
 void summarise(string name, std::function<unordered_set<unsigned long>*()> func){
+    cout << "before" << endl;
     auto t1 = chrono::high_resolution_clock::now();
     unordered_set<unsigned long>* sol = func();
     auto t2 = chrono::high_resolution_clock::now();
@@ -30,6 +31,7 @@ void summarise(string name, std::function<unordered_set<unsigned long>*()> func)
     cout << "time: " << chrono::duration_cast<chrono::milliseconds>(t2-t1).count() << " ms" << endl;
     cout << "Solution size: " << sol->size() << endl;
     cout << endl;
+    cout << "after" << endl;
 }
 
 int main(int argc, char** argv){
@@ -38,18 +40,12 @@ int main(int argc, char** argv){
 	string alg = string(argv[3]);
 
     if(!(alg.compare("DFG") == 0
-        || alg.compare("LHS") == 0
+        || alg.compare("LSH") == 0
         || alg.compare("Rosen") == 0
         || alg.compare("all") == 0
-        || alg.compare("LHS-DFG") == 0
+        || alg.compare("LSH-DFG") == 0
         || alg.compare("Rosen-DFG") == 0)){
         cout << "could not find: " << alg << endl;
-        /* cout << alg.compare("DFG") << endl; */
-        /* cout << alg.compare("LHS") << endl; */
-        /* cout << alg.compare("Rosen") << endl; */
-        /* cout << alg.compare("all") << endl; */
-        /* cout <<alg.compare("LHS-DFG") << endl; */
-        /* cout << alg.compare("Rosen-DFG") << endl; */
         abort();
     }
 
@@ -58,8 +54,7 @@ int main(int argc, char** argv){
     else stream = new OfflineStream(filename);
     vector<unsigned long>* universe = new vector<unsigned long>();
     unsigned long m, M, avg, largest;
-    float var;
-    stream->get_universe(universe, &m, &avg, &largest, &M, &var);
+    stream->get_universe(universe, &m, &avg, &largest, &M);
     unsigned long n = universe->size();
 
     cout << "==============" << endl;
@@ -68,7 +63,6 @@ int main(int argc, char** argv){
     cout << "M: " << M << endl;
     cout << "avg: " << avg << endl;
     cout << "largest: " << largest << endl;
-    cout << "variance: " << var << endl;
     cout << "==============" << endl;
 
     if(alg.compare("DFG") == 0 || alg.compare("all") == 0){
@@ -82,7 +76,7 @@ int main(int argc, char** argv){
         }
     }
 
-    if(alg.compare("LHS") == 0 || alg.compare("all") == 0){
+    if(alg.compare("LSH") == 0 || alg.compare("all") == 0){
         summarise("capture", [&]() -> unordered_set<unsigned long>*{
             SSSCInput sssci = {stream, universe, n, m, avg};
             return capture(&sssci);
@@ -92,28 +86,45 @@ int main(int argc, char** argv){
     if(alg.compare("Rosen") == 0 || alg.compare("all") == 0){
         summarise("sssc", [&]() -> unordered_set<unsigned long>*{
             SSSCInput sssci = {stream, universe, n, m, avg};
-            return sssc(&sssci);
-        });
-    }
-
-    if(alg.compare("LHS-DFG") == 0 || alg.compare("all") == 0){
-        summarise("LHS-DFG", [&]() -> vector<unsigned long>*{
-            SSSCInput sssci = {stream, universe, n, m, avg};
-            return compose(&sssci, string("Rosen"));
+            return sssc(&sssci, string("run"));
         });
     }
 
     if(alg.compare("Rosen-DFG") == 0 || alg.compare("all") == 0){
-        summarise("Rosen-DFG", [&]() -> vector<unsigned long>*{
-            SSSCInput sssci = {stream, universe, n, m, avg};
-            return compose(&sssci, string("LHS"));
-        });
+        if(alg.compare("all") == 0){
+            vector<string> types = {"run", "mrun1", "mrun2"};
+            for(string type : types){
+                summarise("Rosen-DFG-" + type, [&]() -> vector<unsigned long>*{
+                    SSSCInput sssci = {stream, universe, n, m, avg};
+                    return compose(&sssci, string("Rosen"), type);
+                });
+            }
+        }
+        else{
+            string type = string(argv[4]);
+            if(type.compare("run") == 0 || type.compare("mrun1") == 0 || type.compare("mrun2") == 0) {
+                summarise("Rosen-DFG-" + type, [&]() -> vector<unsigned long>*{
+                    SSSCInput sssci = {stream, universe, n, m, avg};
+                    return compose(&sssci, string("Rosen"), type);
+                });
+            }
+            if(type.compare("mrun") == 0){
+                for(string type: {"mrun1", "mrun2"}){
+                    summarise("Rosen-DFG-" + type, [&]() -> vector<unsigned long>*{
+                        SSSCInput sssci = {stream, universe, n, m, avg};
+                        return compose(&sssci, string("Rosen"), type);
+                    });
+                }
+            }
+        }
     }
 
-    size_t peakSize = getPeakRSS();
-    cout << "peakSize: " << peakSize << endl;
-    size_t currentSize = getCurrentRSS();
-    cout << "currentSize: " << currentSize << endl;
+    if(alg.compare("LSH-DFG") == 0 || alg.compare("all") == 0){
+        summarise("LSH-DFG", [&]() -> vector<unsigned long>*{
+            SSSCInput sssci = {stream, universe, n, m, avg};
+            return compose(&sssci, string("LSH"), string("invalid"));
+        });
+    }
 
     /* summarise("randomized sssc", [&]() -> unordered_set<int>*{ */
     /*     SSSCInput sssci = {stream, universe, n, m, avg}; */

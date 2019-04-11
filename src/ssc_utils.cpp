@@ -66,10 +66,10 @@ Set* OnlineStream::get_next_set(){
     }
 
     Set* s = new Set{{}, position++};
-    char* cline = new char[line.size() + 1];
+    char cline[line.size() + 1];
     strcpy(cline, line.c_str());
     char* cs = std::strtok(cline, " \t");
-    s->vertices.push_back(stoul(cs));
+    /* s->vertices.push_back(stoul(cs)); */
     for(; (cs = std::strtok(NULL, " \t")) != NULL; ){
         s->vertices.push_back(stoul(cs));
     }
@@ -77,25 +77,23 @@ Set* OnlineStream::get_next_set(){
     return s;
 }
 
-void OfflineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M, float* var){
+void OfflineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M){
     *universe = *this->sci->universe;
     *m = this->sci->m;
     *avg = this->sci->avg;
     *M = this->sci->M;
     *largest = this->sci->largest;
-    *var = this->sci->var;
 }
 
-void POfflineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M, float* var){
+void POfflineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M){
     *universe = *this->psci->universe;
     *m = this->psci->m;
     *avg = this->psci->avg;
     *M = this->psci->M;
     *largest = this->psci->largest;
-    *var = this->psci->var;
 }
 
-void OnlineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M, float* var){
+void OnlineStream::get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M){
     *m = 0; *M = 0; *largest = 0;
     unsigned long maxx = 0;
     for(Set* s; (s = get_next_set()) != nullptr; (*m)++){
@@ -109,10 +107,8 @@ void OnlineStream::get_universe(vector<unsigned long>* universe, unsigned long* 
 
     bool* covered = new bool[maxx+1];
     for(Set* s; (s = get_next_set()) != nullptr; ){
-        *var = (s->vertices.size() - *avg) * (s->vertices.size() - *avg);
         for(unsigned long v : s->vertices) covered[v] = 1;
     }
-    *var = (*var)/(*m);
     for(unsigned long i = 0; i < maxx+1; i++) if(covered[i] == 1) universe->push_back(i);
     delete[] covered;
     reset();

@@ -30,7 +30,7 @@ vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vect
     // Globals
     vector<unsigned long>* sol = new vector<unsigned long>(); //list of indices of chosen sets
     unsigned long max_elem = *std::max_element(sci->universe->begin(), sci->universe->end());
-    vector<bool> covered(max_elem + 1);
+    bool* covered = new bool[max_elem + 1]();
 
     for(unsigned long k = ktoCollection->size()-1; k != static_cast<unsigned long>(-1); --k){
         for (Set *s: (*ktoCollection)[k]){
@@ -68,6 +68,7 @@ vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vect
             covered[diff[0]] = true;
         }
     }
+    delete[] covered;
     return sol;
 }
 
@@ -75,7 +76,6 @@ vector<unsigned long>* DFG(SetCoverInput* sci, float p = 1.05){
     vector<float>* p_pow_k = new vector<float>();
     vector<vector<Set*>>* ktoCollection = new vector<vector<Set*>>();
     OrderBySubCollection(sci, p, p_pow_k, ktoCollection);
-    cout << "done" << endl;
     vector<unsigned long>* sol = DFG_impl(sci, p_pow_k, ktoCollection, p);
     delete p_pow_k;
     delete ktoCollection;

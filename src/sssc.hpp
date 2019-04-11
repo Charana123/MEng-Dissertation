@@ -26,7 +26,7 @@ struct PSSSCInput
     unsigned long m;
 };
 
-unordered_set<unsigned long>* sssc(SSSCInput* sssci);
+unordered_set<unsigned long>* sssc(SSSCInput* sssci, string type);
 unordered_set<unsigned long>* capture(SSSCInput* sssci);
 unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts);
 /* unordered_set<unsigned long>* randomized_sssc(SSSCInput* sssci); */
@@ -37,8 +37,8 @@ class CaptureCover {
         CaptureCover(vector<unsigned long>* universe){
             /* cout << *universe << endl; */
             this->max_elem = *std::max_element(universe->begin(), universe->end());
-            this->ceid = new vector<unsigned long>(max_elem, static_cast<unsigned long>(-1));
-            this->ceff = new vector<unsigned long>(max_elem, 0);
+            this->ceid = new vector<unsigned long>(max_elem+1, static_cast<unsigned long>(-1));
+            this->ceff = new vector<unsigned long>(max_elem+1, 0);
         }
         ~CaptureCover(){
             delete ceid;
@@ -54,19 +54,23 @@ class SSSCCover {
     public:
         SSSCCover(vector<unsigned long>* universe) {
             this->max_elem = *std::max_element(universe->begin(), universe->end());
-            this->eid = new vector<unsigned long>(max_elem, static_cast<unsigned long>(-1));
-            this->eff = new vector<unsigned long>(max_elem, 0);
-            /* this->ben = new vector<unsigned long>(max_elem, 0); */
-            /* this->ben1 = new vector<unsigned long>(max_elem, 0); */
+            cout << "max_elem: " << max_elem << endl;
+            this->eid = new vector<unsigned long>(max_elem+1, static_cast<unsigned long>(-1));
+            this->eff = new vector<unsigned long>(max_elem+1, 0);
+            this->ben = new vector<unsigned long>(max_elem+1, 0);
+            this->ben1 = new vector<unsigned long>(max_elem+1, 0);
         };
         ~SSSCCover(){
             delete eid;
             delete eff;
+            delete ben;
+            delete ben1;
         }
         void run(HyperEdge* he);
-        void mrun(HyperEdge* he);
-        void randomized_run(HyperEdge* he, float p);
-        void threshold_randomized_run(HyperEdge* he, unsigned long threshold);
+        void mrun1(HyperEdge* he);
+        void mrun2(HyperEdge* he);
+        /* void randomized_run(HyperEdge* he, float p); */
+        /* void threshold_randomized_run(HyperEdge* he, unsigned long threshold); */
 
         // Variables
         unsigned long max_elem;

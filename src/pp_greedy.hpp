@@ -6,5 +6,5 @@
 #include "boost/range/algorithm/remove_if.hpp"
 #include <chrono>
 
-vector<unsigned long>* compose(SSSCInput* sssci, string pp_alg);
+vector<unsigned long>* compose(SSSCInput* sssci, string pp_alg, string type);
 #endif

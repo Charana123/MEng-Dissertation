@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#SBATCH --job-name=proc
+#SBATCH --partition=veryshort
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --time=6:00:00
+#SBATCH --mem=100gb
+
+# ../all.out /mnt/storage/scratch/an15739/random_graphs/2mil400d.dat 0
+# ../all.out /mnt/storage/scratch/an15739/SNAP/dat/friendster.dat 0
+# ../all.out /mnt/storage/scratch/an15739/LAW/sk-2005.dat 0
+# ../all.out /mnt/storage/scratch/an15739/LAW/twitter-2010.dat 0
+# ../all.out /mnt/storage/scratch/an15739/LAW/uk-union-2006-06-2007-05-underlying.dat 1
+
+../ppg.out /mnt/storage/scratch/an15739/SNAP/dat/friendster.dat

@@ -1,19 +1,24 @@
 #include "sc_utils.hpp"
+#include "functional"
+
+bool compare(const Set& s1, const Set& s2){
+    return s1.vertices.size() > s2.vertices.size();
+}
 
 int compute_lowerbound(SetCoverInput* sci){
     cout << "computing lowerbound" << endl;
 
-    sort(sci->sets->begin(), sci->sets->end(), [](Set& s1, Set& s2) -> bool{
-        return s1.vertices.size() > s2.vertices.size();
-    });
+    // Sort sets by size
+    vector<unsigned long> sizes;
+    for(Set& s : *sci->sets) sizes.push_back(s.vertices.size());
+    sort(sizes.begin(), sizes.end(), std::greater<unsigned long>());
     unsigned long i = 0;
-    cout << "sci->n: " << sci->n << endl;
-    for(unsigned long size = 0; i < sci->sets->size(); i++){
-        Set& s = sci->sets->at(i);
-        size += s.vertices.size();
+    unsigned long size = 0;
+    for(unsigned long csize : sizes){
+        size += csize; i++;
         if(size >= sci->n) break;
     }
-    return i + 1;
+    return i;
 }
 
 int main(int argc, char** argv){

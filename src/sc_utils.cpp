@@ -18,14 +18,13 @@ vector<Set>* read_sets(string filename)
         sets->push_back(Set{{}, counter});
         Set& sett = sets->at(sets->size()-1);
         sett.i = counter++;
-        char* cline = new char[line.size() + 1];
+        char cline[line.size() + 1];
         strcpy(cline, line.c_str());
         char* cs = std::strtok(cline, " \t");
-        sett.vertices.push_back(stoul(cs));
+        //sett.vertices.push_back(stoul(cs));
         for(; (cs = std::strtok(NULL, " \t")) != NULL; ){
             sett.vertices.push_back(stoul(cs));
         }
-        delete[] cline;
 	}
     return sets;
 }
@@ -86,11 +85,10 @@ struct set_compare {
     }
 };
 
-void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M, float* var){
+void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M){
     *m = 0;
     *M = 0;
     *largest = 0;
-    *var = 0.0;
     unsigned long maxx = 0;
     Set* sets_data = sets->data();
     for(unsigned long i = 0; i < sets->size(); i++){
@@ -102,12 +100,10 @@ void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned l
     }
     *avg = *M/(*m);
 
-    bool* covered = new bool[maxx+1];
+    bool* covered = new bool[maxx+1]();
     for(unsigned long i = 0; i < sets->size(); i++){
-        *var = ((sets_data+i)->vertices.size() - *avg) * ((sets_data+i)->vertices.size() - *avg);
         for(unsigned long v : (sets_data+i)->vertices) covered[v] = 1;
     }
-    *var = (*var)/(*m);
     for(unsigned long i = 0; i < maxx+1; i++) if(covered[i] == 1) universe->push_back(i);
     delete[] covered;
 }
@@ -117,10 +113,9 @@ SetCoverInput* read_sci(string filename)
     vector<Set>* sets = read_sets(filename);
     vector<unsigned long>* universe = new vector<unsigned long>();
     unsigned long m, avg, largest, M;
-    float var;
-    get_universe(sets, universe, &m, &avg, &largest, &M, &var);
+    get_universe(sets, universe, &m, &avg, &largest, &M);
     unsigned long n = universe->size();
-	return new SetCoverInput{sets, universe, m, n, avg, largest, M, var};
+	return new SetCoverInput{sets, universe, m, n, avg, largest, M};
 }
 
 

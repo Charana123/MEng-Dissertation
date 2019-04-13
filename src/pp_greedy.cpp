@@ -15,9 +15,14 @@ vector<unsigned long>* compose(SSSCInput* sssci, string pp_alg, string type){
     /*     sets->end() */
     /* ); */
     vector<Set>* sets = new vector<Set>();
+    unsigned long M_prog = 0;
     for(Set* s; (s = sssci->stream->get_next_set()) != nullptr; ){
-        if(chosen[s->i]) sets->push_back(*s);
+        if(chosen[s->i]) {
+            M_prog += s->vertices.size();
+            sets->push_back(*s);
+        }
     }
+    cout << "M_prog: " << M_prog << endl;
     sssci->stream->reset();
 
     unsigned long proj_m = sol->size();

@@ -30,20 +30,21 @@ vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vect
     // Globals
     vector<unsigned long>* sol = new vector<unsigned long>(); //list of indices of chosen sets
     unsigned long max_elem = *std::max_element(sci->universe->begin(), sci->universe->end());
-    bool* covered = new bool[max_elem + 1]();
+    vector<bool>* covered = new vector<bool>(max_elem + 1, false);
+    /* bool* covered = new bool[max_elem + 1](); */
 
     for(unsigned long k = ktoCollection->size()-1; k != static_cast<unsigned long>(-1); --k){
         for (Set *s: (*ktoCollection)[k]){
             Set* diff = new SSet{{}, s->i};
             for(unsigned long v : s->vertices) {
-                if(!covered[v]) {
+                if(!(*covered)[v]) {
                     diff->vertices.push_back(v);
                 }
             }
 
             if(diff->vertices.size() >= (*p_pow_k)[k]) {
                 sol->push_back(s->i);
-                for(unsigned long v : diff->vertices) covered[v] = true;
+                for(unsigned long v : diff->vertices) (*covered)[v] = true;
             }
             else{
                 for(unsigned long k_prime = k-1; k_prime != static_cast<unsigned long>(-1); --k_prime){
@@ -62,13 +63,13 @@ vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vect
 
     for(Set* s: (*ktoCollection)[0]){
         vector<unsigned long> diff;
-        for(unsigned long v : s->vertices) if(!covered[v]) diff.push_back(v);
+        for(unsigned long v : s->vertices) if(!(*covered)[v]) diff.push_back(v);
         if(diff.size() == 1) {
             sol->push_back(s->i);
-            covered[diff[0]] = true;
+            (*covered)[diff[0]] = true;
         }
     }
-    delete[] covered;
+    delete covered;
     return sol;
 }
 

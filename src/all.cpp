@@ -40,6 +40,7 @@ int main(int argc, char** argv){
 	string alg = string(argv[3]);
 
     if(!(alg.compare("DFG") == 0
+        || alg.compare("pp") == 0
         || alg.compare("LSH") == 0
         || alg.compare("Rosen") == 0
         || alg.compare("all") == 0
@@ -90,9 +91,16 @@ int main(int argc, char** argv){
         });
     }
 
-    if(alg.compare("Rosen-DFG") == 0 || alg.compare("all") == 0){
-        if(alg.compare("all") == 0){
-            vector<string> types = {"run", "mrun1", "mrun2"};
+    if(alg.compare("RobustRosen") == 0 || alg.compare("all") == 0){
+        summarise("sssc", [&]() -> unordered_set<unsigned long>*{
+            SSSCInput sssci = {stream, universe, n, m, avg};
+            return sssc(&sssci, string("mrun1"));
+        });
+    }
+
+    if(alg.compare("Rosen-DFG") == 0 || alg.compare("all") == 0 || alg.compare("pp") == 0){
+        if(alg.compare("all") == 0 || alg.compare("pp") == 0){
+            vector<string> types = {"run", "mrun1"};
             for(string type : types){
                 summarise("Rosen-DFG-" + type, [&]() -> vector<unsigned long>*{
                     SSSCInput sssci = {stream, universe, n, m, avg};
@@ -119,7 +127,7 @@ int main(int argc, char** argv){
         }
     }
 
-    if(alg.compare("LSH-DFG") == 0 || alg.compare("all") == 0){
+    if(alg.compare("LSH-DFG") == 0 || alg.compare("all") == 0 || alg.compare("pp") == 0){
         summarise("LSH-DFG", [&]() -> vector<unsigned long>*{
             SSSCInput sssci = {stream, universe, n, m, avg};
             return compose(&sssci, string("LSH"), string("invalid"));

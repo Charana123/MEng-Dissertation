@@ -19,15 +19,16 @@ LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
 GEN_DATASET = gen_dataset.cpp
 ALL_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp lazy_greedy.cpp DFG.cpp sssc.cpp pgreedy.cpp pp_greedy.cpp all.cpp
 
-FLAGS=-std=c++17 -pthread -O3
+FLAGS=-std=c++17 -pthread -O3 -fopenmp
 # REPORT=-qopt-report=2 -qopt-report-phase=vec
 # LIBS=$(shell pkg-config --libs --cflags boost)
 # -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
-ifeq ($(uname), Darwin)
-	CC=clang++
-else
-	CC=g++
-endif
+# ifeq ($(uname), Darwin)
+# 	CC=clang++
+# else
+# 	CC=g++
+# endif
+CC=g++-8
 
 spa:
 	$(CC) $(FLAGS) $(SS_FILES) -o spa.out

@@ -108,9 +108,23 @@ void get_universe(vector<Set>* sets, vector<unsigned long>* universe, unsigned l
     delete[] covered;
 }
 
+#include <chrono>
+void summarise(string name, std::function<void()> func){
+    auto t1 = chrono::high_resolution_clock::now();
+    func();
+    auto t2 = chrono::high_resolution_clock::now();
+    cout << "===========" << endl;
+    cout << name << endl;
+    cout << "===========" << endl;
+    cout << "time: " << chrono::duration_cast<chrono::milliseconds>(t2-t1).count() << " ms" << endl;
+}
+
 SetCoverInput* read_sci(string filename)
 {
-    vector<Set>* sets = read_sets(filename);
+    vector<Set>* sets;
+    summarise("read sets", [&]() -> void{
+        sets = read_sets(filename);
+    });
     vector<unsigned long>* universe = new vector<unsigned long>();
     unsigned long m, avg, largest, M;
     get_universe(sets, universe, &m, &avg, &largest, &M);

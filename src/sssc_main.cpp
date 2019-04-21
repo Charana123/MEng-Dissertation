@@ -35,20 +35,21 @@ void check(SSSCInput* sssci, unordered_set<unsigned long>* sol){
     cout << diff << endl;
 }
 
-/* void parr(string filename){ */
-/*     POfflineStream** streams = get_streams(filename, 28); */
-/*     cout << "here" << endl; */
-/*     vector<unsigned long>* universe = new vector<unsigned long>(); */
-/*     unsigned long m, M, avg, median, largest; */
-/*     streams[0]->get_universe(universe, &m, &avg, &median, &largest, &M); */
-/*     unsigned long n = universe->size(); */
-/*     PSSSCInput psssci = {streams, universe, n, m}; */
-/*     cout << "here1" << endl; */
-/*     summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
-/*         unordered_set<unsigned long>* sol = capture(&psssci, 28); */
-/*         return sol; */
-/*     }); */
-/* } */
+void parr(string filename){
+    int ts = 8;
+    POfflineStream** streams = get_streams("../dataset/FIMI/" + filename + ".dat", ts);
+    cout << "here" << endl;
+    vector<unsigned long>* universe = new vector<unsigned long>();
+    unsigned long m, M, avg, largest;
+    streams[0]->get_universe(universe, &m, &avg, &largest, &M);
+    unsigned long n = universe->size();
+    PSSSCInput psssci = {streams, universe, n, m};
+    cout << "here1" << endl;
+    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
+        unordered_set<unsigned long>* sol = capture(&psssci, ts);
+        return sol;
+    });
+}
 
 void seqq(string filename){
     /* Stream* stream = new OfflineStream(filename); */
@@ -68,14 +69,14 @@ void seqq(string filename){
     cout << "largest: " << largest << endl;
     cout << "==============" << endl;
 
-    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
-        unordered_set<unsigned long>* sol = sssc(&sssci, string("run"));
-        return sol;
-    });
     /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
-    /*     unordered_set<unsigned long>* sol = capture(&sssci); */
+    /*     unordered_set<unsigned long>* sol = sssc(&sssci, string("run")); */
     /*     return sol; */
     /* }); */
+    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
+        unordered_set<unsigned long>* sol = capture(&sssci);
+        return sol;
+    });
 }
 
 #include "rss.hpp"
@@ -83,7 +84,7 @@ int main(int argc, char** argv){
 	string filename = string(argv[1]);
 	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
 	/* for(string filename : files){ */
-        /* parr(filename); */
+        parr(filename);
         seqq(filename);
 	/* } */
 

@@ -32,24 +32,6 @@ unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts);
 /* unordered_set<unsigned long>* randomized_sssc(SSSCInput* sssci); */
 /* unordered_set<unsigned long>* threshold_randomized_sssc(SSSCInput* sssci); */
 
-class CaptureCover {
-    public:
-        CaptureCover(vector<unsigned long>* universe){
-            /* cout << *universe << endl; */
-            this->max_elem = *std::max_element(universe->begin(), universe->end());
-            this->ceid = new vector<unsigned long>(max_elem+1, static_cast<unsigned long>(-1));
-            this->ceff = new vector<unsigned long>(max_elem+1, 0);
-        }
-        ~CaptureCover(){
-            delete ceid;
-            delete ceff;
-        }
-        void capture(HyperEdge* he);
-
-        unsigned long max_elem;
-        vector<unsigned long> *ceid, *ceff;
-};
-
 class SSSCCover {
     public:
         SSSCCover(vector<unsigned long>* universe) {
@@ -78,19 +60,38 @@ class SSSCCover {
         vector<unsigned long> *ben, *ben1;
 };
 
-// Parallel UnweightedCover
-class PUC {
+class CaptureCover {
     public:
-        PUC(vector<unsigned long>* universe, int ts) {
+        CaptureCover(vector<unsigned long>* universe){
+            /* cout << *universe << endl; */
             this->max_elem = *std::max_element(universe->begin(), universe->end());
-            this->ceids = new unsigned long*[ts];
-            this->ceffs = new unsigned long*[ts];
+            this->ceid = new vector<unsigned long>(max_elem+1, static_cast<unsigned long>(-1));
+            this->ceff = new vector<unsigned long>(max_elem+1, 0);
+        }
+        ~CaptureCover(){
+            delete ceid;
+            delete ceff;
+        }
+        void capture(HyperEdge* he);
+
+        unsigned long max_elem;
+        vector<unsigned long> *ceid, *ceff;
+};
+
+// Parallel UnweightedCover
+class PCaptureCover {
+    public:
+        PCaptureCover(vector<unsigned long>* universe, int ts) {
+            this->max_elem = *std::max_element(universe->begin(), universe->end());
+            this->ceids = new unsigned long*[ts]();
+            this->ceffs = new unsigned long*[ts]();
             for(int t = 0; t < ts; t++){
                 this->ceffs[t] = new unsigned long[this->max_elem];
                 this->ceids[t] = new unsigned long[this->max_elem];
                 std::fill_n(this->ceids[t], this->max_elem, static_cast<unsigned long>(-1));
             }
             this->fceid = new unsigned long[this->max_elem];
+            std::fill_n(this->fceid, this->max_elem, static_cast<unsigned long>(-1));
         };
         unsigned long max_elem;
         void capture(HyperEdge* he, int t);

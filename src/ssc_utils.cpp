@@ -2,23 +2,24 @@
 
 POfflineStream** get_streams(string filename, int ts) {
     OfflineStream* stream = new OfflineStream(filename);
-    POfflineStream** streams = new POfflineStream*[ts];
-    vector<Set*>* sets = new vector<Set*>[ts];
+    POfflineStream** streams = new POfflineStream*[ts]();
+    vector<Set*>* sets = new vector<Set*>[ts]();
 
     Set* s;
     unsigned long tblock = stream->sci->m / ts;
     for(int t = 0; t < ts; t++){
-        for(unsigned long ts = 0; ts < tblock && (s = stream->get_next_set()) != nullptr; ){
+        for(unsigned long i = 0; i < tblock && (s = stream->get_next_set()) != nullptr; i++){
             sets[t].push_back(s);
         }
     }
     for(; (s = stream->get_next_set()) != nullptr; ){
         sets[ts-1].push_back(s);
     }
-    for(int t = 0; t < ts - 1; t++) {
+    stream->reset();
+    for(int t = 0; t < ts; t++) {
         PSetCoverInput* psci = new PSetCoverInput{sets + t,
             stream->sci->universe, stream->sci->m, stream->sci->n, 0, 0, 0};
-        streams[t] = new POfflineStream(psci, t, ts, tblock + t != ts ? stream->sci->m % ts : 0);
+        streams[t] = new POfflineStream(psci, t, ts, tblock + (t == ts ? stream->sci->m % ts : 0));
     }
     return streams;
 }
@@ -39,9 +40,10 @@ OfflineStream::OfflineStream(string filename) : Stream() {
 POfflineStream::POfflineStream(PSetCoverInput* psci, int t, int ts, unsigned long tsize) {
     this->psci = psci;
     this->m = this->psci->m;
-    this->ts = ts;
     this->t = t;
+    this->ts = ts;
     this->position = 0;
+    cout << "tsize: " << tsize << endl;
     this->tsize = tsize;
 }
 
@@ -52,8 +54,7 @@ Set* OfflineStream::get_next_set(){
 
 Set* POfflineStream::get_next_set(){
     if(this->position >= this->tsize) return nullptr;
-    Set* s = (*this->psci->sets)[this->position++];
-    return s;
+    return (*this->psci->sets)[this->position++];
 }
 
 Set* OnlineStream::get_next_set(){

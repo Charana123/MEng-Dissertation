@@ -1,4 +1,5 @@
 #include "sssc.hpp"
+#include "omp.h"
 using namespace std;
 
 /* void UnweightedCover::randomized_run(HyperEdge* he, float p){ */
@@ -197,7 +198,7 @@ unordered_set<unsigned long>* capture(SSSCInput* sssci){
     return sol;
 }
 
-void PUC::capture(HyperEdge* he, int t){
+void PCaptureCover::capture(HyperEdge* he, int t){
     unsigned long eff = he->vertices.size();
     for(unsigned long v : he->vertices){
         if(eff > this->ceffs[t][v]){
@@ -207,38 +208,49 @@ void PUC::capture(HyperEdge* he, int t){
     }
 }
 
-/* unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts){ */
+unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts){
 
-/*     PUC puc(psssci->universe, ts); */
-/*     cout << "here2" << endl; */
-/*     /1* #pragma omp parallel for *1/ */
-/*     for(int t = 0; t < ts; t++){ */
-/*         for(HyperEdge* he; (he = psssci->streams[t]->get_next_set())!= nullptr; ){ */
-/*             puc.capture(he, t); */
-/*         } */
-/*         cout << "here3" << endl; */
-/*         psssci->streams[t]->reset(); */
-/*         cout << "here4" << endl; */
-/*         /1* for(unsigned long i = puc.max_elem * t; i < puc.max_elem * (t+1); i++){ *1/ */
-/*         /1*     unsigned long max_ceff = 0; unsigned long max_ceid = -1; *1/ */
-/*             /1* for(int t = 0; t < ts; t++){ *1/ */
-/*         /1*         if(puc.ceffs[t][i] > max_ceff) { *1/ */
-/*         /1*             max_ceff = puc.ceffs[t][i]; *1/ */
-/*         /1*             max_ceid = puc.ceids[t][i]; *1/ */
-/*         /1*         } *1/ */
-/*         /1*     } *1/ */
-/*         /1*     puc.fceid[i] = max_ceid; *1/ */
-/*         /1* } *1/ */
-/*     } */
+    PCaptureCover pcc(psssci->universe, ts);
+    /* cout << "here2" << endl; */
+    #pragma omp parallel for
+    for(int t = 0; t < ts; t++){
+        for(HyperEdge* he; (he = psssci->streams[t]->get_next_set())!= nullptr; ){
+            pcc.capture(he, t);
+        }
+        psssci->streams[t]->reset();
+    }
+    #pragma omp parallel for
+    for(int t = 0; t < ts; t++){
+        for(unsigned long i = (pcc.max_elem/ts) * t; i < (pcc.max_elem/ts) * (t+1); i++){
+            unsigned long max_ceff = 0; unsigned long max_ceid;
+            for(int t = 0; t < ts; t++){
+                if(pcc.ceffs[t][i] > max_ceff) {
+                    max_ceff = pcc.ceffs[t][i];
+                    max_ceid = pcc.ceids[t][i];
+                }
+            }
+            pcc.fceid[i] = max_ceid;
+        }
+    }
+    /* for(unsigned long i = 0; i < pcc.max_elem; i++){ */
+    /*     unsigned long max_ceff = 0; unsigned long max_ceid; */
+    /*     for(int t = 0; t < ts; t++){ */
+    /*         if(pcc.ceffs[t][i] > max_ceff) { */
+    /*             max_ceff = pcc.ceffs[t][i]; */
+    /*             max_ceid = pcc.ceids[t][i]; */
+    /*         } */
+    /*     } */
+    /*     pcc.fceid[i] = max_ceid; */
+    /* } */
 
-/*     unordered_set<unsigned long>* sol = new unordered_set<unsigned long>(); */
-/*     for(int i = 0; i < puc.max_elem; i++){ */
-/*         if(puc.fceid[i] != static_cast<unsigned long>(-1)){ */
-/*             sol->insert(puc.fceid[i]); */
-/*         } */
-/*     } */
-/*     return sol; */
-/* } */
+    unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
+    for(unsigned long i = 0; i < pcc.max_elem; i++){
+        if(pcc.fceid[i] != static_cast<unsigned long>(-1)){
+            sol->insert(pcc.fceid[i]);
+        }
+    }
+    return sol;
+}
 
 /* unordered_set<int>* randomized_sssc(SSSCInput* sssci){ */
 

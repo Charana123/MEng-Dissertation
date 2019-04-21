@@ -13,6 +13,6 @@ struct CardinalitySet{
     int cardinality;
 };
 
-vector<int>* greedy(SetCoverInput* sci, int type);
+vector<int>* greedy(SetCoverInput* sci);
 
 #endif

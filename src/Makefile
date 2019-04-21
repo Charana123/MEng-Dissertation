@@ -1,9 +1,9 @@
-SS_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp single-assadi.cpp DFG.cpp single-assadi-main.cpp
+SS_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sp-assadi.cpp DFG.cpp sp-assadi-main.cpp
 EXACT_FILES = gp_utils.cpp sc_utils.cpp exact.cpp exact_main.cpp
 GREEDY_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_main.cpp
 NAIVE_FILES = gp_utils.cpp sc_utils.cpp naive.cpp naive_main.cpp
 DFG_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp DFG_main.cpp
-DFGT_FILES = gp_utils.cpp sc_utils.cpp DFG.cpp DFG_test.cpp
+DFG2_FILES = gp_utils.cpp sc_utils.cpp DFG2.cpp DFG_main.cpp
 EG_FILES = gp_utils.cpp sc_utils.cpp eager_greedy.cpp greedy_main.cpp
 LG_FILES = gp_utils.cpp sc_utils.cpp lazy_greedy.cpp greedy_main.cpp
 # RFGREEDY = utils.cpp rfgreedy.cpp rfgreedy_main.cpp
@@ -11,13 +11,10 @@ LG_FILES = gp_utils.cpp sc_utils.cpp lazy_greedy.cpp greedy_main.cpp
 TG_FILES = gp_utils.cpp ssc_utils.cpp thgreedy.cpp thgreedy_main.cpp
 SSSC_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sssc.cpp sssc_main.cpp
 PPG_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sssc.cpp DFG.cpp pp_greedy.cpp
-SSSCT_FILES = gp_utils.cpp ssc_utils.cpp sssc.cpp sssc_test.cpp
 ISC_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp iter_set_cover.cpp iter_set_cover_main.cpp
 PG_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
-PGT_FILES = gp_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_test.cpp
 # SSC_UTILS_TEST = gp_utils.cpp ssc_utils.cpp ssc_utils_test.cpp
 ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp assadiMP.cpp assadiMP_main.cpp
-ASSADIMPT_FILES = gp_utils.cpp sc_util.cpp greedy.cpp ssc_utils.cpp assadiMP.cpp assadiMP_test.cpp
 LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
 GEN_DATASET = gen_dataset.cpp
 ALL_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp lazy_greedy.cpp DFG.cpp sssc.cpp pgreedy.cpp pp_greedy.cpp all.cpp
@@ -32,9 +29,9 @@ else
 	CC=g++
 endif
 
-ss:
-	$(CC) $(FLAGS) $(SS_FILES) -o ss.out
-	./ss.out
+spa:
+	$(CC) $(FLAGS) $(SS_FILES) -o spa.out
+	./spa.out
 
 g:
 	$(CC) $(FLAGS) $(GREEDY_FILES) -o greedy.out
@@ -68,9 +65,9 @@ dfg:
 	$(CC) $(FLAGS)  $(DFG_FILES) -o dfg.out
 	./dfg.out test
 
-dfgt:
-	$(TCC) $(FLAGS)  $(DFGT_FILES) -o dfgt.out
-	./dfgt.out
+dfg2:
+	$(CC) $(FLAGS)  $(DFG2_FILES) -o dfg2.out
+	./dfg2.out
 
 eg:
 	$(CC) $(FLAGS)  $(EG_FILES) -o eg.out

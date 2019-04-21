@@ -55,8 +55,7 @@ void seqq(string filename){
     Stream* stream = new OfflineStream("../dataset/FIMI/" + filename + ".dat");
     vector<unsigned long>* universe = new vector<unsigned long>();
     unsigned long m, M, avg, largest;
-    float var;
-    stream->get_universe(universe, &m, &avg, &largest, &M, &var);
+    stream->get_universe(universe, &m, &avg, &largest, &M);
     unsigned long n = universe->size();
     SSSCInput sssci = {stream, universe, n, m, avg};
 
@@ -67,11 +66,10 @@ void seqq(string filename){
     cout << "M: " << M << endl;
     cout << "avg: " << avg << endl;
     cout << "largest: " << largest << endl;
-    cout << "variance: " << var << endl;
     cout << "==============" << endl;
 
     summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
-        unordered_set<unsigned long>* sol = sssc(&sssci);
+        unordered_set<unsigned long>* sol = sssc(&sssci, string("run"));
         return sol;
     });
     /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */

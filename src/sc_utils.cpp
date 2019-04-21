@@ -21,7 +21,7 @@ vector<Set>* read_sets(string filename)
         char cline[line.size() + 1];
         strcpy(cline, line.c_str());
         char* cs = std::strtok(cline, " \t");
-        //sett.vertices.push_back(stoul(cs));
+        sett.vertices.push_back(stoul(cs));
         for(; (cs = std::strtok(NULL, " \t")) != NULL; ){
             sett.vertices.push_back(stoul(cs));
         }

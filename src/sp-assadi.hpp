@@ -9,13 +9,13 @@
 
 using namespace std;
 
-struct SAInput
+struct SPAInput
 {
     Stream* stream;
-    vector<int>* universe;
-    int n;
-    int m;
+    vector<unsigned long>* universe;
+    unsigned long n;
+    unsigned long m;
 };
 
-vector<int>* single_sublinear(SAInput* ssi, int alpha);
+vector<unsigned long>* single_sublinear(SPAInput* ssi, unsigned long alpha);
 #endif

@@ -1,8 +1,8 @@
-#include "single-assadi.hpp"
+#include "sp-assadi.hpp"
 
-void summarise(string name, int alpha, std::function<vector<int>*()> func){
+void summarise(string name, unsigned long alpha, std::function<vector<unsigned long>*()> func){
     auto t1 = chrono::high_resolution_clock::now();
-    vector<int>* sol = func();
+    vector<unsigned long>* sol = func();
     auto t2 = chrono::high_resolution_clock::now();
     cout << "===========" << endl;
     cout << name << endl;
@@ -20,18 +20,20 @@ int main(){
 	/* vector<string> files = {"webdocs"}; */
 	for(string filename : files){
         Stream* stream = new OfflineStream("../dataset/FIMI/" + filename + ".dat");
-        vector<int>* universe = new vector<int>();
-        int m, M, avg, median, largest;
-        stream->get_universe(universe, &m, &avg, &median, &largest, &M);
-        int n = universe->size();
-        SAInput ssi = {stream, universe, n, m};
+        vector<unsigned long>* universe = new vector<unsigned long>();
+        unsigned long m, M, avg, largest;
+        stream->get_universe(universe, &m, &avg, &largest, &M);
+        unsigned long n = universe->size();
+        SPAInput ssi = {stream, universe, n, m};
 
-        /* int alpha = sqrt(n); */
-        /* int alpha = sqrt(n) / log(n); */
-        int alpha = log(n);
-        summarise(filename + ".dat", alpha, [&]() -> vector<int>*{
+        /* unsigned long alpha = sqrt(n); */
+        /* unsigned long alpha = sqrt(n) / log(n); */
+        unsigned long alpha = log(n);
+        summarise(filename + ".dat", alpha, [&]() -> vector<unsigned long>*{
             return single_sublinear(&ssi, alpha);
         });
+
+        // log(n.log(n)) < sqrt(n)
 	}
 }
 

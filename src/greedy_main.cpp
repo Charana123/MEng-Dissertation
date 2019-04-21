@@ -19,19 +19,19 @@ void summarise(string name, std::function<vector<int>*()> func){
 }
 
 int main(int argc, char** argv){
-	// string filename = string(argv[1]);
+	string filename = string(argv[1]);
 
-	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
+	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
 	/* vector<string> files = {"chess"}; */
-	for(string filename : files){
+	/* for(string filename : files){ */
 		SetCoverInput* sci = read_sci("../dataset/FIMI/" + filename + ".dat");
 		/* summarise(filename  + ".dat", [&]() -> vector<int>*{ */
 		/* 	return greedy(sci, 3); */
 		/* }); */
 		summarise(filename  + ".dat", [&]() -> vector<int>*{
-			return greedy(sci, 2);
+			return greedy(sci);
 		});
-	}
+	/* } */
 }
 
 

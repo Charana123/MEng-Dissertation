@@ -24,11 +24,11 @@ FLAGS=-std=c++17 -pthread -O3 -fopenmp
 # LIBS=$(shell pkg-config --libs --cflags boost)
 # -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
 # ifeq ($(uname), Darwin)
-# 	CC=clang++
+# 	CC=g++-8
 # else
 # 	CC=g++
 # endif
-CC=g++-8
+CC=g++
 
 spa:
 	$(CC) $(FLAGS) $(SS_FILES) -o spa.out

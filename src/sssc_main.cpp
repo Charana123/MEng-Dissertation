@@ -35,8 +35,7 @@ void check(SSSCInput* sssci, unordered_set<unsigned long>* sol){
     cout << diff << endl;
 }
 
-void parr(string filename){
-    int ts = 8;
+void parr(string filename, int ts){
     POfflineStream** streams = get_streams("../dataset/FIMI/" + filename + ".dat", ts);
     cout << "here" << endl;
     vector<unsigned long>* universe = new vector<unsigned long>();
@@ -82,10 +81,11 @@ void seqq(string filename){
 #include "rss.hpp"
 int main(int argc, char** argv){
 	string filename = string(argv[1]);
+    int ts = stoi(argv[2]);
 	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
 	/* for(string filename : files){ */
-        parr(filename);
-        seqq(filename);
+        parr(filename, ts);
+        //seqq(filename);
 	/* } */
 
     size_t peakSize = getPeakRSS();

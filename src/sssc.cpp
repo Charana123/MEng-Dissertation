@@ -232,16 +232,16 @@ unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts){
             pcc.fceid[i] = max_ceid;
         }
     }
-    /* for(unsigned long i = 0; i < pcc.max_elem; i++){ */
-    /*     unsigned long max_ceff = 0; unsigned long max_ceid; */
-    /*     for(int t = 0; t < ts; t++){ */
-    /*         if(pcc.ceffs[t][i] > max_ceff) { */
-    /*             max_ceff = pcc.ceffs[t][i]; */
-    /*             max_ceid = pcc.ceids[t][i]; */
-    /*         } */
-    /*     } */
-    /*     pcc.fceid[i] = max_ceid; */
-    /* } */
+//    for(unsigned long i = 0; i < pcc.max_elem; i++){
+//         unsigned long max_ceff = 0; unsigned long max_ceid;
+//         for(int t = 0; t < ts; t++){
+//             if(pcc.ceffs[t][i] > max_ceff) {
+//                 max_ceff = pcc.ceffs[t][i];
+//                 max_ceid = pcc.ceids[t][i];
+//             }
+//         }
+//         pcc.fceid[i] = max_ceid;
+//    }
 
     unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
     for(unsigned long i = 0; i < pcc.max_elem; i++){

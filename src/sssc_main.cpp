@@ -35,6 +35,9 @@ void check(SSSCInput* sssci, unordered_set<unsigned long>* sol){
     cout << diff << endl;
 }
 
+void parrstream(string filename){
+}
+
 void parr(string filename, int ts){
     POfflineStream** streams = get_streams("../dataset/FIMI/" + filename + ".dat", ts);
     cout << "here" << endl;
@@ -44,8 +47,14 @@ void parr(string filename, int ts){
     unsigned long n = universe->size();
     PSSSCInput psssci = {streams, universe, n, m};
     cout << "here1" << endl;
+
+    /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
+    /*     unordered_set<unsigned long>* sol = capture(&psssci, ts); */
+    /*     return sol; */
+    /* }); */
+
     summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
-        unordered_set<unsigned long>* sol = capture(&psssci, ts);
+        unordered_set<unsigned long>* sol = sssc(&psssci, ts);
         return sol;
     });
 }
@@ -59,39 +68,44 @@ void seqq(string filename){
     unsigned long n = universe->size();
     SSSCInput sssci = {stream, universe, n, m, avg};
 
-    cout << filename << endl;
-    cout << "==============" << endl;
-    cout << "n: " << n << endl;
-    cout << "m: " << m << endl;
-    cout << "M: " << M << endl;
-    cout << "avg: " << avg << endl;
-    cout << "largest: " << largest << endl;
-    cout << "==============" << endl;
+    /* cout << filename << endl; */
+    /* cout << "==============" << endl; */
+    /* cout << "n: " << n << endl; */
+    /* cout << "m: " << m << endl; */
+    /* cout << "M: " << M << endl; */
+    /* cout << "avg: " << avg << endl; */
+    /* cout << "largest: " << largest << endl; */
+    /* cout << "==============" << endl; */
 
+    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
+        unordered_set<unsigned long>* sol = sssc(&sssci, string("run"));
+        return sol;
+    });
     /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
-    /*     unordered_set<unsigned long>* sol = sssc(&sssci, string("run")); */
+    /*     unordered_set<unsigned long>* sol = capture(&sssci); */
     /*     return sol; */
     /* }); */
     summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
-        unordered_set<unsigned long>* sol = capture(&sssci);
+        unordered_set<unsigned long>* sol = threshold_randomized_sssc(&sssci, largest);
         return sol;
     });
 }
 
 #include "rss.hpp"
 int main(int argc, char** argv){
-	string filename = string(argv[1]);
-    int ts = stoi(argv[2]);
-	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
-	/* for(string filename : files){ */
-        parr(filename, ts);
-        //seqq(filename);
-	/* } */
+	/* string filename = string(argv[1]); */
+    /* int ts = stoi(argv[2]); */
+	vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"};
+	for(string filename : files){
+        /* parrstream(filename); */
+        /* parr(filename, ts); */
+        seqq(filename);
+	}
 
-    size_t peakSize = getPeakRSS();
-    cout << "peakSize: " << peakSize << endl;
-    size_t currentSize = getCurrentRSS();
-    cout << "currentSize: " << currentSize << endl;
+    /* size_t peakSize = getPeakRSS(); */
+    /* cout << "peakSize: " << peakSize << endl; */
+    /* size_t currentSize = getCurrentRSS(); */
+    /* cout << "currentSize: " << currentSize << endl; */
 }
 
 

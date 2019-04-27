@@ -1,12 +1,14 @@
 #include "pgreedy.hpp"
 
-void greedy_pass(ProgressiveGreedyInput* pgin, int threshold, vector<int>* covered, unordered_set<int>* sol){
+void greedy_pass(ProgressiveGreedyInput* pgin, unsigned long threshold, vector<bool>* covered, unordered_set<unsigned long>* sol){
     for(Set* s; (s = pgin->stream->get_next_set()) != nullptr; ){
-        vector<int> diff;
-        for(int v : s->vertices) if((*covered)[v] == 0) diff.push_back(v);
+        vector<unsigned long> diff;
+        for(unsigned long v : s->vertices) {
+            if(!(*covered)[v]) diff.push_back(v);
+        }
         if(diff.size() >= threshold){
             sol->insert(s->i);
-            for(int v : diff) (*covered)[v] = 1;
+            for(unsigned long v : diff) (*covered)[v] = true;
         }
     }
     pgin->stream->reset();
@@ -31,21 +33,19 @@ void greedy_pass(ProgressiveGreedyInput* pgin, int threshold, vector<int>* cover
 /*     pgin->stream->reset(); */
 /* } */
 
-unordered_set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p){
+unordered_set<unsigned long>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, unsigned long p){
     cout << "started" << endl;
     assert(p >= 1);
-    int max_elem = *std::max_element(pgin->universe->begin(), pgin->universe->end());
-    unordered_set<int>* sol = new unordered_set<int>();
-    vector<int>* covered = new vector<int>(max_elem);
+    unsigned long max_elem = *std::max_element(pgin->universe->begin(), pgin->universe->end());
+    unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
+    vector<bool>* covered = new vector<bool>(max_elem + 1, false);
     /* rand_pass(pgin, 2500, pgout); */
-    vector<int> precomp;
+    vector<float> precomp;
     precomp.push_back(1); precomp.push_back(pow(pgin->n, (float)1/p));
-    for(int j = 2; j < p+1; j++) precomp[j] = precomp[j-1] * precomp[1];
-    for(int j = p; j >= 0; j--){
-        cout << "pass: " << j << endl;
+    for(unsigned long j = 2; j < p+1; j++) precomp[j] = precomp[j-1] * precomp[1];
+    for(unsigned long j = p; j != static_cast<unsigned long>(-1); j--){
         greedy_pass(pgin, precomp[j], covered, sol);
     }
-    cout << "end" << endl;
     return sol;
 }
 

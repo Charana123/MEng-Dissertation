@@ -34,5 +34,6 @@ struct SetCoverOutput {
 };
 
 SetCoverInput* read_sci(string filename);
+vector<Set>* read_sets(string filename);
 
 #endif

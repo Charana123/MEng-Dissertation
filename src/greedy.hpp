@@ -9,10 +9,10 @@
 #include "sc_utils.hpp"
 
 struct CardinalitySet{
-    int i;
-    int cardinality;
+    unsigned long i;
+    unsigned long cardinality;
 };
 
-vector<int>* greedy(SetCoverInput* sci);
+vector<unsigned long>* greedy(SetCoverInput* sci);
 
 #endif

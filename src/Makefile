@@ -18,6 +18,7 @@ ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp assadiMP.cpp
 LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
 GEN_DATASET = gen_dataset.cpp
 ALL_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp lazy_greedy.cpp DFG.cpp sssc.cpp pgreedy.cpp pp_greedy.cpp all.cpp
+SPLIT_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp split.cpp
 
 FLAGS=-std=c++17 -pthread -O3 -fopenmp
 # REPORT=-qopt-report=2 -qopt-report-phase=vec
@@ -29,6 +30,10 @@ else
 	CC=g++
 endif
 CC=g++-8
+
+
+split:
+	$(CC) $(FLAGS) $(SPLIT_FILES) -o split.out
 
 spa:
 	$(CC) $(FLAGS) $(SS_FILES) -o spa.out

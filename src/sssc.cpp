@@ -1,5 +1,6 @@
 #include "sssc.hpp"
 #include "omp.h"
+#include <boost/range/algorithm.hpp>
 using namespace std;
 
 /* void UnweightedCover::randomized_run(HyperEdge* he, float p){ */
@@ -107,6 +108,44 @@ void SSSCCover::mrun2(HyperEdge* he){
     }
 }
 
+
+/* void SSSCCover::mrun3(HyperEdge* he){ */
+
+/*     vector<unsigned long>* eff = this->eff; */
+/*     sort(he->vertices.begin(), he->vertices.end(), [&eff](unsigned long v1, unsigned long v2) -> bool{ */
+/*         return (*eff)[v1] < (*eff)[v2]; */
+/*     }); */
+/*     unsigned long i = he->vertices.size() - 1; */
+/*     unsigned long benefit; */
+/*     for(; i != static_cast<unsigned long>(-1); i--) { */
+/*         if((i+1) > (*eff)[he->vertices[i]]) { */
+/*             benefit = he->vertices.size() - i - 1; */
+/*             break; */
+/* 		} */
+/*         else if((i+1) == (*eff)[he->vertices[i]]){ */
+/*             benefit = he->vertices.size() - i - 1; */
+/*             if(benefit > (*this->ben)[he->vertices[i]]) break; */
+/*             benefit1  = std::accumulate(he->vertices.begin() + i + 1, he->vertices.end(), 0, */
+/*                 [&eff](unsigned long acc, unsigned long v) -> unsigned long { */
+/*                     return acc + (float)1/(*eff)[v]; */
+/*                 } */
+/*             ); */
+/*             if(benefit == (*this->ben)[he->vertices[i]] && benefit1 > (*this->ben1)[he->vertices[i]]) break; */
+/*         } */
+/*     } */
+
+/*     if(i ==  static_cast<unsigned long>(-1)) return; */
+/*     for(unsigned long j = 0; j <= i; j++){ */
+/*         unsigned long v = he->vertices[j]; */
+/*         (*this->eid)[v] = he->i; */
+/*         (*this->eff)[v] = i + 1; */
+/*         (*this->ben)[v] = benefit; */
+/*     } */
+/*     for(unsigned long j = i+1; j < he->vertices.size(); j++){ */
+/*         (*this->ben1)[v]++; */
+/*     } */
+/* } */
+
 void SSSCCover::run(HyperEdge* he){
     vector<unsigned long>* eff = this->eff;
     sort(he->vertices.begin(), he->vertices.end(), [&eff](unsigned long v1, unsigned long v2) -> bool{
@@ -156,7 +195,7 @@ void PCover::run(HyperEdge* he, int t){
         return (*effs[t])[v1] < (*effs[t])[v2];
     });
     unsigned long i = he->vertices.size() - 1;
-    for(; i != static_cast<unsigned long>(-1) && (i + 1) < 2*(*effs[t])[he->vertices[i]]; i--) {}
+    for(; i != static_cast<unsigned long>(-1) && (i + 1) <= (*effs[t])[he->vertices[i]]; i--) {}
 
     if(i ==  static_cast<unsigned long>(-1)) return;
     for(unsigned long j = 0; j <= i; j++){
@@ -170,7 +209,7 @@ void PCover::run(HyperEdge* he, int t){
 unordered_set<unsigned long>* sssc(PSSSCInput* psssci, int ts){
 
     PCover cover(psssci->universe, ts);
-    #pragma omp parallel for
+    /* #pragma omp parallel for */
     for(int t = 0; t < ts; t++){
         for(HyperEdge* he; (he = psssci->streams[t]->get_next_set())!= nullptr; ){
             cover.run(he, t);
@@ -178,42 +217,63 @@ unordered_set<unsigned long>* sssc(PSSSCInput* psssci, int ts){
         psssci->streams[t]->reset();
     }
 
+    /* cout << "here2" << endl; */
     for(int t = 1; t < ts; t++){
         vector<unsigned long> sv;
-        for(int v = 0; v < cover.max_elem + 1; v++) sv.push_back(v);
+        for(int v = 0; v <= cover.max_elem + 1; v++){
+            if((*cover.eids[t])[v] != static_cast<unsigned long>(-1)){
+                sv.push_back(v);
+            }
+        }
         sort(sv.begin(), sv.end(), [&](unsigned long v1, unsigned long v2) -> bool {
             return (*cover.eids[t])[v1] < (*cover.eids[t])[v2];
         });
+        /* for(unsigned long i = 0; i < sv.size(); i++) { */
+        /*     cout << "v: " << sv[i] << endl; */
+        /*     cout << "s: " << (*cover.eids[1])[sv[i]] << endl; */
+        /* } */
+        /* cout << "here2.1" << endl; */
 
         unsigned long i = 0;
         while(i < sv.size()){
+            /* cout << "here2.1.1" << endl; */
             vector<unsigned long> s;
-            unsigned long eff, id;
             s.push_back(sv[i]);
-            eff = (*cover.effs[t])[sv[i]]; id = (*cover.eids[t])[sv[i]];
-            if(id == static_cast<unsigned long>(-1)) break;
-            for(i++; (*cover.eids[t])[sv[i]] == id && i < sv.size(); i++) s.push_back(sv[i]);
+            unsigned long eff = (*cover.effs[t])[sv[i]];
+            unsigned long id = (*cover.eids[t])[sv[i]];
+            for(i++; i < sv.size() && (*cover.eids[t])[sv[i]] == id; i++) s.push_back(sv[i]);
             vector<bool> s_removed(s.size(), false);
             unsigned long eff_after = eff;
-            while(eff_after != eff){
+            /* cout << "here2.1.2" << endl; */
+            cout << "eff_before: " << eff_after << endl;
+            cout << "s.size: " << s.size() << endl;
+            do{
                 eff = eff_after;
                 for(unsigned long j = 0; j < s.size(); j++) {
-                    if(s_removed[j] != true){
-                        if(eff_after < (*cover.effs[0])[s[j]]){
+                    /* cout << s_removed[j] << endl; */
+                    if(!s_removed[j]){
+                        /* cout << "eff: " << (*cover.effs[0])[s[j]] << endl; */
+                        if(eff_after <= (*cover.effs[0])[s[j]]){
                             eff_after--;
                             s_removed[j] = true;
                         }
                     }
                 }
-            }
+            } while(eff_after != eff);
+            if(eff_after == 0) continue;
+            cout << "eff_after: " << eff_after << endl;
+            /* cout << "here2.1.3" << endl; */
             for(unsigned long j = 0; j < s.size(); j++){
-                if(s_removed[j] != true) {
+                if(!s_removed[j]) {
+                    /* cout << "x" << endl; */
                     (*cover.eids[0])[s[j]] = (*cover.eids[t])[s[j]];
                     (*cover.effs[0])[s[j]] = eff_after;
                 }
             }
         }
+        /* cout << "here2.2" << endl; */
     }
+    /* cout << "here3" << endl; */
 
     unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
     for(unsigned long i = 0; i < cover.max_elem + 1; i++){
@@ -260,10 +320,9 @@ void PCaptureCover::capture(HyperEdge* he, int t){
 unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts){
 
     PCaptureCover pcc(psssci->universe, ts);
-    /* cout << "here2" << endl; */
     #pragma omp parallel for
     for(int t = 0; t < ts; t++){
-        for(HyperEdge* he; (he = psssci->streams[t]->get_next_set())!= nullptr; ){
+        for(HyperEdge* he; (he = psssci->streams[t]->get_next_set()) != nullptr; ){
             pcc.capture(he, t);
         }
         psssci->streams[t]->reset();
@@ -324,55 +383,57 @@ void RCover::capture(HyperEdge* he){
 
 void RCover::threshold_randomized_run(HyperEdge* he, unsigned long threshold){
 
-    unsigned long sample_size = threshold < he->vertices.size() && threshold > 0 ? threshold : he->vertices.size();
-    float fraction = he->vertices.size() / sample_size;
+    if(he->vertices.size() <= threshold){
+        vector<unsigned long>* eff = this->eff;
+        sort(he->vertices.begin(), he->vertices.end(), [&eff](unsigned long v1, unsigned long v2) -> bool{
+            return (*eff)[v1] < (*eff)[v2];
+        });
+        unsigned long i = he->vertices.size() - 1;
+        /* for(; i != static_cast<unsigned long>(-1) && (i + 1) < 2*(*eff)[he->vertices[i]]; i--) {} */
+        for(; i != static_cast<unsigned long>(-1) && (i + 1) <= (*eff)[he->vertices[i]]; i--) {}
 
-    /* vector<unsigned long> he_sample(he->vertices.begin(), he->vertices.begin() + sample_size); */
-    // Stage 1
-    vector<unsigned long>* he_sample;
-    if(sample_size < he->vertices.size()){
-        he_sample = new vector<unsigned long>();
-        sample(he->vertices.begin(), he->vertices.end(),
-            std::inserter(*he_sample, he_sample->begin()), threshold,
-            std::mt19937{std::random_device{}()});
-    }
-    else {
-        he_sample = &he->vertices;
-    }
-
-    // Stage 2
-    vector<unsigned long>* eff = this->eff;
-    sort(he_sample->begin(), he_sample->end(), [&eff](unsigned long v1, unsigned long v2) -> bool{
-        return (*eff)[v1] < (*eff)[v2];
-    });
-    unsigned long i = sample_size - 1;
-    for(; i != static_cast<unsigned long>(-1) && (i*fraction + 1) <= (*eff)[(*he_sample)[i]]; i--) {}
-
-    // Stage 3
-    if(i == static_cast<unsigned long>(-1)) return;
-    if(threshold < he->vertices.size()){
-        unsigned long threshold_effectivity = (*eff)[(*he_sample)[i]];
-        vector<unsigned long> T;
-        for(unsigned long v : he->vertices) if((*eff)[v] <= threshold_effectivity) T.push_back(v);
-        unsigned long eff_t = T.size();
-        for(unsigned long v : T){
-            (*this->eid)[v] = he->i;
-            (*this->eff)[v] = eff_t;
-        }
-    }
-    else {
+        if(i ==  static_cast<unsigned long>(-1)) return;
         for(unsigned long j = 0; j <= i; j++){
             unsigned long v = he->vertices[j];
             (*this->eid)[v] = he->i;
             (*this->eff)[v] = i + 1;
         }
     }
+    else {
+        float fraction = ((float) he->vertices.size()) / threshold;
+        // Stage 1
+        vector<unsigned long> he_sample;
+        sample(he->vertices.begin(), he->vertices.end(),
+            std::inserter(he_sample, he_sample.begin()), threshold,
+            std::mt19937{std::random_device{}()});
+
+        // Stage 2
+        vector<unsigned long>* eff = this->eff;
+        sort(he_sample.begin(), he_sample.begin() + threshold + 1, [&eff](unsigned long v1, unsigned long v2) -> bool{
+            return (*eff)[v1] < (*eff)[v2];
+        });
+        unsigned long i = threshold - 1;
+        for(; i != static_cast<unsigned long>(-1) && (i*fraction + 1) <= (*eff)[he_sample[i]]; i--) {}
+
+        // Stage 3
+        if(i == static_cast<unsigned long>(-1)) return;
+        unsigned long threshold_effectivity = (*eff)[he_sample[i]];
+        unsigned long eff_t = i * fraction + 1;
+        for(unsigned long v : he->vertices){
+            if((*eff)[v] <= threshold_effectivity){
+                (*this->eid)[v] = he->i;
+                (*this->eff)[v] = eff_t;
+            }
+        }
+    }
 }
 
-unordered_set<unsigned long>* threshold_randomized_sssc(SSSCInput* sssci, unsigned long largest){
+unordered_set<unsigned long>* threshold_randomized_sssc(SSSCInput* sssci, unsigned long largest, unsigned long avg){
 
     RCover cover(sssci->universe);
-    unsigned long threshold = 0.25 * largest;
+    /* unsigned long threshold = largest; */
+    /* cout << "threshold: " << threshold << endl; */
+    unsigned long threshold = (largest - avg)/10 + avg;
     cout << "threshold: " << threshold << endl;
     for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
         cover.threshold_randomized_run(he, threshold);

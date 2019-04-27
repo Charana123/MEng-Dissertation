@@ -20,7 +20,8 @@ struct SSSCInput
 
 struct PSSSCInput
 {
-    POfflineStream** streams;
+    /* POfflineStream** streams; */
+    OnlineStream** streams;
     vector<unsigned long>* universe;
     unsigned long n;
     unsigned long m;
@@ -31,7 +32,7 @@ unordered_set<unsigned long>* sssc(PSSSCInput* psssci, int ts);
 unordered_set<unsigned long>* capture(SSSCInput* sssci);
 unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts);
 /* unordered_set<unsigned long>* randomized_sssc(SSSCInput* sssci); */
-unordered_set<unsigned long>* threshold_randomized_sssc(SSSCInput* sssci, unsigned long largest);
+unordered_set<unsigned long>* threshold_randomized_sssc(SSSCInput* sssci, unsigned long largest, unsigned long avg);
 
 class SSSCCover {
     public:
@@ -52,6 +53,7 @@ class SSSCCover {
         void run(HyperEdge* he);
         void mrun1(HyperEdge* he);
         void mrun2(HyperEdge* he);
+        void mrun3(HyperEdge* he);
         /* void randomized_run(HyperEdge* he, float p); */
         void threshold_randomized_run(HyperEdge* he, unsigned long threshold);
 
@@ -91,13 +93,12 @@ class PCover {
             this->effs = new vector<unsigned long>*[ts]();
             for(int t = 0; t < ts; t++){
                 this->effs[t] = new vector<unsigned long>(this->max_elem + 1, 0);
-                this->eids[t] = new vector<unsigned long>(this->max_elem + 1, -1);
+                this->eids[t] = new vector<unsigned long>(this->max_elem + 1, static_cast<unsigned long>(-1));
             }
-            this->fceid = new vector<unsigned long>(this->max_elem + 1, -1);
         };
         unsigned long max_elem;
         void run(HyperEdge* he, int t);
-        vector<unsigned long> **eids, **effs, *fceid;
+        vector<unsigned long> **eids, **effs;
 };
 
 class CaptureCover {
@@ -126,12 +127,12 @@ class PCaptureCover {
             this->ceids = new unsigned long*[ts]();
             this->ceffs = new unsigned long*[ts]();
             for(int t = 0; t < ts; t++){
-                this->ceffs[t] = new unsigned long[this->max_elem];
-                this->ceids[t] = new unsigned long[this->max_elem];
-                std::fill_n(this->ceids[t], this->max_elem, static_cast<unsigned long>(-1));
+                this->ceffs[t] = new unsigned long[this->max_elem+1];
+                this->ceids[t] = new unsigned long[this->max_elem+1];
+                std::fill_n(this->ceids[t], this->max_elem+1, static_cast<unsigned long>(-1));
             }
-            this->fceid = new unsigned long[this->max_elem];
-            std::fill_n(this->fceid, this->max_elem, static_cast<unsigned long>(-1));
+            this->fceid = new unsigned long[this->max_elem+1];
+            std::fill_n(this->fceid, this->max_elem+1, static_cast<unsigned long>(-1));
         };
         unsigned long max_elem;
         void capture(HyperEdge* he, int t);

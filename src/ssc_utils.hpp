@@ -21,12 +21,13 @@ class OnlineStream : public Stream {
         virtual Set* get_next_set() override;
         virtual void get_universe(vector<unsigned long>* universe, unsigned long* m, unsigned long* avg, unsigned long* largest, unsigned long* M) override;
         virtual void reset() override;
+        unsigned long start_counter = 0;
+        unsigned long counter = 0;
     private:
         bip::file_mapping mapping;
         bip::mapped_region mapped_rgn;
         imemstream* mmistream;
         Set* last_set = nullptr;
-        unsigned long position = 0;
 };
 
 class OfflineStream : public Stream {
@@ -56,6 +57,7 @@ class POfflineStream : public Stream {
 };
 
 POfflineStream** get_streams(string filename, int ts);
+void get_online_streams(string filename, int ts, OnlineStream** streams, vector<unsigned long>* final_universe);
 
 #endif
 

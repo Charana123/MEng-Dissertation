@@ -12,10 +12,10 @@ using namespace std;
 struct ProgressiveGreedyInput
 {
     Stream* stream;
-    vector<int>* universe;
-    int n;
-    int m;
+    vector<unsigned long>* universe;
+    unsigned long n;
+    unsigned long m;
 };
 
-unordered_set<int>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, int p);
+unordered_set<unsigned long>* progressive_greedy_naive(ProgressiveGreedyInput* pgin, unsigned long p);
 #endif

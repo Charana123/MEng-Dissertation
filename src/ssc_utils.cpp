@@ -1,5 +1,22 @@
 #include "ssc_utils.hpp"
 
+void get_online_streams(string filename, int ts, OnlineStream** streams, vector<unsigned long>* final_universe) {
+    unordered_set<unsigned long> final_universe_s;
+    unsigned long counter = 0;
+    for(int t = 0; t < ts; t++) {
+        streams[t] = new OnlineStream(filename + "." + to_string(ts) + "." + to_string(t));
+        streams[t]->start_counter = counter;
+        streams[t]->counter = counter;
+        vector<unsigned long> universe;
+        unsigned long m, M, avg, largest;
+        streams[t]->get_universe(&universe, &m, &avg, &largest, &M);
+        counter += m;
+        final_universe_s.insert(universe.begin(), universe.end());
+    }
+        final_universe->insert(final_universe->end(), final_universe_s.begin(), final_universe_s.end());
+}
+
+
 POfflineStream** get_streams(string filename, int ts) {
     OfflineStream* stream = new OfflineStream(filename);
     POfflineStream** streams = new POfflineStream*[ts]();
@@ -57,6 +74,7 @@ Set* POfflineStream::get_next_set(){
     return (*this->psci->sets)[this->position++];
 }
 
+#include <string.h>
 Set* OnlineStream::get_next_set(){
 
     delete this->last_set;
@@ -66,14 +84,15 @@ Set* OnlineStream::get_next_set(){
         return nullptr;
     }
 
-    Set* s = new Set{{}, position++};
-    char cline[line.size() + 1];
+    Set* s = new Set{{}, counter++};
+    char* cline = new char[line.size() + 1];
     strcpy(cline, line.c_str());
-    char* cs = std::strtok(cline, " \t");
-    /* s->vertices.push_back(stoul(cs)); */
-    for(; (cs = std::strtok(NULL, " \t")) != NULL; ){
+    char* cs = strtok_r(cline, " \t\n", &cline);
+    s->vertices.push_back(stoul(cs));
+    for(; (cs = strtok_r(NULL, " \t\n", &cline)) != NULL; ){
         s->vertices.push_back(stoul(cs));
     }
+    delete[] cline;
     this->last_set = s;
     return s;
 }
@@ -128,5 +147,5 @@ void OnlineStream::reset(){
     char const* const mmaped_data = static_cast<char*>(this->mapped_rgn.get_address());
     size_t const mmap_size = this->mapped_rgn.get_size();
     this->mmistream = new imemstream(mmaped_data, mmap_size);
-    this->position = 0;
+    this->counter = this->start_counter;
 }

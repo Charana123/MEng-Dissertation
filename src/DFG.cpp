@@ -55,9 +55,9 @@ vector<unsigned long>* DFG_impl(SetCoverInput* sci, vector<float>* p_pow_k, vect
                 }
             }
         }
-        for(Set* s : (*ktoCollection)[k]){
-            if(SSet* ss = dynamic_cast<SSet*>(s)) delete ss;
-        }
+        /* for(Set* s : (*ktoCollection)[k]){ */
+        /*     if(SSet* ss = dynamic_cast<SSet*>(s)) delete ss; */
+        /* } */
         (*ktoCollection)[k].clear();
     }
 

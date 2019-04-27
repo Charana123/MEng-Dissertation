@@ -6,9 +6,9 @@
 using namespace std;
 float p = 1.05;
 
-void summarise(string name, std::function<vector<int>*()> func){
+void summarise(string name, std::function<vector<unsigned long>*()> func){
     auto t1 = chrono::high_resolution_clock::now();
-    vector<int>* sol = func();
+    vector<unsigned long>* sol = func();
     auto t2 = chrono::high_resolution_clock::now();
     cout << "===========" << endl;
     cout << name << endl;
@@ -24,11 +24,12 @@ int main(int argc, char** argv){
 	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
 	/* vector<string> files = {"chess"}; */
 	/* for(string filename : files){ */
-		SetCoverInput* sci = read_sci("../dataset/FIMI/" + filename + ".dat");
-		/* summarise(filename  + ".dat", [&]() -> vector<int>*{ */
+		/* SetCoverInput* sci = read_sci("../dataset/FIMI/" + filename + ".dat"); */
+		SetCoverInput* sci = read_sci(filename);
+		/* summarise(filename  + ".dat", [&]() -> vector<unsigned long>*{ */
 		/* 	return greedy(sci, 3); */
 		/* }); */
-		summarise(filename  + ".dat", [&]() -> vector<int>*{
+		summarise(filename  + ".dat", [&]() -> vector<unsigned long>*{
 			return greedy(sci);
 		});
 	/* } */

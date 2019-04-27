@@ -18,13 +18,14 @@ vector<Set>* read_sets(string filename)
         sets->push_back(Set{{}, counter});
         Set& sett = sets->at(sets->size()-1);
         sett.i = counter++;
-        char cline[line.size() + 1];
+        char* cline = new char[line.size() + 1];
         strcpy(cline, line.c_str());
-        char* cs = std::strtok(cline, " \t");
+        char* cs = strtok_r(cline, " \t", &cline);
         sett.vertices.push_back(stoul(cs));
-        for(; (cs = std::strtok(NULL, " \t")) != NULL; ){
+        for(; (cs = strtok_r(NULL, " \t", &cline)) != NULL; ){
             sett.vertices.push_back(stoul(cs));
         }
+        delete[] cline;
 	}
     return sets;
 }

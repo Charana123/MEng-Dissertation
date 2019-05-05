@@ -1,4 +1,6 @@
 SS_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sp-assadi.cpp DFG.cpp sp-assadi-main.cpp
+REC_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp element-sampling.cpp lazy_greedy.cpp element-sampling_main.cpp
+ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp mp-assadi.cpp lazy_greedy.cpp mp-assadi_main.cpp
 EXACT_FILES = gp_utils.cpp sc_utils.cpp exact.cpp exact_main.cpp
 GREEDY_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp greedy_main.cpp
 NAIVE_FILES = gp_utils.cpp sc_utils.cpp naive.cpp naive_main.cpp
@@ -14,7 +16,6 @@ PPG_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp sssc.cpp DFG.cpp pp_greedy.c
 ISC_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp iter_set_cover.cpp iter_set_cover_main.cpp
 PG_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp pgreedy.cpp pgreedy_main.cpp
 # SSC_UTILS_TEST = gp_utils.cpp ssc_utils.cpp ssc_utils_test.cpp
-ASSADIMP_FILES = gp_utils.cpp sc_utils.cpp greedy.cpp ssc_utils.cpp assadiMP.cpp assadiMP_main.cpp
 LOWERBOUND_FILES = gp_utils.cpp sc_utils.cpp lowerbound.cpp
 GEN_DATASET = gen_dataset.cpp
 ALL_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp lazy_greedy.cpp DFG.cpp sssc.cpp pgreedy.cpp pp_greedy.cpp all.cpp
@@ -31,6 +32,8 @@ else
 endif
 CC=g++-8
 
+rec:
+	$(CC) $(FLAGS) $(REC_FILES) -o rec.out
 
 split:
 	$(CC) $(FLAGS) $(SPLIT_FILES) -o split.out
@@ -38,6 +41,9 @@ split:
 spa:
 	$(CC) $(FLAGS) $(SS_FILES) -o spa.out
 	./spa.out
+
+mpa:
+	$(CC) $(FLAGS)  $(ASSADIMP_FILES) -o mpa.out
 
 g:
 	$(CC) $(FLAGS) $(GREEDY_FILES) -o greedy.out
@@ -92,12 +98,6 @@ sssc:
 
 sssct:
 	$(CC) $(FLAGS)  $(SSSCT_FILES) -o sssct.out
-
-assadiMP:
-	$(CC) $(FLAGS)  $(ASSADIMP_FILES) -o assadiMP.out
-
-assadiMPt:
-	$(CC) $(FLAGS)  $(ASSADIMPT_FILES) -o assadiMPt.out
 
 lowerbound:
 	$(CC) $(FLAGS)  $(LOWERBOUND_FILES) -o lowerbound.out

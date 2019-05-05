@@ -58,8 +58,3 @@ vector<unsigned long>* greedy(SetCoverInput* sci){
     unsigned long max_elem = *std::max_element(sci->universe->begin(), sci->universe->end());
     return greedy_impl(sci, max_elem);
 }
-
-
-
-
-

@@ -84,6 +84,17 @@ int main(int argc, char** argv){
         });
     }
 
+    if(alg.compare("PLSH") == 0 || alg.compare("all") == 0){
+        int ts = stoi(argv[4]);
+        OnlineStream** streams = new OnlineStream*[ts]();
+        vector<unsigned long>* universe = new vector<unsigned long>();
+        get_online_streams(filename, ts, streams, universe);
+        PSSSCInput psssci = {streams, universe, 0, 0};
+        summarise("capture", [&]() -> unordered_set<unsigned long>*{
+            return capture(&psssci, ts);
+        });
+    }
+
     if(alg.compare("Rosen") == 0 || alg.compare("all") == 0){
         summarise("sssc", [&]() -> unordered_set<unsigned long>*{
             SSSCInput sssci = {stream, universe, n, m, avg};

@@ -1,5 +1,4 @@
 #include "sp-assadi.hpp"
-#include "DFG.hpp"
 
 vector<unsigned long>* single_sublinear(SPAInput* ssi, unsigned long alpha){
     unsigned long m = ((float)ssi->m/alpha);

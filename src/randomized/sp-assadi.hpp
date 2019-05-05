@@ -1,7 +1,8 @@
 #ifndef SINGLE_ASSADI_H
 #define SINGLE_ASSADI_H
 
-#include "ssc_utils.hpp"
+#include "../ssc_utils.hpp"
+#include "../DFG.hpp"
 #include <algorithm>
 #include <random>
 #include <map>

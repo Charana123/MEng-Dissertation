@@ -118,13 +118,13 @@ void OnlineStream::get_universe(vector<unsigned long>* universe, unsigned long* 
     *m = 0; *M = 0; *largest = 0;
     unsigned long maxx = 0;
     for(Set* s; (s = get_next_set()) != nullptr; (*m)++){
-        cout << "hammer" << endl;
+        /* cout << "hammer" << endl; */
         *M += s->vertices.size();
-        cout << "hammer1" << endl;
+        /* cout << "hammer1" << endl; */
         if(s->vertices.size() > *largest) *largest = s->vertices.size();
-        cout << "hammer2" << endl;
+        /* cout << "hammer2" << endl; */
         unsigned long c_maxx = *std::max_element(s->vertices.begin(), s->vertices.end());
-        cout << "hammer3" << endl;
+        /* cout << "hammer3" << endl; */
         if(c_maxx > maxx) maxx = c_maxx;
     }
     *avg = *M/(*m);
@@ -157,6 +157,14 @@ void POfflineStream::reset(){
 void OnlineStream::reset(){
     char const* const mmaped_data = static_cast<char*>(this->mapped_rgn.get_address());
     size_t const mmap_size = this->mapped_rgn.get_size();
+    delete this->mmistream;
     this->mmistream = new imemstream(mmaped_data, mmap_size);
     this->counter = this->start_counter;
 }
+
+
+
+
+
+
+

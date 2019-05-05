@@ -18,6 +18,7 @@ void summarise(string name, std::function<vector<unsigned long>*()> func){
     cout << "time: " << chrono::duration_cast<chrono::milliseconds>(t2-t1).count() << " ms" << endl;
     cout << "Solution size: " << sol->size() << endl;
     cout << endl;
+    delete sol;
 }
 
 void summarise(string name, std::function<unordered_set<unsigned long>*()> func){
@@ -31,7 +32,7 @@ void summarise(string name, std::function<unordered_set<unsigned long>*()> func)
     cout << "time: " << chrono::duration_cast<chrono::milliseconds>(t2-t1).count() << " ms" << endl;
     cout << "Solution size: " << sol->size() << endl;
     cout << endl;
-    cout << "after" << endl;
+    delete sol;
 }
 
 int main(int argc, char** argv){

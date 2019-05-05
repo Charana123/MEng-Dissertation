@@ -22,6 +22,7 @@ ALL_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp lazy_greedy.cpp DFG.cpp sssc
 SPLIT_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp split.cpp
 
 FLAGS=-std=c++17 -O3 -fopenmp
+DEBUG_FLAGS=-std=c++17 -g
 # REPORT=-qopt-report=2 -qopt-report-phase=vec
 # LIBS=$(shell pkg-config --libs --cflags boost)
 # -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
@@ -30,7 +31,7 @@ ifeq ($(uname), Darwin)
 else
 	CC=g++
 endif
-CC=g++
+CC=g++-8
 
 rec:
 	$(CC) $(FLAGS) $(REC_FILES) -o rec.out
@@ -62,7 +63,7 @@ ppg:
 	./ppg.out
 
 all:
-	$(CC) $(FLAGS) $(ALL_FILES) -o all.out
+	$(CC) $(DEBUG_FLAGS) $(ALL_FILES) -o all.out
 	./all.out
 
 pg:

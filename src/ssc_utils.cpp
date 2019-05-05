@@ -84,15 +84,16 @@ Set* OnlineStream::get_next_set(){
         return nullptr;
     }
 
-    Set* s = new Set{{}, counter++};
+    Set* s = new Set{{}, this->counter++};
     char* cline = new char[line.size() + 1];
+    char* cline_start = cline;
     strcpy(cline, line.c_str());
-    char* cs = strtok_r(cline, " \t\n", &cline);
+    char* cs = strtok_r(cline, " \t", &cline);
     s->vertices.push_back(stoul(cs));
-    for(; (cs = strtok_r(NULL, " \t\n", &cline)) != NULL; ){
+    for(; (cs = strtok_r(NULL, " \t", &cline)) != NULL; ){
         s->vertices.push_back(stoul(cs));
     }
-    delete[] cline;
+    delete[] cline_start;
     this->last_set = s;
     return s;
 }
@@ -117,21 +118,31 @@ void OnlineStream::get_universe(vector<unsigned long>* universe, unsigned long* 
     *m = 0; *M = 0; *largest = 0;
     unsigned long maxx = 0;
     for(Set* s; (s = get_next_set()) != nullptr; (*m)++){
+        cout << "hammer" << endl;
         *M += s->vertices.size();
+        cout << "hammer1" << endl;
         if(s->vertices.size() > *largest) *largest = s->vertices.size();
+        cout << "hammer2" << endl;
         unsigned long c_maxx = *std::max_element(s->vertices.begin(), s->vertices.end());
+        cout << "hammer3" << endl;
         if(c_maxx > maxx) maxx = c_maxx;
     }
     *avg = *M/(*m);
-    reset();
+    this->reset();
 
+    cout << "computed max" << endl;
     bool* covered = new bool[maxx+1];
+    cout << "cover created" << endl;
     for(Set* s; (s = get_next_set()) != nullptr; ){
         for(unsigned long v : s->vertices) covered[v] = 1;
     }
-    for(unsigned long i = 0; i < maxx+1; i++) if(covered[i] == 1) universe->push_back(i);
+    cout << "cover written to" << endl;
+    for(unsigned long i = 0; i < maxx+1; i++) {
+        if(covered[i] == 1) universe->push_back(i);
+    }
+    cout << "universe computed" << endl;
     delete[] covered;
-    reset();
+    this->reset();
 }
 
 

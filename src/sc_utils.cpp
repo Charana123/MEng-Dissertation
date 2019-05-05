@@ -19,13 +19,14 @@ vector<Set>* read_sets(string filename)
         Set& sett = sets->at(sets->size()-1);
         sett.i = counter++;
         char* cline = new char[line.size() + 1];
+        char* cline_start = cline;
         strcpy(cline, line.c_str());
         char* cs = strtok_r(cline, " \t", &cline);
         sett.vertices.push_back(stoul(cs));
         for(; (cs = strtok_r(NULL, " \t", &cline)) != NULL; ){
             sett.vertices.push_back(stoul(cs));
         }
-        delete[] cline;
+        delete[] cline_start;
 	}
     return sets;
 }

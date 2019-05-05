@@ -166,21 +166,21 @@ void SSSCCover::run(HyperEdge* he){
 unordered_set<unsigned long>* sssc(SSSCInput* sssci, string type){
 
     SSSCCover cover(sssci->universe);
-    if(type.compare("run") == 0){
+    //if(type.compare("run") == 0){
         for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
             cover.run(he);
         }
-    }
-    else if(type.compare("mrun1") == 0){
-        for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
-            cover.mrun1(he);
-        }
-    }
-    else if(type.compare("mrun2") == 0){
-        for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
-            cover.mrun2(he);
-        }
-    }
+    //}
+//    else if(type.compare("mrun1") == 0){
+//        for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
+//            cover.mrun1(he);
+//        }
+//    }
+//    else if(type.compare("mrun2") == 0){
+//        for(HyperEdge* he; (he = sssci->stream->get_next_set()) != nullptr; ){
+//            cover.mrun2(he);
+//        }
+//    }
     sssci->stream->reset();
 
     unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
@@ -317,29 +317,44 @@ void PCaptureCover::capture(HyperEdge* he, int t){
     }
 }
 
+#include <chrono>
+void time1(string name, std::function<void()> func){
+    auto t1 = chrono::high_resolution_clock::now();
+    func();
+    auto t2 = chrono::high_resolution_clock::now();
+    cout << "===========" << endl;
+    cout << name << endl;
+    cout << "===========" << endl;
+    cout << "time: " << chrono::duration_cast<chrono::milliseconds>(t2-t1).count() << " ms" << endl;
+}
+
 unordered_set<unsigned long>* capture(PSSSCInput* psssci, int ts){
 
     PCaptureCover pcc(psssci->universe, ts);
-    #pragma omp parallel for
-    for(int t = 0; t < ts; t++){
-        for(HyperEdge* he; (he = psssci->streams[t]->get_next_set()) != nullptr; ){
-            pcc.capture(he, t);
-        }
-        psssci->streams[t]->reset();
-    }
-    #pragma omp parallel for
-    for(int t = 0; t < ts; t++){
-        for(unsigned long i = (pcc.max_elem/ts) * t; i < (pcc.max_elem/ts) * (t+1); i++){
-            unsigned long max_ceff = 0; unsigned long max_ceid;
-            for(int t = 0; t < ts; t++){
-                if(pcc.ceffs[t][i] > max_ceff) {
-                    max_ceff = pcc.ceffs[t][i];
-                    max_ceid = pcc.ceids[t][i];
-                }
+    time1("process sets", [&]() -> void{
+        #pragma omp parallel for
+        for(int t = 0; t < ts; t++){
+            for(HyperEdge* he; (he = psssci->streams[t]->get_next_set()) != nullptr; ){
+                pcc.capture(he, t);
             }
-            pcc.fceid[i] = max_ceid;
+            psssci->streams[t]->reset();
         }
-    }
+    });
+    time1("consolidate solution", [&]() -> void{
+        #pragma omp parallel for
+        for(int t = 0; t < ts; t++){
+            for(unsigned long i = (pcc.max_elem/ts) * t; i < (pcc.max_elem/ts) * (t+1); i++){
+                unsigned long max_ceff = 0; unsigned long max_ceid;
+                for(int t = 0; t < ts; t++){
+                    if(pcc.ceffs[t][i] > max_ceff) {
+                        max_ceff = pcc.ceffs[t][i];
+                        max_ceid = pcc.ceids[t][i];
+                    }
+                }
+                pcc.fceid[i] = max_ceid;
+            }
+        }
+    });
 
     unordered_set<unsigned long>* sol = new unordered_set<unsigned long>();
     for(unsigned long i = 0; i < pcc.max_elem; i++){

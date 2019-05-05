@@ -41,14 +41,14 @@ class SSSCCover {
             cout << "max_elem: " << max_elem << endl;
             this->eid = new vector<unsigned long>(max_elem+1, static_cast<unsigned long>(-1));
             this->eff = new vector<unsigned long>(max_elem+1, 0);
-            this->ben = new vector<unsigned long>(max_elem+1, 0);
-            this->ben1 = new vector<unsigned long>(max_elem+1, 0);
+            //this->ben = new vector<unsigned long>(max_elem+1, 0);
+            //this->ben1 = new vector<unsigned long>(max_elem+1, 0);
         };
         ~SSSCCover(){
             delete eid;
             delete eff;
-            delete ben;
-            delete ben1;
+            //delete ben;
+            //delete ben1;
         }
         void run(HyperEdge* he);
         void mrun1(HyperEdge* he);

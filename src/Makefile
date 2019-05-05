@@ -21,7 +21,7 @@ GEN_DATASET = gen_dataset.cpp
 ALL_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp lazy_greedy.cpp DFG.cpp sssc.cpp pgreedy.cpp pp_greedy.cpp all.cpp
 SPLIT_FILES = gp_utils.cpp sc_utils.cpp ssc_utils.cpp split.cpp
 
-FLAGS=-std=c++17 -pthread -O3 -fopenmp
+FLAGS=-std=c++17 -O3 -fopenmp
 # REPORT=-qopt-report=2 -qopt-report-phase=vec
 # LIBS=$(shell pkg-config --libs --cflags boost)
 # -I/panfs/panasas01/cosc/an15739/boost_1_69_0 -L/panfs/panasas01/cosc/an15739/boost_1_69_0 -Wl,-rpath,/panfs/panasas01/cosc/an15739/boost_1_69_0
@@ -30,7 +30,7 @@ ifeq ($(uname), Darwin)
 else
 	CC=g++
 endif
-CC=g++-8
+CC=g++
 
 rec:
 	$(CC) $(FLAGS) $(REC_FILES) -o rec.out

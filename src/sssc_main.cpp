@@ -55,8 +55,7 @@ void parr(string filename, int ts){
 
 void seqq(string filename){
     /* Stream* stream = new OfflineStream(filename); */
-    Stream* stream = new OfflineStream(filename);
-    /* Stream* stream = new OnlineStream(filename); */
+    Stream* stream = new OnlineStream(filename);
     vector<unsigned long>* universe = new vector<unsigned long>();
     unsigned long m, M, avg, largest;
     stream->get_universe(universe, &m, &avg, &largest, &M);
@@ -72,18 +71,18 @@ void seqq(string filename){
     /* cout << "largest: " << largest << endl; */
     /* cout << "==============" << endl; */
 
-    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
-        unordered_set<unsigned long>* sol = sssc(&sssci, string("run"));
-        return sol;
-    });
+//    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
+//        unordered_set<unsigned long>* sol = sssc(&sssci, string("run"));
+//        return sol;
+//    });
     /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
     /*     unordered_set<unsigned long>* sol = sssc(&sssci, string("mrun1")); */
     /*     return sol; */
     /* }); */
-    /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
-    /*     unordered_set<unsigned long>* sol = capture(&sssci); */
-    /*     return sol; */
-    /* }); */
+    summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{
+        unordered_set<unsigned long>* sol = capture(&sssci);
+        return sol;
+    });
     /* summarise(filename + ".dat", [&]() -> unordered_set<unsigned long>*{ */
     /*     unordered_set<unsigned long>* sol = threshold_randomized_sssc(&sssci, largest, avg); */
     /*     return sol; */
@@ -97,7 +96,7 @@ int main(int argc, char** argv){
 	/* vector<string> files = {"test", "chess", "retail", "pumsb", "kosarak", "webdocs"}; */
 	/* for(string filename : files){ */
         /* parrstream(filename); */
-        /* seqq(filename); */
+        //seqq(filename);
         parr(filename, ts);
 	/* } */
 

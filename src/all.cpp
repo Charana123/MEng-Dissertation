@@ -42,6 +42,7 @@ int main(int argc, char** argv){
     if(!(alg.compare("DFG") == 0
         || alg.compare("pp") == 0
         || alg.compare("LSH") == 0
+        || alg.compare("PLSH") == 0
         || alg.compare("Rosen") == 0
         || alg.compare("all") == 0
         || alg.compare("LSH-DFG") == 0
@@ -53,9 +54,11 @@ int main(int argc, char** argv){
     Stream* stream;
     if(streaming_only == 1) stream = new OnlineStream(filename);
     else stream = new OfflineStream(filename);
+    cout << "Created stream" << endl;
     vector<unsigned long>* universe = new vector<unsigned long>();
     unsigned long m, M, avg, largest;
     stream->get_universe(universe, &m, &avg, &largest, &M);
+    cout << "Computed universe" << endl;
     unsigned long n = universe->size();
 
     cout << "==============" << endl;
@@ -75,6 +78,13 @@ int main(int argc, char** argv){
                 return DFG(sci, p);
             });
         }
+    }
+
+    if(alg.compare("PLSH") == 0 || alg.compare("all") == 0){
+        summarise("capture", [&]() -> unordered_set<unsigned long>*{
+            SSSCInput sssci = {stream, universe, n, m, avg};
+            return capture(&sssci);
+        });
     }
 
     if(alg.compare("LSH") == 0 || alg.compare("all") == 0){
